@@ -3,7 +3,7 @@ import './App.css';
 
 import * as THREE from 'three'
 import { Canvas } from 'react-three-fiber'
-import { useSpring, animated } from 'react-spring'
+import { useSpring, animated } from 'react-spring/three'
 
 const BLOCK_SIZE = 5;
 const MAP_SIZE = 10;
@@ -18,11 +18,10 @@ function createMap(size) {
 
 function App() {
 
- 
-
-  const aspect = window.innerWidth / window.innerHeight;
-  const d = 50;
   
+  const aspect = window.innerWidth / window.innerHeight;
+  const d = 50;  
+
   return (
     <Canvas
       updateDefaultCamera={false}
@@ -64,12 +63,12 @@ function App() {
       }}
       >
       <ambientLight intensity={0.5} />
-      <spotLight  
+      {/* <spotLight  
         intensity={0.3} 
         position={[0, 70, 80]} 
         angle={0.6} penumbra={1} 
         castShadow={true}
-        />
+        /> */}
 
       <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
@@ -80,7 +79,7 @@ function App() {
         })
       })}
 
-      <Player position={[0,0,0]}/>
+      <Player/>
       
     </Canvas>
       
@@ -134,7 +133,7 @@ function Blokkie({ position }) {
         geometry={new THREE.BoxGeometry( BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)}
         castShadow={true}
         >
-        <meshStandardMaterial attach="material"/>
+        <meshStandardMaterial attach="material" color="#886622"/>
       </mesh>          
     </group>
   )
@@ -161,22 +160,83 @@ function Player({ position }) {
   // const [{ xy }, set] = useSpring(() => ({ xy: [0, 0] }))
   // const happyPress = useKeyPress('h');
   // console.log("happyPress: ", happyPress);  
+
+  let pos = [0,0,0];
+  const [props, set, stop] = useSpring(() => ({ 
+    position: [0, 0, 0]
+  }));
+
+  // console.log("props:", props);
+  // // If pressed key is our target key then set to true
+  function downHandler({ key }) {
+    // console.log("key:", key);
+    if (key === 'ArrowRight') {
+      pos = [pos[0]+BLOCK_SIZE,pos[1],pos[2]];
+      set({ 
+        position: pos
+      })
+    }
+    if (key === 'ArrowLeft') {
+      pos = [pos[0]-BLOCK_SIZE,pos[1],pos[2]];
+      set({ 
+        position: pos
+      })
+    }
+    if (key === 'ArrowUp') {
+      pos = [pos[0],pos[1],pos[2]-BLOCK_SIZE];
+      set({ 
+        position: pos
+      })
+    }
+    if (key === 'ArrowDown') {
+      pos = [pos[0],pos[1],pos[2]+BLOCK_SIZE];
+      set({ 
+        position: pos
+      })
+    }
+  }
+
+  // // Add event listeners
+  useEffect(() => {
+    window.addEventListener('keydown', downHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener('keydown', downHandler);
+    };
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  // const [active, setActive] = useState(false)
+  // const [hovered, setHover] = useState(false)
+  // const vertices = [[-1, 0, 0], [0, 1, 0], [1, 0, 0], [0, -1, 0], [-1, 0, 0]]
+  // const { color, pos, ...props } = useSpring({
+  //   color: active ? 'hotpink' : 'white',
+  //   pos: active ? [0, 0, 2] : [0, 0, 0],
+  //   'material-opacity': hovered ? 0.6 : 0.25,
+  //   scale: active ? [1.5, 1.5, 1.5] : [1, 1, 1],
+  //   rotation: active ? [THREE.Math.degToRad(180), 0, THREE.Math.degToRad(45)] : [0, 0, 0],
+  //   config: { mass: 10, tension: 1000, friction: 300, precision: 0.00001 }
+  // })
+  
   return (
     <group >
-      <mesh
+      {/* <animated.mesh onClick={e => setActive(!active)} onPointerOver={e => setHover(true)} onPointerOut={e => setHover(false)} {...props}>
+        <octahedronGeometry attach="geometry" />
+        <animated.meshStandardMaterial attach="material" color="grey" />
+      </animated.mesh> */}
+      <animated.mesh
         visible
         userData={{ test: "hello" }}
-        position={new THREE.Vector3(...position)}
+        position={props.position}
         rotation={new THREE.Euler(0, 0, 0)}
         geometry={new THREE.BoxGeometry( BLOCK_SIZE/10, BLOCK_SIZE/10, BLOCK_SIZE/10)}
-        material={new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffffff)})} />
-      <pointLight  
+        material={new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffffff)})} /> */}
+      <animated.pointLight  
         color={0xefef55} 
         intensity={1} 
         distance={50}
         decay={1}
         castShadow={true}
-        position={new THREE.Vector3(...position)}
+        position={props.position}
         />
     </group>
   )
