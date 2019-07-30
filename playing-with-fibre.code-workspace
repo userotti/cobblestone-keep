@@ -1,8 +1,11 @@
 {
 	"folders": [
-		{
-			"path": "."
-		}
+    {
+      "path": "."
+    },
+    {
+      "path": "/Users/christian/sites/vault-superuser-dashboard"
+    }
   ],
   "settings": {}
 }

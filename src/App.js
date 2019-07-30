@@ -43,32 +43,17 @@ function App() {
         camera.lookAt( scene.position ); // or the origin  
         camera.updateProjectionMatrix();
 
-        console.log(gl);
-        // const aspect = window.innerWidth / window.innerHeight;
-        // const d = 50;
+        // console.log(gl);
         
-        // let camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
-        // gl.setDefaultCamera(camera);
-        
-        // camera.position.set( 20, 20, 20 ); // all components equal
-        // camera.left = -(d * aspect);
-        // camera.right = (d * aspect);
-        // camera.top = d;
-        // camera.bottom = -(d);
-        // camera.lookAt( gl.scene.position ); // or the origin
-        // camera.updateProjectionMatrix();
-
-        // return ((gl.shadowMap.enabled = true), (gl.shadowMap.type = THREE.PCFSoftShadowMap))
-
       }}
       >
-      <ambientLight intensity={0.5} />
-      {/* <spotLight  
+      {/* <ambientLight intensity={0.5} />
+      <spotLight  
         intensity={0.3} 
         position={[0, 70, 80]} 
         angle={0.6} penumbra={1} 
         castShadow={true}
-        /> */}
+        />
 
       <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
@@ -77,7 +62,7 @@ function App() {
         return column.map((blockPositionValue, rowIndex)=>{
           return blockPositionValue ? <Blokkie key={columnIndex + '' + rowIndex} position={[-(columnIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]}/> : null
         })
-      })}
+      })} */}
 
       <Player/>
       
@@ -88,38 +73,6 @@ function App() {
 
 export default App;
 
-// Hook
-function useKeyPress(targetKey) {
-  // State for keeping track of whether key is pressed
-  const [keyPressed, setKeyPressed] = useState(false);
-
-  // If pressed key is our target key then set to true
-  function downHandler({ key }) {
-    if (key === targetKey) {
-      setKeyPressed(true);
-    }
-  }
-
-  // If released key is our target key then set to false
-  const upHandler = ({ key }) => {
-    if (key === targetKey) {
-      setKeyPressed(false);
-    }
-  };
-
-  // Add event listeners
-  useEffect(() => {
-    window.addEventListener('keydown', downHandler);
-    window.addEventListener('keyup', upHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener('keydown', downHandler);
-      window.removeEventListener('keyup', upHandler);
-    };
-  }, []); // Empty array ensures that effect is only run on mount and unmount
-
-  return keyPressed;
-}
 
 
 function Blokkie({ position }) {
@@ -131,6 +84,7 @@ function Blokkie({ position }) {
         position={new THREE.Vector3(...position)}
         rotation={new THREE.Euler(0, 0, 0)}
         geometry={new THREE.BoxGeometry( BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)}
+        invalidateFrameloop={true}
         castShadow={true}
         >
         <meshStandardMaterial attach="material" color="#886622"/>
@@ -155,80 +109,85 @@ function Plane({ position }) {
   )
 }
 
-function Player({ position }) {
+function Player() {
   // Register plane as a physics body with zero mass
   // const [{ xy }, set] = useSpring(() => ({ xy: [0, 0] }))
   // const happyPress = useKeyPress('h');
   // console.log("happyPress: ", happyPress);  
 
-  let pos = [0,0,0];
-  const [props, set, stop] = useSpring(() => ({ 
-    position: [0, 0, 0]
-  }));
 
-  // console.log("props:", props);
-  // // If pressed key is our target key then set to true
-  function downHandler({ key }) {
-    // console.log("key:", key);
-    if (key === 'ArrowRight') {
-      pos = [pos[0]+BLOCK_SIZE,pos[1],pos[2]];
-      set({ 
-        position: pos
-      })
-    }
-    if (key === 'ArrowLeft') {
-      pos = [pos[0]-BLOCK_SIZE,pos[1],pos[2]];
-      set({ 
-        position: pos
-      })
-    }
-    if (key === 'ArrowUp') {
-      pos = [pos[0],pos[1],pos[2]-BLOCK_SIZE];
-      set({ 
-        position: pos
-      })
-    }
-    if (key === 'ArrowDown') {
-      pos = [pos[0],pos[1],pos[2]+BLOCK_SIZE];
-      set({ 
-        position: pos
-      })
-    }
-  }
+  const [position, setPosition] = useState([0, 0, 0]); 
+  
+  const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
+    position:position
+  }));
+ 
 
   // // Add event listeners
   useEffect(() => {
+
+    // console.log("props:", props);
+    // // If pressed key is our target key then set to true
+    const downHandler = ({ key }) => {
+
+      if (key === 'ArrowRight') {
+        let p =[position[0]+BLOCK_SIZE,position[1],position[2]];
+        setPosition(p);
+        setAnimatedPosition({
+          position:p
+        })
+      }
+
+      if (key === 'ArrowLeft') {
+        let p = [position[0]-BLOCK_SIZE,position[1],position[2]];
+        setPosition(p);
+        setAnimatedPosition({
+          position:p
+        })
+      }
+
+      if (key === 'ArrowUp') {
+        let p =[position[0],position[1],position[2]-BLOCK_SIZE];
+        setPosition(p);
+        setAnimatedPosition({
+          position:p
+        })
+      }
+
+      if (key === 'ArrowDown') {
+        let p =[position[0],position[1],position[2]+BLOCK_SIZE];
+        setPosition(p);
+        setAnimatedPosition({
+          position:p
+        })
+      }
+    }
+
     window.addEventListener('keydown', downHandler);
+
     // Remove event listeners on cleanup
     return () => {
       window.removeEventListener('keydown', downHandler);
     };
-  }, []); // Empty array ensures that effect is only run on mount and unmount
+  }, [position, setAnimatedPosition]); // Empty array ensures that effect is only run on mount and unmount
 
-  // const [active, setActive] = useState(false)
-  // const [hovered, setHover] = useState(false)
-  // const vertices = [[-1, 0, 0], [0, 1, 0], [1, 0, 0], [0, -1, 0], [-1, 0, 0]]
-  // const { color, pos, ...props } = useSpring({
-  //   color: active ? 'hotpink' : 'white',
-  //   pos: active ? [0, 0, 2] : [0, 0, 0],
-  //   'material-opacity': hovered ? 0.6 : 0.25,
-  //   scale: active ? [1.5, 1.5, 1.5] : [1, 1, 1],
-  //   rotation: active ? [THREE.Math.degToRad(180), 0, THREE.Math.degToRad(45)] : [0, 0, 0],
-  //   config: { mass: 10, tension: 1000, friction: 300, precision: 0.00001 }
-  // })
-  
   return (
+    
     <group >
       {/* <animated.mesh onClick={e => setActive(!active)} onPointerOver={e => setHover(true)} onPointerOut={e => setHover(false)} {...props}>
         <octahedronGeometry attach="geometry" />
         <animated.meshStandardMaterial attach="material" color="grey" />
       </animated.mesh> */}
       <animated.mesh
+        onClick={(e) => {
+          
+          
+        }}
         visible
         userData={{ test: "hello" }}
-        position={props.position}
+        position={animatedPosition.position}
         rotation={new THREE.Euler(0, 0, 0)}
-        geometry={new THREE.BoxGeometry( BLOCK_SIZE/10, BLOCK_SIZE/10, BLOCK_SIZE/10)}
+        geometry={new THREE.BoxGeometry( BLOCK_SIZE/1, BLOCK_SIZE/1, BLOCK_SIZE/1)}
         material={new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffffff)})} /> */}
       <animated.pointLight  
         color={0xefef55} 
@@ -236,8 +195,43 @@ function Player({ position }) {
         distance={50}
         decay={1}
         castShadow={true}
-        position={props.position}
+        position={animatedPosition}
         />
     </group>
   )
 }
+
+
+
+// // Hook
+// function useKeyPress(targetKey) {
+//   // State for keeping track of whether key is pressed
+//   const [keyPressed, setKeyPressed] = useState(false);
+
+//   // If pressed key is our target key then set to true
+//   function downHandler({ key }) {
+//     if (key === targetKey) {
+//       setKeyPressed(true);
+//     }
+//   }
+
+//   // If released key is our target key then set to false
+//   const upHandler = ({ key }) => {
+//     if (key === targetKey) {
+//       setKeyPressed(false);
+//     }
+//   };
+
+//   // Add event listeners
+//   useEffect(() => {
+//     window.addEventListener('keydown', downHandler);
+//     window.addEventListener('keyup', upHandler);
+//     // Remove event listeners on cleanup
+//     return () => {
+//       window.removeEventListener('keydown', downHandler);
+//       window.removeEventListener('keyup', upHandler);
+//     };
+//   }, []); // Empty array ensures that effect is only run on mount and unmount
+
+//   return keyPressed;
+// }
