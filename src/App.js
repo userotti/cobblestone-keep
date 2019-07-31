@@ -10,9 +10,13 @@ const BLOCK_SIZE = 5;
 const MAP_SIZE = 10;
 
 function createMap(size, model) {
-    return [...Array(size).keys()].map(()=>{
-      return [...Array(size).keys()].map(()=>{
-        return Math.random() > 0.8 ? model.clone() : null
+    return [...Array(size).keys()].map((itemCol, colIndex)=>{
+      return [...Array(size).keys()].map((itemRow, rowIndex)=>{
+        return Math.random() > 0.3 ? {
+          model: model.clone(),
+          rotation: new THREE.Euler(0, (-Math.PI/2)*Math.floor(Math.random()*5+1), 0),
+          position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE])
+        } : null
       })
     })
   }
@@ -28,7 +32,7 @@ function App() {
         // Load a glTF resource
     loader.load(
       // resource URL
-      '/assets/mure2.gltf',
+      '/assets/walls.gltf',
       // called when the resource is loaded
       function ( gltf ) {
 
@@ -61,9 +65,9 @@ export default App;
 function GameScene({ worldMap }) {
   
   const aspect = window.innerWidth / window.innerHeight;
-  const d = 50;  
+  const d = 40;  
 
-  const [position, setPosition] = useState([0, 0, 0]); 
+  const [position, setPosition] = useState([+6*BLOCK_SIZE,0, +6*BLOCK_SIZE]); 
   const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
     position:position
   }));
@@ -145,18 +149,18 @@ function GameScene({ worldMap }) {
       >
       <ambientLight intensity={0.5} />
       <spotLight  
-        intensity={0.3} 
-        position={[0, 70, 80]} 
-        angle={0.6} penumbra={1} 
-        castShadow={true}
+        intensity={1} 
+        position={[40, 40, 40]} 
+        angle={0.7} penumbra={1} 
+        castShadow={false}
         />
 
       <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
         />  
       {worldMap && worldMap.map((column, columnIndex)=>{
-        return column.map((blockModel, rowIndex)=>{
-          return blockModel ? <Blokkie key={columnIndex + '' + rowIndex} position={[-(columnIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]} muurModel={blockModel}/> : null
+        return column.map((block, rowIndex)=>{
+          return block ? <Blokkie key={columnIndex + '' + rowIndex} block={block}/> : null
         })
       })}
 
@@ -168,16 +172,16 @@ function GameScene({ worldMap }) {
 }
 
 
-function Blokkie({ position, muurModel }) {
+function Blokkie({ position, block }) {
 
-  console.log("position: ", position);
+  // console.log("position: ", position);
   return (
     <group>
-      {muurModel && <primitive 
-        object={muurModel.clone()} 
-        position={new THREE.Vector3(...position)} 
+      {block.model && <primitive 
+        object={block.model} 
+        position={block.position} 
         scale={[BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE]}
-        rotation={new THREE.Euler(0, (-Math.PI/2)*Math.floor(Math.random()*5+1), 0)}/>}       
+        rotation={block.rotation}/>}       
     </group>
   )
   // return (
