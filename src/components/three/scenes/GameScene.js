@@ -9,11 +9,12 @@ import Player from '../map/Player.js';
 
 
 export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
-  
+
   const aspect = window.innerWidth / window.innerHeight;
   const d = 20;  
 
-  const [position, setPosition] = useState([0,BLOCK_SIZE, 0]); 
+
+  const [position, setPosition] = useState([0,0, 0]); 
   const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
     position:position
   }));
@@ -65,8 +66,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
     return () => {
       window.removeEventListener('keydown', downHandler);
     };
-  }, [position, setAnimatedPosition, BLOCK_SIZE]); // Empty array ensures that effect is only run on mount and unmount
-
+  }, [position, setAnimatedPosition, BLOCK_SIZE, worldMap]); // Empty array ensures that effect is only run on mount and unmount
 
   return (
     <Canvas
@@ -93,11 +93,11 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         
       }}
       >
-      <ambientLight intensity={0.5}/>
+      <ambientLight intensity={0.2}/>
       <directionalLight 
         intensity={0.5} 
         color={0xffffff} 
-        position={[100, 200, 0]}
+        position={[100, 200, -100]}
         castShadow={true}
         shadow-camera-near={0.5}
         shadow-camera-far={500}
@@ -127,7 +127,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         })
       })}
 
-      {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
+      <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/>
       
     </Canvas>
       

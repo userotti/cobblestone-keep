@@ -3,31 +3,31 @@ import * as THREE from 'three';
 
 export default function Blokkie({ block, BLOCK_SIZE }) {
 
-  // return (
-  //   <group>
-  //     {block.model && <primitive 
-  //       object={block.model} 
-  //       position={block.position} 
-  //       scale={[BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE]}
-  //       rotation={block.rotation}
-  //       receiveShadow={true} 
-  //       castShadow={true}
-  //       />}
-        
-  //   </group>
-  // )
   return (
-    <group>
-      {<mesh
-        visible
-        position={block.position}
-        rotation={block.rotation}
-        geometry={new THREE.BoxGeometry( BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)}
-        receiveShadow={false} 
+    <group
+      position={block.position} 
+      scale={[BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE]}
+      rotation={block.rotation}
+    >
+      {block.threeObjects && block.threeObjects.length && block.threeObjects.map((item, index)=>(<primitive 
+        key={index}
+        object={item} 
         castShadow={true}
-        >
-        <meshStandardMaterial attach="material" color="#886622"/>
-      </mesh>}       
+      />))}
     </group>
   )
+  // return (
+  //   <group>
+  //     {<mesh
+  //       visible
+  //       position={block.position}
+  //       rotation={block.rotation}
+  //       geometry={new THREE.BoxGeometry( BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)}
+  //       receiveShadow={false} 
+  //       castShadow={true}
+  //       >
+  //       <meshStandardMaterial attach="material" color="#886622"/>
+  //     </mesh>}       
+  //   </group>
+  // )
 }

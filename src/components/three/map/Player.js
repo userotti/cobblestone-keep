@@ -16,10 +16,10 @@ export default function Player({ animatedPosition, size, BLOCK_SIZE }) {
         position={animatedPosition.position}
         rotation={new THREE.Euler(0, 0, 0)}
         geometry={new THREE.BoxGeometry( BLOCK_SIZE*size, BLOCK_SIZE*size, BLOCK_SIZE*size)}
-        material={new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffffff)})} /> */}
+        material={new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffffff)})} /> 
       <animated.pointLight  
-        color={0xefef55} 
-        intensity={1} 
+        color={0xefad55} 
+        intensity={0.4} 
         distance={50}
         decay={1}
         castShadow={true}
