@@ -11,7 +11,7 @@ export default function Plane({ position, BLOCK_SIZE, MAP_SIZE }) {
       <planeBufferGeometry 
         attach="geometry" 
         args={[BLOCK_SIZE*MAP_SIZE*2, BLOCK_SIZE*MAP_SIZE*2]}/> 
-      <meshStandardMaterial attach="material" color="#272727" />
+      <meshStandardMaterial attach="material" color="#405A71" />
     </mesh>
   )
 }

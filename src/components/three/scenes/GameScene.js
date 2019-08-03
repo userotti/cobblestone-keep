@@ -11,9 +11,9 @@ import Player from '../map/Player.js';
 export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
   
   const aspect = window.innerWidth / window.innerHeight;
-  const d = 40;  
+  const d = 20;  
 
-  const [position, setPosition] = useState([+6*BLOCK_SIZE,0, +6*BLOCK_SIZE]); 
+  const [position, setPosition] = useState([0,BLOCK_SIZE, 0]); 
   const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
     position:position
   }));
@@ -93,13 +93,27 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         
       }}
       >
-      <ambientLight intensity={0.5} />
-      <spotLight  
+      <ambientLight intensity={0.5}/>
+      <directionalLight 
+        intensity={0.5} 
+        color={0xffffff} 
+        position={[100, 200, 0]}
+        castShadow={true}
+        shadow-camera-near={0.5}
+        shadow-camera-far={500}
+        shadow-camera-left={-35}
+        shadow-camera-bottom={-35}
+        shadow-camera-top={35}
+        shadow-camera-right={35}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+      {/* <spotLight  
         intensity={1} 
         position={[40, 40, 40]} 
         angle={0.7} penumbra={1} 
         castShadow={false}
-        />
+        /> */}
 
       <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
@@ -113,7 +127,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         })
       })}
 
-      <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/>
+      {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
       
     </Canvas>
       

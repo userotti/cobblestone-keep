@@ -6,15 +6,15 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import GameScene from './components/three/scenes/GameScene.js';
 
 
-const BLOCK_SIZE = 5;
+const BLOCK_SIZE = 3;
 const MAP_SIZE = 10;
 
 function createMap(size, model) {
     return [...Array(size).keys()].map((itemCol, colIndex)=>{
       return [...Array(size).keys()].map((itemRow, rowIndex)=>{
-        return Math.random() > 0.8 ? {
+        return Math.random() > 0.5 ? {
           model: model.clone(),
-          rotation: new THREE.Euler(0, (-Math.PI/2)*Math.floor(Math.random()*5+1), 0),
+          rotation: new THREE.Euler(0, (-Math.PI/2), 0),
           position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE])
         } : null
       })
@@ -28,8 +28,10 @@ function App() {
     
     var loader = new GLTFLoader();
     loader.load(
-      '/assets/walls2.gltf',
+      '/assets/walls_shadows.gltf',
       function ( gltf ) {
+
+        console.log("createMap: ", createMap(12, gltf.scene));
         setWorldMap(createMap(12, gltf.scene));
       },
       function ( xhr ) {

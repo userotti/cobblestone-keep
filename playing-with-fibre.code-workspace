@@ -2,6 +2,9 @@
 	"folders": [
     {
       "path": "."
+    },
+    {
+      "path": "/Users/christian/sites/dungeon-crawler"
     }
   ],
   "settings": {}
