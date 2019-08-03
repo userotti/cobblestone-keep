@@ -93,9 +93,9 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         
       }}
       >
-      <ambientLight intensity={0.2}/>
+      <ambientLight intensity={0.1}/>
       <directionalLight 
-        intensity={0.5} 
+        intensity={0.6} 
         color={0xffffff} 
         position={[100, 200, -100]}
         castShadow={true}
@@ -115,11 +115,11 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         castShadow={false}
         /> */}
 
-      <Plane 
+      {/* <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
         BLOCK_SIZE={BLOCK_SIZE}
         MAP_SIZE={MAP_SIZE}
-        />  
+        />   */}
 
       {worldMap && worldMap.map((column, columnIndex)=>{
         return column.map((block, rowIndex)=>{
