@@ -1,17 +1,19 @@
 import { Canvas } from 'react-three-fiber';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSpring, animated } from 'react-spring/three'
 import * as THREE from 'three';
 
 import Blokkie from '../map/Blokkie.js';
 import Plane from '../map/Plane.js';
 import Player from '../map/Player.js';
+import Wall from '../map/wall.js';
+
 
 
 export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
 
   const aspect = window.innerWidth / window.innerHeight;
-  const d = 20;  
+  const d = 2;  
 
 
   const [position, setPosition] = useState([0,0, 0]); 
@@ -93,7 +95,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         
       }}
       >
-      <ambientLight intensity={0.1}/>
+      <ambientLight intensity={1.1}/>
       <directionalLight 
         intensity={0.6} 
         color={0xffffff} 
@@ -108,28 +110,41 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      {/* <spotLight  
-        intensity={1} 
-        position={[40, 40, 40]} 
-        angle={0.7} penumbra={1} 
-        castShadow={false}
-        /> */}
-
+      
       {/* <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
         BLOCK_SIZE={BLOCK_SIZE}
         MAP_SIZE={MAP_SIZE}
         />   */}
 
-      {worldMap && worldMap.map((column, columnIndex)=>{
-        return column.map((block, rowIndex)=>{
-          return block ? <Blokkie key={columnIndex + '' + rowIndex} block={block} BLOCK_SIZE={BLOCK_SIZE}/> : null 
-        })
-      })}
+      <Wall2 tex_url='/assets/atlas.png'></Wall2>
 
-      <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/>
+      {/* {worldMap && worldMap.map((column, columnIndex)=>{
+        return column.map((block, rowIndex)=>{
+          return block ? <Wall key={columnIndex + '' + rowIndex} tex_url={block.tex_url} BLOCK_SIZE={BLOCK_SIZE}/> : null 
+        })
+      })} */}
+
+      {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
       
     </Canvas>
       
   );
+}
+
+
+function Wall2({ tex_url }) {
+  // const loader = new THREE.TextureLoader().load(tex_url);
+  console.log()
+  const texture = useMemo(() => new THREE.TextureLoader().load(tex_url), [tex_url])
+  
+  console.log("texture: ", texture);
+  return <mesh>
+      <planeBufferGeometry 
+        attach="geometry" 
+        args={[1, 1]} />
+      <meshLambertMaterial attach="material" transparent>
+        <primitive attach="map" object={texture} />
+      </meshLambertMaterial>
+    </mesh>
 }
