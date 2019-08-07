@@ -6,24 +6,32 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import GameScene from './components/three/scenes/GameScene.js';
 
 
-const BLOCK_SIZE = 3;
-const MAP_SIZE = 5;
-
-const assets = {
-  'grey_brick_wall_three_gltf': '/assets/walls_on_ground.gltf',  
-  'brown_floor_three_gltf': '/assets/tiled_floor.gltf',
-  'minecraft_atlas': '/assets/atlas.png'
-  
-}
+const BLOCK_SIZE = 1;
+const MAP_SIZE = 10;
 
 function createMap(size, assets) {
 
+    console.log("assets:", assets);
     return [...Array(size).keys()].map((itemCol, colIndex)=>{
       return [...Array(size).keys()].map((itemRow, rowIndex)=>{
 
-        return {
-          tex_url: assets['minecraft_atlas']
-        }  
+        return Math.random() > 0.7 ? {
+          type: 'wall',
+          textures: {
+            'texture_wall_sides': assets['texture_wall_sides'],
+            'texture_wall_top': assets['texture_wall_top']
+          },
+          position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+          size: new THREE.Vector3(1,1.333,1) 
+        } : {
+          type: 'floor',
+          textures: {
+            'texture_floor_stones': assets['texture_floor_stones'],
+          },
+          position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+          size: new THREE.Vector2(1,1),
+          rotation: new THREE.Euler(0, 0, 0),
+        } 
         // Import from GLTF file format 
         // return Math.random() > 0.8 ? {
         //   threeObjects: [...grey_brick_wall_three_gltf.scene.clone().children],
@@ -47,78 +55,110 @@ function createMap(size, assets) {
 
 function App() {
 
+  const [assets, setAssets] = useState({
+    'grey_brick_wall_three_gltf': {
+      url: '/assets/walls_on_ground.gltf',
+    },
+    'brown_floor_three_gltf': {
+      url: '/assets/tiled_floor.gltf',
+    },
+    'minecraft_atlas': {
+      url: '/assets/atlas.png',
+    },
+
+    'texture_wall_sides': {
+      url: '/assets/walls/bricks-sides-basic.png',
+    },
+    'texture_wall_top': {
+      url: '/assets/walls/bricks-top.png',
+    },
+    'texture_floor_stones': {
+      url: '/assets/walls/floor-stones.png',
+    },
+    // 'texture_wall_brick_px': {
+    //   url: '/assets/walls/brick_px.png',
+    // },
+    // 'texture_wall_brick_nx': {
+    //   url: '/assets/walls/brick_nx.png',
+    // },
+    // 'texture_wall_brick_py': {
+    //   url: '/assets/walls/brick_py.png',
+    // },
+    // 'texture_wall_brick_ny': {
+    //   url: '/assets/walls/brick_ny.png',
+    // },
+    // 'texture_wall_brick_pz': {
+    //   url: '/assets/walls/brick_pz.png',
+    // },
+    // 'texture_wall_brick_nz': {
+    //   url: '/assets/walls/brick_nz.png',
+    // }
+
+  });
   const [worldMap, setWorldMap] = useState(null);
+  
   useEffect(() => {
 
-    setWorldMap(createMap(MAP_SIZE, assets));  
-    console.log("here!");
-    // var loader = new GLTFLoader();
+    const loadingAssetPromises = [
+      ...getGLTFLoadingPromises(assets),
+      ...getPNGLoadingPromises(assets),
+    ]; 
+    
+    Promise.all(loadingAssetPromises).then((assetData)=>{
+      setWorldMap(createMap(MAP_SIZE, assetData.reduce((total, item, index)=>{
+        return {
+          ...total,
+          ...item
+        }  
+      }, {})));
+    })
 
-    // const loadingAssetPromises = Object.keys(assets).map((assetKey, index)=>{
-    //   return new Promise((resolve, reject)=>{
-    //     loader.load(assets[assetKey],
-    //       function ( gltf ) {
-    //         console.log("gltf: ", gltf);
-    //         resolve({[assetKey]: gltf});
-    //       },
-    //       function ( xhr ) {
-    //         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' + assetKey );
-    //       },
-    //       function ( error ) {
-    //         console.log( 'An error happened' + assetKey, error );
-    //       }
-    //     );
-    //   })
-    // })
-
-    // Promise.all(loadingAssetPromises).then((assetData)=>{
-    //   setWorldMap(createMap(MAP_SIZE, assetData.reduce((item, total, index)=>{
-    //     return {
-    //       ...total,
-    //       ...item
-    //     }  
-    //   }, {})));
-    //   console.log("assetData: ", assetData);  
-    // })
-
-    // new Promise((resolve, reject)=>{
-    //    loader.load(
-    //     '/assets/walls_shadows.gltf',
-    //     function ( gltf ) {
-    //       resolve({brickWallSceneImported: gltf.scene});
-    //       // console.log("gltf.scene: ", gltf.scene);
-    //       // console.log("createMap: ", createMap(12, {brickWallSceneImported: gltf.scene}));
-    //       // setWorldMap(createMap(MAP_SIZE, {brickWallSceneImported: gltf.scene}));
-    //     },
-    //     function ( xhr ) {
-    //       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    //     },
-    //     function ( error ) {
-    //       console.log( 'An error happened', error );
-    //     }
-    //   );
-    // })
-    // loader.load(
-    //   '/assets/walls_shadows.gltf',
-    //   function ( gltf ) {
-    //     console.log("gltf.scene: ", gltf.scene);
-    //     // console.log("createMap: ", createMap(12, {brickWallSceneImported: gltf.scene}));
-    //     setWorldMap(createMap(MAP_SIZE, {brickWallSceneImported: gltf.scene}));
-    //   },
-    //   function ( xhr ) {
-    //     console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    //   },
-    //   function ( error ) {
-    //     console.log( 'An error happened', error );
-    //   }
-    // );
-
-  }, [setWorldMap])
+  }, [setWorldMap, assets])
  
 
   return <GameScene worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}/>
 }
 
+
+function getPNGLoadingPromises(assets) {
+  const textureLoader = new THREE.TextureLoader();
+
+  return Object.keys(assets).filter((assetKey)=>assets[assetKey].url.endsWith('png')).map((assetKey, index)=>{
+    return new Promise((resolve, reject)=>{
+      textureLoader.load(assets[assetKey].url,
+        function ( texture ) {
+          resolve({[assetKey]: texture});
+        },
+        function ( xhr ) {
+          console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' + assetKey );
+        },
+        function ( error ) {
+          console.log( 'An error happened' + assetKey, error );
+        }
+      );
+    })
+  })
+}  
+
+function getGLTFLoadingPromises(assets) {
+  const GLTFloader = new GLTFLoader();
+
+  return Object.keys(assets).filter((assetKey)=>assets[assetKey].url.endsWith('gltf')).map((assetKey, index)=>{
+    return new Promise((resolve, reject)=>{
+      GLTFloader.load(assets[assetKey].url,
+        function ( gltf ) {
+          resolve({[assetKey]: gltf});
+        },
+        function ( xhr ) {
+          console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' + assetKey );
+        },
+        function ( error ) {
+          console.log( 'An error happened' + assetKey, error );
+        }
+      );
+    })
+  })
+}  
 
 export default App;
 

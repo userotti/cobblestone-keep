@@ -1,18 +1,96 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 
-export default function Wall({ tex_url, px_url, nx_url, py_url, ny_url, pz_url, nz_url }) {
-  const [texture] = useMemo(() => new THREE.TextureLoader().load(tex_url), [tex_url])
+export default function Wall({ textures, position }) {
+  // textures
+  // position
   
-  console.log("texture: ", texture);
   return (
-    <mesh>
-      <planeBufferGeometry 
-        attach="geometry" 
-        args={[1, 1]} />
-      <meshLambertMaterial attach="material" transparent>
-        <primitive attach="map" object={texture} />
-      </meshLambertMaterial>
-    </mesh>
+    <group
+      position={new THREE.Vector3(0,0+(1.333)/2,0)}
+    >
+      <mesh
+        position={new THREE.Vector3(position.x,position.y,position.z+0.5)}
+        rotation={new THREE.Euler(0, 0, 0)}
+        castShadow={true}
+        // receiveShadow={true} 
+      >
+        <planeBufferGeometry 
+          attach="geometry" 
+          args={[1, 1.333]} />
+        <meshLambertMaterial attach="material" transparent side={THREE.DoubleSide}>
+          <primitive attach="map" object={textures['texture_wall_sides']} />
+        </meshLambertMaterial>
+      </mesh>
+
+      <mesh
+        position={new THREE.Vector3(position.x+0.5,position.y,position.z)}
+        rotation={new THREE.Euler(0, (Math.PI/2), 0)}
+        castShadow={true} 
+        // receiveShadow={true} 
+      >
+        <planeBufferGeometry 
+          attach="geometry" 
+          args={[1, 1.333]} />
+        <meshLambertMaterial attach="material" transparent side={THREE.DoubleSide}>
+          <primitive attach="map" object={textures['texture_wall_sides']} />
+        </meshLambertMaterial>
+      </mesh>
+
+      <mesh
+        position={new THREE.Vector3(position.x-0.5,position.y,position.z)}
+        rotation={new THREE.Euler(0, (-Math.PI/2), 0)}
+        castShadow={true}
+        // receiveShadow={true}  
+      >
+        <planeBufferGeometry 
+          attach="geometry" 
+          args={[1, 1.333]} />
+        <meshLambertMaterial attach="material" transparent side={THREE.DoubleSide}>
+          <primitive attach="map" object={textures['texture_wall_sides']} />
+        </meshLambertMaterial>
+      </mesh>
+
+      <mesh
+        position={new THREE.Vector3(position.x,position.y,position.z-0.5)}
+        rotation={new THREE.Euler(0, (-Math.PI), 0)}
+        castShadow={true}
+        // receiveShadow={true}  
+      >
+        <planeBufferGeometry 
+          attach="geometry" 
+          args={[1, 1.333]} />
+        <meshLambertMaterial attach="material" transparent side={THREE.DoubleSide}>
+          <primitive attach="map" object={textures['texture_wall_sides']} />
+        </meshLambertMaterial>
+      </mesh>
+
+
+      <mesh
+        position={new THREE.Vector3(position.x,position.y+(1.333)/2,position.z)}
+        rotation={new THREE.Euler((-Math.PI/2), 0, 0)}
+        castShadow={true} 
+      >
+        <planeBufferGeometry 
+          attach="geometry" 
+          args={[1, 1]} />
+        <meshLambertMaterial attach="material" transparent side={THREE.DoubleSide}>
+          <primitive attach="map" object={textures['texture_wall_top']} />
+        </meshLambertMaterial>
+      </mesh>
+      <mesh
+        position={new THREE.Vector3(position.x,position.y-(1.333)/2,position.z)}
+        rotation={new THREE.Euler((-Math.PI/2), 0, 0)}
+        castShadow={true} 
+      >
+        <planeBufferGeometry 
+          attach="geometry" 
+          args={[1, 1]} />
+        <meshLambertMaterial attach="material" transparent side={THREE.DoubleSide}>
+          <primitive attach="map" object={textures['texture_wall_top']} />
+        </meshLambertMaterial>
+      </mesh>
+    </group>
+    
   )
 }

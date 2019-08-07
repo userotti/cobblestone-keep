@@ -7,13 +7,14 @@ import Blokkie from '../map/Blokkie.js';
 import Plane from '../map/Plane.js';
 import Player from '../map/Player.js';
 import Wall from '../map/wall.js';
+import Floor from '../map/floor.js';
 
 
 
 export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
 
   const aspect = window.innerWidth / window.innerHeight;
-  const d = 2;  
+  const d = 5;  
 
 
   const [position, setPosition] = useState([0,0, 0]); 
@@ -95,35 +96,48 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         
       }}
       >
-      <ambientLight intensity={1.1}/>
+      <ambientLight intensity={0.8}/>
       <directionalLight 
-        intensity={0.6} 
+        intensity={0.8} 
         color={0xffffff} 
         position={[100, 200, -100]}
         castShadow={true}
         shadow-camera-near={0.5}
         shadow-camera-far={500}
-        shadow-camera-left={-35}
-        shadow-camera-bottom={-35}
-        shadow-camera-top={35}
-        shadow-camera-right={35}
+        shadow-camera-left={-25}
+        shadow-camera-bottom={-25}
+        shadow-camera-top={25}
+        shadow-camera-right={25}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
       
       {/* <Plane 
-        position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-BLOCK_SIZE/2,0+(MAP_SIZE - BLOCK_SIZE)/2]}
+        position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-0.7,0+(MAP_SIZE - BLOCK_SIZE)/2]}
         BLOCK_SIZE={BLOCK_SIZE}
         MAP_SIZE={MAP_SIZE}
         />   */}
 
-      <Wall2 tex_url='/assets/atlas.png'></Wall2>
+      {/* <Wall2 tex_url='/assets/atlas.png'></Wall2> */}
 
-      {/* {worldMap && worldMap.map((column, columnIndex)=>{
+      {worldMap && worldMap.map((column, columnIndex)=>{
         return column.map((block, rowIndex)=>{
-          return block ? <Wall key={columnIndex + '' + rowIndex} tex_url={block.tex_url} BLOCK_SIZE={BLOCK_SIZE}/> : null 
+          switch (block.type){
+
+            case 'wall': {
+              return <Wall key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} size={block.size} BLOCK_SIZE={BLOCK_SIZE}/>
+            }
+
+            case 'floor': {
+              return <Floor key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} size={block.size} rotation={block.rotation} BLOCK_SIZE={BLOCK_SIZE}/>
+            }
+            default: {
+              return null;
+            }
+          }
+          
         })
-      })} */}
+      })}
 
       {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
       
