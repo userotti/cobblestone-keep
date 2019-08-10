@@ -9,15 +9,26 @@ import Player from '../map/Player.js';
 import Wall from '../map/wall.js';
 import Floor from '../map/floor.js';
 
+function getCurrentAngle(position){
+  return Math.atan2(position[2], position[0]);
+}
 
+function getNewPositionXZ(newAngle, hypotenuse){
+  
+  return {
+    x: Math.cos(newAngle)*hypotenuse,
+    z: Math.sin(newAngle)*hypotenuse,
+  }
+}
 
 export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
 
-  const aspect = window.innerWidth / window.innerHeight;
-  const d = 5;  
+  const cameraRotateAngleAmout = Math.PI/4;
+  const cameraStartingDistanceVector = new THREE.Vector3(40,40,40);
 
 
-  const [position, setPosition] = useState([0,0,0]); 
+  const [position, setPosition] = useState(cameraStartingDistanceVector.toArray()); 
+  
   const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
     position:position
   }));
@@ -31,7 +42,10 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
     const downHandler = ({ key }) => {
 
       if (key === 'ArrowRight') {
-        let p =[position[0]+BLOCK_SIZE,position[1],position[2]];
+        const currentAngle = getCurrentAngle(position);
+        const newAngle = currentAngle + cameraRotateAngleAmout;
+        const newPosition = getNewPositionXZ(newAngle, Math.hypot(cameraStartingDistanceVector.x, cameraStartingDistanceVector.z));  
+        let p =[newPosition.x,40,newPosition.z];
         setPosition(p);
         setAnimatedPosition({
           position:p
@@ -39,28 +53,31 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
       }
 
       if (key === 'ArrowLeft') {
-        let p = [position[0]-BLOCK_SIZE,position[1],position[2]];
+        const currentAngle = getCurrentAngle(position);
+        const newAngle = currentAngle - cameraRotateAngleAmout;
+        const newPosition = getNewPositionXZ(newAngle, Math.hypot(cameraStartingDistanceVector.x, cameraStartingDistanceVector.z));  
+        let p =[newPosition.x,40,newPosition.z];
         setPosition(p);
         setAnimatedPosition({
           position:p
         })
       }
 
-      if (key === 'ArrowUp') {
-        let p =[position[0],position[1],position[2]-BLOCK_SIZE];
-        setPosition(p);
-        setAnimatedPosition({
-          position:p
-        })
-      }
+      // if (key === 'ArrowUp') {
+      //   let p =[position[0],position[1],position[2]];
+      //   setPosition(p);
+      //   setAnimatedPosition({
+      //     position:p
+      //   })
+      // }
 
-      if (key === 'ArrowDown') {
-        let p =[position[0],position[1],position[2]+BLOCK_SIZE];
-        setPosition(p);
-        setAnimatedPosition({
-          position:p
-        })
-      }
+      // if (key === 'ArrowDown') {
+      //   let p =[position[0],position[1],position[2]];
+      //   setPosition(p);
+      //   setAnimatedPosition({
+      //     position:p
+      //   })
+      // }
     }
 
     window.addEventListener('keydown', downHandler);
@@ -71,33 +88,35 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
     };
   }, [position, setAnimatedPosition, BLOCK_SIZE, worldMap]); // Empty array ensures that effect is only run on mount and unmount
 
+  
   return (
     <Canvas
-      updateDefaultCamera={false}
-      orthographic={true}
-      camera={{
-        left: - d * aspect,
-        right: d * aspect,
-        top: d,
-        bottom: -d,
-        near: 1,
-        far: 1000
-      }}
-      position={animatedPosition}
+      // updateDefaultCamera={false}
+      // orthographic={true}
+      // camera={{
+      //   left: - d * aspect,
+      //   right: d * aspect,
+      //   top: d,
+      //   bottom: -d,
+      //   near: 1,
+      //   far: 1000
+      // }}
+
       onCreated={({gl, camera, scene}) => {
 
         gl.shadowMap.enabled = true;
         gl.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        camera.position.set( 40, 40, 40 );
-        camera.lookAt( scene.position ); // or the origin  
-        camera.updateProjectionMatrix();
+        // camera.position.set( 40, 40, 40 );
+        // camera.lookAt( scene.position ); // or the origin  
+        // camera.updateProjectionMatrix();
 
-        // console.log(gl);
+
+        // console.log(camera);
         
-      }}
-      >
-      <ambientLight intensity={0.9}/>
+      }}>
+
+      {/* <ambientLight intensity={0.9}/>
       <directionalLight 
         intensity={0.9} 
         color={0xffffff} 
@@ -111,7 +130,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         shadow-camera-right={8}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
-      />
+      /> */}
       
       {/* <Plane 
         position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-0.7,0+(MAP_SIZE - BLOCK_SIZE)/2]}
@@ -121,7 +140,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
 
       {/* <Wall2 tex_url='/assets/atlas.png'></Wall2> */}
 
-      {worldMap && worldMap.map((column, columnIndex)=>{
+      {/* {worldMap && worldMap.map((column, columnIndex)=>{
         return column.map((block, rowIndex)=>{
           switch (block.type){
 
@@ -138,35 +157,113 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
           }
           
         })
-      })}
+      })} */}
 
-      {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
+      {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}    
+      <Content worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE} animatedPosition={animatedPosition}/>
       
     </Canvas>
       
   );
 }
 
-function Content() {
+function Content({ worldMap, BLOCK_SIZE, MAP_SIZE, animatedPosition }) {
   const camera = useRef()
   const controls = useRef()
   const { size, setDefaultCamera } = useThree()
-  useEffect(() => void setDefaultCamera(camera.current), [camera, setDefaultCamera])
-  useRender(() => controls.current.update())
+  useEffect(() => {
+    void setDefaultCamera(camera.current);
+
+    
+    console.log("camera.current:", camera.current.lookAt);
+  }, [camera, setDefaultCamera])
+  // useRender(() => controls.current.update())
+
+  const aspect = window.innerWidth / window.innerHeight;
+  const d = 10;  
+
+
+  // let cameraProps = {
+  //   left: - d * aspect,
+  //   right: d * aspect,
+  //   top: d,
+  //   bottom: -d,
+  //   near: 1,
+  //   far: 1000
+  // };
+  // console.log("cameraProps:",cameraProps);
+  
   return (
     <>
-      <perspectiveCamera
+      <animated.orthographicCamera
         ref={camera}
-        aspect={size.width / size.height}
-        radius={(size.width + size.height) / 4}
-        fov={55}
-        position={[0, 0, 5]}
-        onUpdate={self => self.updateProjectionMatrix()}
+        
+        position={animatedPosition.position}
+        onUpdate={self => {
+
+          self.left = -d * aspect
+          self.right = d * aspect
+          self.top = d
+          self.bottom = -d
+          self.near = 1
+          self.far = 1000
+
+          
+          self.lookAt( 0,0,0 ); // or the origin  
+              
+          self.updateProjectionMatrix();
+
+        }}
       />
       {camera.current && (
-        <group>
-          
-        </group>
+      <group>
+        <ambientLight intensity={0.9}/>
+        <directionalLight 
+          intensity={0.9} 
+          color={0xffffff} 
+          position={[100, 200, -100]}
+          castShadow={true}
+          shadow-camera-near={0.5}
+          shadow-camera-far={500}
+          shadow-camera-left={-8}
+          shadow-camera-bottom={-8}
+          shadow-camera-top={8}
+          shadow-camera-right={8}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
+        
+        {/* <Plane 
+          position={[0+(MAP_SIZE - BLOCK_SIZE)/2,-0.7,0+(MAP_SIZE - BLOCK_SIZE)/2]}
+          BLOCK_SIZE={BLOCK_SIZE}
+          MAP_SIZE={MAP_SIZE}
+          />   */}
+
+        {/* <Wall2 tex_url='/assets/atlas.png'></Wall2> */}
+
+        {worldMap && worldMap.map((column, columnIndex)=>{
+          return column.map((block, rowIndex)=>{
+            switch (block.type){
+
+              case 'wall': {
+                return <Wall key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} size={block.size} BLOCK_SIZE={BLOCK_SIZE}/>
+              }
+
+              case 'floor': {
+                return <Floor key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} size={block.size} rotation={block.rotation} BLOCK_SIZE={BLOCK_SIZE}/>
+              }
+              default: {
+                return null;
+              }
+            }
+            
+          })
+        })}
+
+        {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
+      </group>  
+        
+        
       )}
     </>
   )
