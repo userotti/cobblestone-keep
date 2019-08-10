@@ -1,5 +1,5 @@
-import { Canvas } from 'react-three-fiber';
-import React, { useState, useEffect, useMemo } from 'react';
+import { Canvas, useThree, useRender } from 'react-three-fiber';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSpring, animated } from 'react-spring/three'
 import * as THREE from 'three';
 
@@ -17,7 +17,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
   const d = 5;  
 
 
-  const [position, setPosition] = useState([0,0, 0]); 
+  const [position, setPosition] = useState([0,0,0]); 
   const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
     position:position
   }));
@@ -83,6 +83,7 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         near: 1,
         far: 1000
       }}
+      position={animatedPosition}
       onCreated={({gl, camera, scene}) => {
 
         gl.shadowMap.enabled = true;
@@ -96,18 +97,18 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
         
       }}
       >
-      <ambientLight intensity={0.8}/>
+      <ambientLight intensity={0.9}/>
       <directionalLight 
-        intensity={0.8} 
+        intensity={0.9} 
         color={0xffffff} 
         position={[100, 200, -100]}
         castShadow={true}
         shadow-camera-near={0.5}
         shadow-camera-far={500}
-        shadow-camera-left={-25}
-        shadow-camera-bottom={-25}
-        shadow-camera-top={25}
-        shadow-camera-right={25}
+        shadow-camera-left={-8}
+        shadow-camera-bottom={-8}
+        shadow-camera-top={8}
+        shadow-camera-right={8}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
@@ -146,19 +147,27 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
   );
 }
 
-
-function Wall2({ tex_url }) {
-  // const loader = new THREE.TextureLoader().load(tex_url);
-  console.log()
-  const texture = useMemo(() => new THREE.TextureLoader().load(tex_url), [tex_url])
-  
-  console.log("texture: ", texture);
-  return <mesh>
-      <planeBufferGeometry 
-        attach="geometry" 
-        args={[1, 1]} />
-      <meshLambertMaterial attach="material" transparent>
-        <primitive attach="map" object={texture} />
-      </meshLambertMaterial>
-    </mesh>
+function Content() {
+  const camera = useRef()
+  const controls = useRef()
+  const { size, setDefaultCamera } = useThree()
+  useEffect(() => void setDefaultCamera(camera.current), [camera, setDefaultCamera])
+  useRender(() => controls.current.update())
+  return (
+    <>
+      <perspectiveCamera
+        ref={camera}
+        aspect={size.width / size.height}
+        radius={(size.width + size.height) / 4}
+        fov={55}
+        position={[0, 0, 5]}
+        onUpdate={self => self.updateProjectionMatrix()}
+      />
+      {camera.current && (
+        <group>
+          
+        </group>
+      )}
+    </>
+  )
 }

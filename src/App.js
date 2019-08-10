@@ -67,10 +67,10 @@ function App() {
     },
 
     'texture_wall_sides': {
-      url: '/assets/walls/bricks-sides-basic.png',
+      url: '/assets/walls/bricks_shaded.png',
     },
     'texture_wall_top': {
-      url: '/assets/walls/bricks-top.png',
+      url: '/assets/walls/bricks-top2.png',
     },
     'texture_floor_stones': {
       url: '/assets/walls/floor-stones.png',
