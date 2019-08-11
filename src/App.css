@@ -12,3 +12,7 @@ body,
   background-color: #000;
 }
 
+.special {
+  padding: 50px;
+  background-color: #ff0;
+}
