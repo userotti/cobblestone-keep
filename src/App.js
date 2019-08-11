@@ -9,49 +9,6 @@ import GameScene from './components/three/scenes/GameScene.js';
 const BLOCK_SIZE = 1;
 const MAP_SIZE = 10;
 
-function createMap(size, assets) {
-
-    console.log("assets:", assets);
-    return [...Array(size).keys()].map((itemCol, colIndex)=>{
-      return [...Array(size).keys()].map((itemRow, rowIndex)=>{
-
-        return Math.random() > 0.7 ? {
-          type: 'wall',
-          textures: {
-            'texture_wall_sides': assets['texture_wall_sides'],
-            'texture_wall_top': assets['texture_wall_top']
-          },
-          position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
-          size: new THREE.Vector3(1,1.333,1) 
-        } : {
-          type: 'floor',
-          textures: {
-            'texture_floor_stones': assets['texture_floor_stones'],
-          },
-          position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
-          size: new THREE.Vector2(1,1),
-          rotation: new THREE.Euler(0, 0, 0),
-        } 
-        // Import from GLTF file format 
-        // return Math.random() > 0.8 ? {
-        //   threeObjects: [...grey_brick_wall_three_gltf.scene.clone().children],
-        //   rotation: new THREE.Euler(0, (-Math.PI/2), 0),
-        //   position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
-          
-        //   castShadow: true,
-        //   receiveShadow: true
-        // } : null
-        
-        //  {
-        //   threeObjects: [...brown_floor_three_gltf.scene.clone().children],
-        //   rotation: new THREE.Euler(0, (-Math.PI/2), 0),
-        //   position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
-        //   castShadow:false,
-        //   receiveShadow:true
-        // }
-      })
-    })
-  }
 
 function App() {
 
@@ -75,26 +32,8 @@ function App() {
     'texture_floor_stones': {
       url: '/assets/walls/floor-stones.png',
     },
-    // 'texture_wall_brick_px': {
-    //   url: '/assets/walls/brick_px.png',
-    // },
-    // 'texture_wall_brick_nx': {
-    //   url: '/assets/walls/brick_nx.png',
-    // },
-    // 'texture_wall_brick_py': {
-    //   url: '/assets/walls/brick_py.png',
-    // },
-    // 'texture_wall_brick_ny': {
-    //   url: '/assets/walls/brick_ny.png',
-    // },
-    // 'texture_wall_brick_pz': {
-    //   url: '/assets/walls/brick_pz.png',
-    // },
-    // 'texture_wall_brick_nz': {
-    //   url: '/assets/walls/brick_nz.png',
-    // }
-
   });
+
   const [worldMap, setWorldMap] = useState(null);
   
   useEffect(() => {
@@ -114,8 +53,7 @@ function App() {
     })
 
   }, [setWorldMap, assets])
- 
-
+  
   return <GameScene worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}/>
 }
 
@@ -159,6 +97,31 @@ function getGLTFLoadingPromises(assets) {
     })
   })
 }  
+
+
+function createMap(size, assets) {
+  return [...Array(size).keys()].map((itemCol, colIndex)=>{
+    return [...Array(size).keys()].map((itemRow, rowIndex)=>{
+      return Math.random() > 0.7 ? {
+        type: 'wall',
+        textures: {
+          'texture_wall_sides': assets['texture_wall_sides'],
+          'texture_wall_top': assets['texture_wall_top']
+        },
+        position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+        size: new THREE.Vector3(1,1.333,1) 
+      } : {
+        type: 'floor',
+        textures: {
+          'texture_floor_stones': assets['texture_floor_stones'],
+        },
+        position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+        size: new THREE.Vector2(1,1),
+        rotation: new THREE.Euler(0, 0, 0),
+      } 
+    })
+  })
+}
 
 export default App;
 

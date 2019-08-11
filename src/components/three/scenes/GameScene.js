@@ -1,13 +1,12 @@
-import { Canvas, useThree, useRender } from 'react-three-fiber';
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useSpring, animated } from 'react-spring/three'
+import React, { useState, useEffect } from 'react';
+import { useSpring } from 'react-spring/three'
 import * as THREE from 'three';
 
-import Blokkie from '../map/Blokkie.js';
-import Plane from '../map/Plane.js';
-import Player from '../map/Player.js';
-import Wall from '../map/wall.js';
-import Floor from '../map/floor.js';
+import Wall from '../map/Wall.js';
+import Floor from '../map/Floor.js';
+import Camera from '../Camera.js';
+import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
+
 
 function getCurrentAngle(position){
   return Math.atan2(position[2], position[0]);
@@ -26,21 +25,17 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
   const cameraRotateAngleAmout = Math.PI/4;
   const cameraStartingDistanceVector = new THREE.Vector3(40,40,40);
 
-
   const [position, setPosition] = useState(cameraStartingDistanceVector.toArray()); 
-  
   const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
     position:position
   }));
 
-  
-  
-  // // Add event listeners
+
+  // Add event listeners
   useEffect(() => {
 
     // // If pressed key is our target key then set to true
     const downHandler = ({ key }) => {
-
       if (key === 'ArrowRight') {
         const currentAngle = getCurrentAngle(position);
         const newAngle = currentAngle + cameraRotateAngleAmout;
@@ -62,82 +57,18 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
           position:p
         })
       }
-
-      // if (key === 'ArrowUp') {
-      //   let p =[position[0],position[1],position[2]];
-      //   setPosition(p);
-      //   setAnimatedPosition({
-      //     position:p
-      //   })
-      // }
-
-      // if (key === 'ArrowDown') {
-      //   let p =[position[0],position[1],position[2]];
-      //   setPosition(p);
-      //   setAnimatedPosition({
-      //     position:p
-      //   })
-      // }
     }
 
     window.addEventListener('keydown', downHandler);
-
-    // Remove event listeners on cleanup
     return () => {
       window.removeEventListener('keydown', downHandler);
     };
   }, [position, setAnimatedPosition, BLOCK_SIZE, worldMap, cameraStartingDistanceVector, cameraRotateAngleAmout]); // Empty array ensures that effect is only run on mount and unmount
 
   
-  return (
-    <Canvas
-      onCreated={({gl, camera, scene}) => {
+  return (<ThreeFibreHTMLCanvas>
+      <Camera worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE} animatedPosition={animatedPosition}>
 
-        gl.shadowMap.enabled = true;
-        gl.shadowMap.type = THREE.PCFSoftShadowMap;
-      
-      }}>
-
-      <Content worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE} animatedPosition={animatedPosition}/>
-      
-    </Canvas>
-      
-  );
-}
-
-function Content({ worldMap, BLOCK_SIZE, MAP_SIZE, animatedPosition }) {
-  const camera = useRef()
-  const controls = useRef()
-  const { size, setDefaultCamera } = useThree()
-  useEffect(() => {
-    void setDefaultCamera(camera.current);
-  }, [camera, setDefaultCamera])
-
-  const aspect = window.innerWidth / window.innerHeight;
-  const d = 10;  
-  
-  return (
-    <>
-      <animated.orthographicCamera
-        ref={camera}
-        
-        position={animatedPosition.position}
-        onUpdate={self => {
-
-          self.left = -d * aspect
-          self.right = d * aspect
-          self.top = d
-          self.bottom = -d
-          self.near = 1
-          self.far = 1000
-          
-          self.lookAt( 0,0,0 ); // or the origin  
-          self.updateProjectionMatrix();
-
-        }}
-      />
-      {camera.current && (
-      <group>
         <ambientLight intensity={0.9}/>
         <directionalLight 
           intensity={0.9} 
@@ -172,12 +103,7 @@ function Content({ worldMap, BLOCK_SIZE, MAP_SIZE, animatedPosition }) {
             
           })
         })}
-
-        {/* <Player animatedPosition={animatedPosition} size={0.2} BLOCK_SIZE={BLOCK_SIZE}/> */}
-      </group>  
-        
-        
-      )}
-    </>
-  )
+      </Camera>
+    </ThreeFibreHTMLCanvas>
+  );
 }
