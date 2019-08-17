@@ -5,10 +5,11 @@ import useStore from '../../store';
 
 function Camera({ worldMap, BLOCK_SIZE, MAP_SIZE, animatedPosition, children }) {
   
-  const cameraSize = useStore(state => state.cameraSize);
+  const { cameraSize, cameraAspect } = useStore();
+  
   const camera = useRef()
   const { setDefaultCamera } = useThree()
-  const aspect = window.innerWidth / window.innerHeight;
+  
   
 
   useEffect(() => {
@@ -23,8 +24,8 @@ function Camera({ worldMap, BLOCK_SIZE, MAP_SIZE, animatedPosition, children }) 
         position={animatedPosition.position}
         onUpdate={self => {
 
-          self.left = -cameraSize * aspect
-          self.right = cameraSize * aspect
+          self.left = -cameraSize * cameraAspect
+          self.right = cameraSize * cameraAspect
           self.top = cameraSize
           self.bottom = -cameraSize
           self.near = 1

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring } from 'react-spring/three'
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-import Wall from '../map/Wall.js';
-import Floor from '../map/Floor.js';
+import Wall from '../map/wall.js';
+import Floor from '../map/floor.js';
 import Camera from '../Camera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 
@@ -20,7 +21,7 @@ function getNewPositionXZ(newAngle, hypotenuse){
   }
 }
 
-export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
+export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
 
   const cameraRotateAngleAmout = Math.PI/4;
   const cameraStartingDistanceVector = new THREE.Vector3(40,40,40);
@@ -30,6 +31,25 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
     position:position
   }));
 
+  const [worldMap, setWorldMap] = useState(null);
+  
+  useEffect(() => {
+
+    const loadingAssetPromises = [
+      ...getGLTFLoadingPromises(assets),
+      ...getPNGLoadingPromises(assets),
+    ]; 
+    
+    Promise.all(loadingAssetPromises).then((assetData)=>{
+      setWorldMap(createMap(MAP_SIZE, BLOCK_SIZE, assetData.reduce((total, item, index)=>{
+        return {
+          ...total,
+          ...item
+        }  
+      }, {}), ));
+    })
+
+  }, [setWorldMap, assets, MAP_SIZE, BLOCK_SIZE])
 
   // Add event listeners
   useEffect(() => {
@@ -106,4 +126,70 @@ export default function GameScene({ worldMap, BLOCK_SIZE, MAP_SIZE }) {
       </Camera>
     </ThreeFibreHTMLCanvas>
   );
+}
+
+
+function getPNGLoadingPromises(assets) {
+  const textureLoader = new THREE.TextureLoader();
+
+  return Object.keys(assets).filter((assetKey)=>assets[assetKey].url.endsWith('png')).map((assetKey, index)=>{
+    return new Promise((resolve, reject)=>{
+      textureLoader.load(assets[assetKey].url,
+        function ( texture ) {
+          resolve({[assetKey]: texture});
+        },
+        function ( xhr ) {
+          console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' + assetKey );
+        },
+        function ( error ) {
+          console.log( 'An error happened' + assetKey, error );
+        }
+      );
+    })
+  })
+}  
+
+function getGLTFLoadingPromises(assets) {
+  const GLTFloader = new GLTFLoader();
+
+  return Object.keys(assets).filter((assetKey)=>assets[assetKey].url.endsWith('gltf')).map((assetKey, index)=>{
+    return new Promise((resolve, reject)=>{
+      GLTFloader.load(assets[assetKey].url,
+        function ( gltf ) {
+          resolve({[assetKey]: gltf});
+        },
+        function ( xhr ) {
+          console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' + assetKey );
+        },
+        function ( error ) {
+          console.log( 'An error happened' + assetKey, error );
+        }
+      );
+    })
+  })
+}  
+
+
+function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
+  return [...Array(MAP_SIZE).keys()].map((itemCol, colIndex)=>{
+    return [...Array(MAP_SIZE).keys()].map((itemRow, rowIndex)=>{
+      return Math.random() > 0.7 ? {
+        type: 'wall',
+        textures: {
+          'texture_wall_sides': assets['texture_wall_sides'],
+          'texture_wall_top': assets['texture_wall_top']
+        },
+        position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+        size: new THREE.Vector3(1,1.333,1) 
+      } : {
+        type: 'floor',
+        textures: {
+          'texture_floor_stones': assets['texture_floor_stones'],
+        },
+        position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+        size: new THREE.Vector2(1,1),
+        rotation: new THREE.Euler(0, 0, 0),
+      } 
+    })
+  })
 }
