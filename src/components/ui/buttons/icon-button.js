@@ -1,11 +1,11 @@
 
 import styled from 'styled-components';
 
-export default styled.button`
+export default styled.div`
   background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
   border: 0;
+  cursor: pointer;
 `

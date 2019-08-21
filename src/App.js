@@ -3,15 +3,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
-
 import GameScene from './components/three/scenes/GameScene.js';
-import AddSvg from './components/ui/icons/add.js';
-import RemoveSvg from './components/ui/icons/remove.js';
-import RotateLeftSvg from './components/ui/icons/rotate-left.js';
-import RotateRightSvg from './components/ui/icons/rotate-right.js';
-import IconButton from './components/ui/buttons/icon-button.js';
-
-
+import CameraControls from './components/ui/camera-controls';
 
 const BLOCK_SIZE = 1;
 const MAP_SIZE = 10;
@@ -67,36 +60,17 @@ function Home() {
   });
 
   
-  const { canvasContainerSizeInPixels, increaseCameraSize, decreaseCameraSize, UIButtonsColor } = useStore();  
+  const { canvasContainerSizeInPixels } = useStore();  
   console.log("canvasContainerSizeInPixels:", canvasContainerSizeInPixels);
 
   return <div>
-    <h2>Home</h2>
-    <div>
-      <Button onClick={()=>{
-        console.log("increaseCameraSize: ", increaseCameraSize(1));
-      }}>Click me!</Button>
       
-      
-      
-      
-      <CanvasContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
-        
+      <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
         <GameScene assets={assets} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}/>
-        <CanvasUI>
-
-          <IconButton onClick={()=>{decreaseCameraSize(1)}}>
-            <AddIcon color={UIButtonsColor}></AddIcon>
-          </IconButton>
-          <IconButton onClick={()=>{increaseCameraSize(1)}}>
-            <RemoveIcon color={UIButtonsColor}  ></RemoveIcon>
-          </IconButton>
-          <RotateLeftIcon color={UIButtonsColor}></RotateLeftIcon>
-          <RotateRightIcon color={UIButtonsColor}></RotateRightIcon>
-        </CanvasUI>
-      </CanvasContainer>
-    </div>
-
+        <CameraControls/>
+        
+      </SceneContainer>
+    
   </div>;
 }
 
@@ -112,7 +86,7 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const CanvasContainer = styled.div`
+const SceneContainer = styled.div`
   position: relative;
   width: ${(props)=>props.width}px;
   height: ${(props)=>props.height}px;
@@ -120,33 +94,6 @@ const CanvasContainer = styled.div`
   margin: 1rem;
 `
 
-const CanvasUI = styled.div`
-  background: transparent;
-  position: absolute;
-  top: 0;
-  right: 0;
-`
-
-const AddIcon = styled(AddSvg)`
-  width: 40px;
-  height: 40px;
-  padding: 0.5rem;
-`
-const RemoveIcon = styled(RemoveSvg)`
-  width: 40px;
-  height: 40px;
-  padding: 0.5rem;
-`
-const RotateLeftIcon = styled(RotateLeftSvg)`
-  width: 40px;
-  height: 40px;
-  padding: 0.5rem;
-`
-const RotateRightIcon = styled(RotateRightSvg)`
-  width: 40px;
-  height: 40px;
-  padding: 0.5rem;
-`
 
 function About() {
   return <h2>About</h2>;

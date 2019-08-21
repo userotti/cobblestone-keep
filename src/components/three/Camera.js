@@ -1,33 +1,39 @@
 import { useThree } from 'react-three-fiber';
 import React, { useEffect, useRef } from 'react';
-import { animated } from 'react-spring/three'
+import { useSpring , animated } from 'react-spring/three'
 import useStore from '../../store';
 
-function Camera({ worldMap, BLOCK_SIZE, MAP_SIZE, animatedPosition, children }) {
+function Camera({ worldMap, BLOCK_SIZE, MAP_SIZE, children }) {
   
-  const { cameraSize, cameraAspect } = useStore();
+  const { cameraAspect, previousCameraPosition, cameraPosition, previousCameraSize, cameraSize} = useStore();
+  
+  console.log("previousCameraSize: ", previousCameraSize);
+  console.log("cameraSize: ", cameraSize);
   
   const camera = useRef()
   const { setDefaultCamera } = useThree()
   
+  const animatedPostion = useSpring({ position: cameraPosition, from: {position: previousCameraPosition}})
+  const animatedCameraSize = useSpring({ size: cameraSize, from: {size: previousCameraSize}})
   
 
   useEffect(() => {
     void setDefaultCamera(camera.current);
   }, [camera, setDefaultCamera])
-
   
   return (
     <>
       <animated.orthographicCamera
         ref={camera}
-        position={animatedPosition.position}
+        position={animatedPostion.position}
+
+        left={animatedCameraSize.size.interpolate((value)=>-value * cameraAspect)}
+        right={animatedCameraSize.size.interpolate((value)=>value * cameraAspect)}
+        top={animatedCameraSize.size.interpolate((value)=>value)}
+        bottom={animatedCameraSize.size.interpolate((value)=>-value)}
+
         onUpdate={self => {
 
-          self.left = -cameraSize * cameraAspect
-          self.right = cameraSize * cameraAspect
-          self.top = cameraSize
-          self.bottom = -cameraSize
           self.near = 1
           self.far = 1000
           

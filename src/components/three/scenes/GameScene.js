@@ -87,7 +87,7 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
 
   
   return (<ThreeFibreHTMLCanvas>
-      <Camera worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE} animatedPosition={animatedPosition}>
+      <Camera worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}>
 
         <ambientLight intensity={0.9}/>
         <directionalLight 
