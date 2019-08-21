@@ -5,10 +5,11 @@ import useStore from '../../store';
 
 function Camera({ worldMap, BLOCK_SIZE, MAP_SIZE, children }) {
   
-  const { cameraAspect, previousCameraPosition, cameraPosition, previousCameraSize, cameraSize} = useStore();
-  
-  console.log("previousCameraSize: ", previousCameraSize);
-  console.log("cameraSize: ", cameraSize);
+  const cameraAspect = useStore(state => state.cameraAspect);
+  const previousCameraPosition = useStore(state => state.previousCameraPosition);
+  const cameraPosition = useStore(state => state.cameraPosition);
+  const previousCameraSize = useStore(state => state.previousCameraSize);
+  const cameraSize = useStore(state => state.cameraSize);
   
   const camera = useRef()
   const { setDefaultCamera } = useThree()

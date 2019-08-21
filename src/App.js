@@ -17,8 +17,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Header />
-
+        
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
@@ -60,7 +59,7 @@ function Home() {
   });
 
   
-  const { canvasContainerSizeInPixels } = useStore();  
+  const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
   console.log("canvasContainerSizeInPixels:", canvasContainerSizeInPixels);
 
   return <div>

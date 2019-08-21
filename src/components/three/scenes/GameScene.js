@@ -9,28 +9,10 @@ import Camera from '../Camera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 
 
-function getCurrentAngle(position){
-  return Math.atan2(position[2], position[0]);
-}
-
-function getNewPositionXZ(newAngle, hypotenuse){
-  
-  return {
-    x: Math.cos(newAngle)*hypotenuse,
-    z: Math.sin(newAngle)*hypotenuse,
-  }
-}
 
 export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
 
-  const cameraRotateAngleAmout = Math.PI/4;
-  const cameraStartingDistanceVector = new THREE.Vector3(40,40,40);
-
-  const [position, setPosition] = useState(cameraStartingDistanceVector.toArray()); 
-  const [animatedPosition, setAnimatedPosition] = useSpring(() => ({
-    position:position
-  }));
-
+  
   const [worldMap, setWorldMap] = useState(null);
   
   useEffect(() => {
@@ -57,25 +39,11 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
     // // If pressed key is our target key then set to true
     const downHandler = ({ key }) => {
       if (key === 'ArrowRight') {
-        const currentAngle = getCurrentAngle(position);
-        const newAngle = currentAngle + cameraRotateAngleAmout;
-        const newPosition = getNewPositionXZ(newAngle, Math.hypot(cameraStartingDistanceVector.x, cameraStartingDistanceVector.z));  
-        let p =[newPosition.x,40,newPosition.z];
-        setPosition(p);
-        setAnimatedPosition({
-          position:p
-        })
+       
       }
 
       if (key === 'ArrowLeft') {
-        const currentAngle = getCurrentAngle(position);
-        const newAngle = currentAngle - cameraRotateAngleAmout;
-        const newPosition = getNewPositionXZ(newAngle, Math.hypot(cameraStartingDistanceVector.x, cameraStartingDistanceVector.z));  
-        let p =[newPosition.x,40,newPosition.z];
-        setPosition(p);
-        setAnimatedPosition({
-          position:p
-        })
+       
       }
     }
 
@@ -83,7 +51,7 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
     return () => {
       window.removeEventListener('keydown', downHandler);
     };
-  }, [position, setAnimatedPosition, BLOCK_SIZE, worldMap, cameraStartingDistanceVector, cameraRotateAngleAmout]); // Empty array ensures that effect is only run on mount and unmount
+  }, [BLOCK_SIZE, worldMap]); // Empty array ensures that effect is only run on mount and unmount
 
   
   return (<ThreeFibreHTMLCanvas>

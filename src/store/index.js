@@ -6,7 +6,7 @@ const cameraStartingPosition = new THREE.Vector3(40,40,40);
 
 const [useStore] = create(set => ({
   cameraAspect: 4/3,
-  canvasContainerSizeInPixels: [1024, 768], 
+  canvasContainerSizeInPixels: [800, 600], 
 
   cameraStartingDistanceVector: cameraStartingPosition,
   previousCameraPosition: cameraStartingPosition.toArray(),
