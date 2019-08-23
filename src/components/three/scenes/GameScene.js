@@ -16,7 +16,7 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
   const [worldMap, setWorldMap] = useState(null);
   
   useEffect(() => {
-
+    
     const loadingAssetPromises = [
       ...getGLTFLoadingPromises(assets),
       ...getPNGLoadingPromises(assets),
@@ -32,27 +32,6 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
     })
 
   }, [setWorldMap, assets, MAP_SIZE, BLOCK_SIZE])
-
-  // Add event listeners
-  useEffect(() => {
-
-    // // If pressed key is our target key then set to true
-    const downHandler = ({ key }) => {
-      if (key === 'ArrowRight') {
-       
-      }
-
-      if (key === 'ArrowLeft') {
-       
-      }
-    }
-
-    window.addEventListener('keydown', downHandler);
-    return () => {
-      window.removeEventListener('keydown', downHandler);
-    };
-  }, [BLOCK_SIZE, worldMap]); // Empty array ensures that effect is only run on mount and unmount
-
   
   return (<ThreeFibreHTMLCanvas>
       <Camera worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}>
@@ -141,20 +120,28 @@ function getGLTFLoadingPromises(assets) {
 function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
   return [...Array(MAP_SIZE).keys()].map((itemCol, colIndex)=>{
     return [...Array(MAP_SIZE).keys()].map((itemRow, rowIndex)=>{
+      console.log("colIndex: rowIndex", colIndex + ': '+ rowIndex);
+
+      // console.log("[MAP_SIZE/2-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,MAP_SIZE/2-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]: ", [MAP_SIZE/2-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,MAP_SIZE/2-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]);
+      
+      
+      const positionVector = new THREE.Vector3(colIndex*BLOCK_SIZE, 0, rowIndex*BLOCK_SIZE);
+      const offset = new THREE.Vector3(-(MAP_SIZE-1)/2, 0, -(MAP_SIZE-1)/2);
+
       return Math.random() > 0.7 ? {
         type: 'wall',
         textures: {
           'texture_wall_sides': assets['texture_wall_sides'],
           'texture_wall_top': assets['texture_wall_top']
         },
-        position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+        position: positionVector.clone().add(offset),
         size: new THREE.Vector3(1,1.333,1) 
       } : {
         type: 'floor',
         textures: {
           'texture_floor_stones': assets['texture_floor_stones'],
         },
-        position: new THREE.Vector3(...[-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]),
+        position: positionVector.clone().add(offset),
         size: new THREE.Vector2(1,1),
         rotation: new THREE.Euler(0, 0, 0),
       } 

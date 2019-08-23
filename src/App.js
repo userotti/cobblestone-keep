@@ -7,7 +7,7 @@ import GameScene from './components/three/scenes/GameScene.js';
 import CameraControls from './components/ui/camera-controls';
 
 const BLOCK_SIZE = 1;
-const MAP_SIZE = 10;
+const MAP_SIZE = 4;
 
 
 function App() {
