@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSpring } from 'react-spring/three'
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
@@ -7,11 +6,14 @@ import Wall from '../map/wall.js';
 import Floor from '../map/floor.js';
 import Camera from '../Camera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
+import useStore from '../../../store';
 
 
 
 export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
 
+  const block_size = useStore(state => state.block_size);
+  const map_size = useStore(state => state.map_size);
   
   const [worldMap, setWorldMap] = useState(null);
   
@@ -23,7 +25,7 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
     ]; 
     
     Promise.all(loadingAssetPromises).then((assetData)=>{
-      setWorldMap(createMap(MAP_SIZE, BLOCK_SIZE, assetData.reduce((total, item, index)=>{
+      setWorldMap(createMap(map_size, block_size, assetData.reduce((total, item, index)=>{
         return {
           ...total,
           ...item
@@ -31,10 +33,10 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
       }, {}), ));
     })
 
-  }, [setWorldMap, assets, MAP_SIZE, BLOCK_SIZE])
+  }, [setWorldMap, assets, map_size, block_size])
   
   return (<ThreeFibreHTMLCanvas>
-      <Camera worldMap={worldMap} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}>
+      <Camera worldMap={worldMap}>
 
         <ambientLight intensity={0.9}/>
         <directionalLight 
@@ -57,11 +59,11 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
             switch (block.type){
 
               case 'wall': {
-                return <Wall key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} size={block.size} BLOCK_SIZE={BLOCK_SIZE}/>
+                return <Wall key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position}/>
               }
 
               case 'floor': {
-                return <Floor key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} size={block.size} rotation={block.rotation} BLOCK_SIZE={BLOCK_SIZE}/>
+                return <Floor key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} rotation={block.rotation}/>
               }
               default: {
                 return null;

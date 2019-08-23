@@ -2,8 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 
 export default function Wall({ textures, position }) {
-  // textures
-  // position
+  
   const castShadow = true;
   const receiveShadow = true;
     

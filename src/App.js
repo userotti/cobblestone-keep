@@ -6,9 +6,6 @@ import useStore from './store';
 import GameScene from './components/three/scenes/GameScene.js';
 import CameraControls from './components/ui/camera-controls';
 
-const BLOCK_SIZE = 1;
-const MAP_SIZE = 4;
-
 
 function App() {
 
@@ -28,7 +25,6 @@ function App() {
 }
 
 
-
 export default App;
 
 
@@ -36,38 +32,14 @@ export default App;
 
 function Home() {
 
-  const [assets, setAssets] = useState({
-    'grey_brick_wall_three_gltf': {
-      url: '/assets/walls_on_ground.gltf',
-    },
-    'brown_floor_three_gltf': {
-      url: '/assets/tiled_floor.gltf',
-    },
-    'minecraft_atlas': {
-      url: '/assets/atlas.png',
-    },
-
-    'texture_wall_sides': {
-      url: '/assets/walls/bricks_shaded.png',
-    },
-    'texture_wall_top': {
-      url: '/assets/walls/bricks-top2.png',
-    },
-    'texture_floor_stones': {
-      url: '/assets/walls/floor-stones.png',
-    },
-  });
-
-  
+  const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
-  console.log("canvasContainerSizeInPixels:", canvasContainerSizeInPixels);
-
+  
   return <div>
       
       <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
-        <GameScene assets={assets} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}/>
+        <GameScene assets={assets}/>
         <CameraControls/>
-        
       </SceneContainer>
     
   </div>;
@@ -123,21 +95,5 @@ function Topics({ match }) {
         render={() => <h3>Please select a topic.</h3>}
       />
     </div>
-  );
-}
-
-function Header() {
-  return (
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <Link to="/topics">Topics</Link>
-      </li>
-    </ul>
   );
 }

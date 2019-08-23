@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import * as THREE from 'three';
 
 export default function Wall({ textures, position, size, rotation }) {
