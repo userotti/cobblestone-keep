@@ -17,6 +17,7 @@ function Camera({ children }) {
   const cameraOrthographicAngle = useStore(state => state.cameraOrthographicAngle);
   
   const newCameraPosition = calculateCameraPosition(cameraFocusPointPosition, cameraFocusPointPositionOffset, cameraOrthographicAngle);
+  console.log("newCameraPosition: ", newCameraPosition);
   const animatedPostion = useSpring({
     to: { 
       position: newCameraPosition,

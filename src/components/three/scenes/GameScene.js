@@ -34,7 +34,7 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
     })
 
   }, [setWorldMap, assets, map_size, block_size])
-  
+  console.log("asd")
   return (<ThreeFibreHTMLCanvas>
       <Camera worldMap={worldMap}>
 

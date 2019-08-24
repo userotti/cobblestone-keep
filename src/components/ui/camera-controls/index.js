@@ -28,8 +28,6 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
   </CameraControlsContainer>)
 }
 
-
-
 const CameraControlsContainer = styled.div`
   background: transparent;
   display: flex;

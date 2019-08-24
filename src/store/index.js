@@ -11,7 +11,7 @@ const [useStore] = create(set => ({
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
   
   block_size: 1,
-  map_size: 18,
+  map_size: 7,
   assets: {
     'grey_brick_wall_three_gltf': {
       url: '/assets/walls_on_ground.gltf',
@@ -48,6 +48,7 @@ const [useStore] = create(set => ({
   cameraOrthographicAngle: 0,
   cameraVisibleRadius: 2.5,
   
+  setCameraFocusPointPosition: (newPostionArray) => set(state=>({cameraFocusPointPosition: newPostionArray})),
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
   increaseCameraSize: (amount) => set(state=>({cameraSize: state.cameraSize + amount})),
   rotateCamera: (amount) => set(state=>({cameraOrthographicAngle: state.cameraOrthographicAngle + amount}))
