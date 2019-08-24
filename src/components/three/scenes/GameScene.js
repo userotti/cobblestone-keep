@@ -122,14 +122,8 @@ function getGLTFLoadingPromises(assets) {
 function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
   return [...Array(MAP_SIZE).keys()].map((itemCol, colIndex)=>{
     return [...Array(MAP_SIZE).keys()].map((itemRow, rowIndex)=>{
-      console.log("colIndex: rowIndex", colIndex + ': '+ rowIndex);
-
-      // console.log("[MAP_SIZE/2-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,MAP_SIZE/2-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]: ", [MAP_SIZE/2-(colIndex-MAP_SIZE/2) * BLOCK_SIZE,0,MAP_SIZE/2-(rowIndex-MAP_SIZE/2) * BLOCK_SIZE]);
-      
-      
       const positionVector = new THREE.Vector3(colIndex*BLOCK_SIZE, 0, rowIndex*BLOCK_SIZE);
       const offset = new THREE.Vector3(-(MAP_SIZE-1)/2, 0, -(MAP_SIZE-1)/2);
-
       return Math.random() > 0.7 ? {
         type: 'wall',
         textures: {

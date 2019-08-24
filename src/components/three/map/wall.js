@@ -1,13 +1,22 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
+import useStore from '../../../store';
 
 export default function Wall({ textures, position }) {
   
+  const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition)
+  const cameraVisibleRadius = useStore(state => state.cameraVisibleRadius)
+  
+  
+  const difference = new THREE.Vector3(...cameraFocusPointPosition);
+  difference.sub(position)
+
   const castShadow = true;
   const receiveShadow = true;
     
+  
   return (
-    <group
+    (difference.length() < cameraVisibleRadius) ? <group 
       position={new THREE.Vector3(0,0+(1.333)/2,0)}
     >
       <mesh
@@ -94,6 +103,6 @@ export default function Wall({ textures, position }) {
         </meshLambertMaterial>
       </mesh>
     </group>
-    
+    :null
   )
 }

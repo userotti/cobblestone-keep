@@ -1,12 +1,17 @@
 import create from 'zustand'
 import * as THREE from 'three';
 
+const origin = new THREE.Vector3(0,0,0);
 const cameraStartingPosition = new THREE.Vector3(40,40,40);
+
+const canvasContainerSizeInPixels = [800, 600];
 
 const [useStore] = create(set => ({
 
+  canvasContainerSizeInPixels: canvasContainerSizeInPixels,
+  
   block_size: 1,
-  map_size: 5,
+  map_size: 18,
   assets: {
     'grey_brick_wall_three_gltf': {
       url: '/assets/walls_on_ground.gltf',
@@ -35,30 +40,17 @@ const [useStore] = create(set => ({
   }),
 
 
-  cameraAspect: 4/3,
-  canvasContainerSizeInPixels: [800, 600], 
-  cameraStartingDistanceVector: cameraStartingPosition,
-
-  cameraPosition: cameraStartingPosition.toArray(),
+  cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],
   cameraSize: 6,
 
-  increaseCameraSize: (amount) => set((state) =>{
-    
-    return ({
-      cameraSize: state.cameraSize + amount
-    })
-  }),
-
-  rotateCamera: (amount) => set((state)=>{
-
-    const currentAngle = getCurrentAngle(state.cameraPosition);
-    const newAngle = currentAngle + amount;
-    const newPosition = getNewPositionXZ(newAngle, Math.hypot(state.cameraStartingDistanceVector.x, state.cameraStartingDistanceVector.z));  
-    
-    return ({
-      cameraPosition: [newPosition.x,40,newPosition.z]
-    })
-  }),
+  cameraFocusPointPosition: origin.toArray(),
+  cameraFocusPointPositionOffset: cameraStartingPosition.toArray(),
+  cameraOrthographicAngle: 0,
+  cameraVisibleRadius: 2.5,
+  
+  increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
+  increaseCameraSize: (amount) => set(state=>({cameraSize: state.cameraSize + amount})),
+  rotateCamera: (amount) => set(state=>({cameraOrthographicAngle: state.cameraOrthographicAngle + amount}))
   
     
 }))
@@ -66,15 +58,3 @@ const [useStore] = create(set => ({
 export default useStore;
 
 
-
-function getCurrentAngle(position){
-  return Math.atan2(position[2], position[0]);
-}
-
-function getNewPositionXZ(newAngle, hypotenuse){
-  
-  return {
-    x: Math.cos(newAngle)*hypotenuse,
-    z: Math.sin(newAngle)*hypotenuse,
-  }
-}   

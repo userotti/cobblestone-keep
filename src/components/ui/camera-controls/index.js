@@ -4,9 +4,15 @@ import useStore from '../../../store';
 
 const CameraControls = function({controlsColor, controlsBackgroundColor }){
 
-  const { increaseCameraSize, rotateCamera } = useStore();  
+  const { increaseCameraSize, rotateCamera, increaseCameraVisibleRadius } = useStore();  
 
   return (<CameraControlsContainer controlsBackgroundColor={controlsBackgroundColor}>
+    <IconButton onClick={()=>{increaseCameraVisibleRadius(1)}}>
+      <span> +radius </span>
+    </IconButton>
+    <IconButton onClick={()=>{increaseCameraVisibleRadius(-1)}}>
+      <span> -radius </span>
+    </IconButton>
     <IconButton onClick={()=>{increaseCameraSize(-2)}}>
       <img src="../icons/zoom-in-32x32.png" alt="zoom-in"/>
     </IconButton>
@@ -21,6 +27,7 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
     </IconButton>
   </CameraControlsContainer>)
 }
+
 
 
 const CameraControlsContainer = styled.div`
@@ -42,6 +49,7 @@ const IconButton = styled.div`
   padding: 0.5rem;
   border: 0;
   cursor: pointer;
+  color: white;
 `
 
 export default CameraControls;
