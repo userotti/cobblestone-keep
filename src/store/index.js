@@ -11,7 +11,7 @@ const [useStore] = create(set => ({
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
   
   block_size: 1,
-  map_size: 7,
+  map_size: 8,
   assets: {
     'grey_brick_wall_three_gltf': {
       url: '/assets/walls_on_ground.gltf',

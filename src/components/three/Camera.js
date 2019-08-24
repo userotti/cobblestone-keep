@@ -32,7 +32,8 @@ function Camera({ children }) {
   useEffect(() => {
     void setDefaultCamera(camera.current);
   }, [camera, setDefaultCamera])
-  
+
+
   return (
     <>
       <animated.orthographicCamera
@@ -44,8 +45,32 @@ function Camera({ children }) {
         right={animatedCameraSize.size.interpolate((value)=>value * cameraAspect)}
         top={animatedCameraSize.size.interpolate((value)=>value)}
         bottom={animatedCameraSize.size.interpolate((value)=>-value)}
-
+        near={1}
+        far={1000}
+        
         onUpdate={self => {
+
+          // const x_axis = new THREE.Vector3(1,0,0);
+          // const y_axis = new THREE.Vector3(0,1,0);
+          // const z_axis = new THREE.Vector3(0,0,1);
+          
+          
+          // const xRotation = new THREE.Quaternion().setFromAxisAngle(x_axis, -Math.PI / 4)
+          // const yRotation = new THREE.Quaternion().setFromAxisAngle(y_axis, -Math.atan( - newCameraPosition[1] / Math.sqrt( Math.pow(newCameraPosition[0],2) + Math.pow(newCameraPosition[2],2) ) ))
+          // const zRotation = new THREE.Quaternion().setFromAxisAngle(z_axis, Math.PI / 6 )
+          
+          // self.quaternion.multiply(yRotation);
+          // self.quaternion.set(xRotation.x,xRotation.y,xRotation.z,xRotation.w)
+          // self.quaternion.multiply(yRotation);
+          // self.quaternion.multiply(zRotation);
+          
+          // console.log("quaternion: ", self.quaternion);
+          // self.rotation.order = 'YXZ';
+          // self.rotation.y = - Math.PI / 4;
+          
+          
+          // self.rotation.x = Math.atan( - 1 / Math.sqrt( 2 ) );
+
           self.near = 1
           self.far = 1000
           self.lookAt( ...cameraFocusPointPosition ); // or the origin  
