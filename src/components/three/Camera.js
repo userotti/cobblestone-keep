@@ -4,6 +4,11 @@ import { useSpring , animated } from 'react-spring/three'
 import useStore from '../../store';
 import * as THREE from 'three';
 
+const translate_focus_point = new THREE.Matrix4();
+const translate_distance = new THREE.Matrix4();
+const y_rotate_m = new THREE.Matrix4();
+const x_rotate_m = new THREE.Matrix4();
+
 
 function Camera({ children }) {
   
@@ -13,30 +18,32 @@ function Camera({ children }) {
   const cameraAspect = useStore(state => state.cameraAspect);
   const cameraSize = useStore(state => state.cameraSize);
   const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition);
-  const cameraFocusPointPositionOffset = useStore(state => state.cameraFocusPointPositionOffset);
+  const cameraDistanceFromFocusPoint = useStore(state => state.cameraDistanceFromFocusPoint);
   const cameraOrthographicAngle = useStore(state => state.cameraOrthographicAngle);
   
-  const newCameraPosition = calculateCameraPosition(cameraFocusPointPosition, cameraFocusPointPositionOffset, cameraOrthographicAngle);
-  const animatedPostion = useSpring({
-    to: { 
-      position: newCameraPosition,
-    }, 
-    from: { 
-      poistion: newCameraPosition
-    }}
-  )
-  console.log("newCameraPosition:", newCameraPosition)
-  const animatedAngle = useSpring({
-    to: { 
-      angle: cameraOrthographicAngle,
-    }, 
-    from: { 
-      angle: cameraOrthographicAngle
-    }}
-  )
-  console.log(cameraOrthographicAngle)
-  const animatedCameraSize = useSpring({to: { size: cameraSize}, from:{ size: cameraSize-0.02}})
+  const m = new THREE.Matrix4();
+
+  translate_focus_point.identity().makeTranslation(...cameraFocusPointPosition).transpose();
+  translate_distance.identity().makeTranslation(0,0,cameraDistanceFromFocusPoint).transpose();
+  y_rotate_m.identity().makeRotationY(cameraOrthographicAngle)
+  x_rotate_m.identity().makeRotationX(Math.atan( 1/Math.sqrt(2)))
+
+  m.identity();
+  m.multiply(translate_distance); 
+  m.multiply(x_rotate_m);
+  m.multiply(y_rotate_m);        
+  m.multiply(translate_focus_point);  
   
+  const animatedStuff = useSpring({
+    to: { 
+      matrixElements: m.elements,
+      size: cameraSize
+    }, 
+    from: { 
+      matrixElements: m.elements,
+      size: cameraSize-0.02
+    }}
+  )
 
   useEffect(() => {
     void setDefaultCamera(camera.current);
@@ -47,40 +54,15 @@ function Camera({ children }) {
     <>
       <animated.orthographicCamera
         ref={camera}
-        position={animatedPostion.position}
-        left={animatedCameraSize.size.interpolate((value)=>-value * cameraAspect)}
-        right={animatedCameraSize.size.interpolate((value)=>value * cameraAspect)}
-        top={animatedCameraSize.size.interpolate((value)=>value)}
-        bottom={animatedCameraSize.size.interpolate((value)=>-value)}
+        matrix={animatedStuff.matrixElements}
+        left={animatedStuff.size.interpolate((value)=>-value * cameraAspect)}
+        right={animatedStuff.size.interpolate((value)=>value * cameraAspect)}
+        top={animatedStuff.size.interpolate((value)=>value)}
+        bottom={animatedStuff.size.interpolate((value)=>-value)}
         near={1}
         far={1000}
-        rotation-order={'YXZ'}
-        rotation-y={animatedAngle.angle}
-        rotation-x={Math.atan( - 1 / Math.sqrt( 2 ) )}
         onUpdate={self => {
-
-          // const x_axis = new THREE.Vector3(1,0,0);
-          // const y_axis = new THREE.Vector3(0,1,0);
-          // const z_axis = new THREE.Vector3(0,0,1);
-          
-          
-          // const xRotation = new THREE.Quaternion().setFromAxisAngle(x_axis, -Math.PI / 4)
-          // const yRotation = new THREE.Quaternion().setFromAxisAngle(y_axis, -Math.atan( - newCameraPosition[1] / Math.sqrt( Math.pow(newCameraPosition[0],2) + Math.pow(newCameraPosition[2],2) ) ))
-          // const zRotation = new THREE.Quaternion().setFromAxisAngle(z_axis, Math.PI / 6 )
-          
-          // self.quaternion.multiply(yRotation);
-          // self.quaternion.set(xRotation.x,xRotation.y,xRotation.z,xRotation.w)
-          // self.quaternion.multiply(yRotation);
-          // self.quaternion.multiply(zRotation);
-          
-          // console.log("quaternion: ", self.quaternion);
-          // self.rotation.order = 'YXZ';
-          // self.rotation.y = 0;
-          
-
-          // self.near = 1
-          // self.far = 1000
-          // self.lookAt( ...cameraFocusPointPosition ); // or the origin  
+          self.matrixAutoUpdate = false;
           self.updateProjectionMatrix();
         }}
       />
@@ -94,14 +76,17 @@ function Camera({ children }) {
 
 export default Camera
 
-const axis = new THREE.Vector3( 0, 1, 0 );
+const y_axis = new THREE.Vector3( 0, 1, 0 );
 
-const calculateCameraPosition = function(focusPointPositionArray, focusPointOffsetArray, angle){
+const calculateCameraPosition = function(focusPointPositionArray, distance, angle){
   
   const focusPointPosition =  new THREE.Vector3(...focusPointPositionArray);
-  const focusPointOffset =  new THREE.Vector3(...focusPointOffsetArray);
-  const result = focusPointOffset.clone()
-  result.applyAxisAngle(axis,angle)
+  const cameraPostion =  new THREE.Vector3(0,0,distance);
+
+
+  const result = cameraPostion.clone()
+  result.applyAxisAngle(y_axis,angle)
+
   result.add(focusPointPosition)
   return result.toArray()
   
