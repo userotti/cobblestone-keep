@@ -76,18 +76,3 @@ function Camera({ children }) {
 
 export default Camera
 
-const y_axis = new THREE.Vector3( 0, 1, 0 );
-
-const calculateCameraPosition = function(focusPointPositionArray, distance, angle){
-  
-  const focusPointPosition =  new THREE.Vector3(...focusPointPositionArray);
-  const cameraPostion =  new THREE.Vector3(0,0,distance);
-
-
-  const result = cameraPostion.clone()
-  result.applyAxisAngle(y_axis,angle)
-
-  result.add(focusPointPosition)
-  return result.toArray()
-  
-} 
