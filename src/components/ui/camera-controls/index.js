@@ -19,10 +19,10 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
     <IconButton onClick={()=>{increaseCameraSize(2)}}>
       <img src="../icons/zoom-out-32x32.png" alt="zoom-out"/>
     </IconButton>
-    <IconButton onClick={()=>{rotateCamera(Math.PI/4)}}>
+    <IconButton onClick={()=>{rotateCamera(Math.PI/8)}}>
       <img src="../icons/rotate-left-32x32.png" alt="zoom-in"/>
     </IconButton>
-    <IconButton onClick={()=>{rotateCamera(-Math.PI/4)}}>
+    <IconButton onClick={()=>{rotateCamera(-Math.PI/8)}}>
       <img src="../icons/rotate-right-32x32.png" alt="zoom-out"/>
     </IconButton>
   </CameraControlsContainer>)

@@ -17,15 +17,24 @@ function Camera({ children }) {
   const cameraOrthographicAngle = useStore(state => state.cameraOrthographicAngle);
   
   const newCameraPosition = calculateCameraPosition(cameraFocusPointPosition, cameraFocusPointPositionOffset, cameraOrthographicAngle);
-  console.log("newCameraPosition: ", newCameraPosition);
   const animatedPostion = useSpring({
     to: { 
       position: newCameraPosition,
     }, 
     from: { 
       poistion: newCameraPosition
-    }})
-
+    }}
+  )
+  console.log("newCameraPosition:", newCameraPosition)
+  const animatedAngle = useSpring({
+    to: { 
+      angle: cameraOrthographicAngle,
+    }, 
+    from: { 
+      angle: cameraOrthographicAngle
+    }}
+  )
+  console.log(cameraOrthographicAngle)
   const animatedCameraSize = useSpring({to: { size: cameraSize}, from:{ size: cameraSize-0.02}})
   
 
@@ -38,16 +47,16 @@ function Camera({ children }) {
     <>
       <animated.orthographicCamera
         ref={camera}
-        position={animatedPostion.position.interpolate((x,y,z)=>{
-          return [x,y,z]
-        })}
+        position={animatedPostion.position}
         left={animatedCameraSize.size.interpolate((value)=>-value * cameraAspect)}
         right={animatedCameraSize.size.interpolate((value)=>value * cameraAspect)}
         top={animatedCameraSize.size.interpolate((value)=>value)}
         bottom={animatedCameraSize.size.interpolate((value)=>-value)}
         near={1}
         far={1000}
-        
+        rotation-order={'YXZ'}
+        rotation-y={animatedAngle.angle}
+        rotation-x={Math.atan( - 1 / Math.sqrt( 2 ) )}
         onUpdate={self => {
 
           // const x_axis = new THREE.Vector3(1,0,0);
@@ -66,14 +75,12 @@ function Camera({ children }) {
           
           // console.log("quaternion: ", self.quaternion);
           // self.rotation.order = 'YXZ';
-          // self.rotation.y = - Math.PI / 4;
+          // self.rotation.y = 0;
           
-          
-          // self.rotation.x = Math.atan( - 1 / Math.sqrt( 2 ) );
 
-          self.near = 1
-          self.far = 1000
-          self.lookAt( ...cameraFocusPointPosition ); // or the origin  
+          // self.near = 1
+          // self.far = 1000
+          // self.lookAt( ...cameraFocusPointPosition ); // or the origin  
           self.updateProjectionMatrix();
         }}
       />

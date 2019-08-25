@@ -2,7 +2,7 @@ import create from 'zustand'
 import * as THREE from 'three';
 
 const origin = new THREE.Vector3(0,0,0);
-const cameraStartingPosition = new THREE.Vector3(40,40,40);
+const cameraStartingPosition = new THREE.Vector3(0,30,Math.sqrt(Math.pow(30,2)+Math.pow(30,2)));
 
 const canvasContainerSizeInPixels = [800, 600];
 
@@ -33,11 +33,7 @@ const [useStore] = create(set => ({
       url: '/assets/walls/floor-stones.png',
     },
   },
-  setAssets: (value) => set((value)=>{
-    return ({
-      assets: value
-    })
-  }),
+  
 
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],
@@ -45,8 +41,8 @@ const [useStore] = create(set => ({
 
   cameraFocusPointPosition: origin.toArray(),
   cameraFocusPointPositionOffset: cameraStartingPosition.toArray(),
-  cameraOrthographicAngle: 0,
-  cameraVisibleRadius: 2.5,
+  cameraOrthographicAngle: Math.atan(cameraStartingPosition.x/cameraStartingPosition.y),
+  cameraVisibleRadius: 5.5,
   
   setCameraFocusPointPosition: (newPostionArray) => set(state=>({cameraFocusPointPosition: newPostionArray})),
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
