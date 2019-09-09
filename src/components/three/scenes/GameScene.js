@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
@@ -12,10 +12,9 @@ import useStore from '../../../store';
 
 export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
 
-  const block_size = useStore(state => state.block_size);
-  const map_size = useStore(state => state.map_size);
+  const active_map = useStore(state => state.active_map);  
+  const createActiveMap = useStore(state => state.createActiveMap);  
   
-  const [worldMap, setWorldMap] = useState(null);
   
   useEffect(() => {
     
@@ -25,18 +24,13 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
     ]; 
     
     Promise.all(loadingAssetPromises).then((assetData)=>{
-      setWorldMap(createMap(map_size, block_size, assetData.reduce((total, item, index)=>{
-        return {
-          ...total,
-          ...item
-        }  
-      }, {}), ));
+      createActiveMap(assetData);
     })
 
-  }, [setWorldMap, assets, map_size, block_size])
-  console.log("asd")
+  }, [createActiveMap, assets])
+
   return (<ThreeFibreHTMLCanvas>
-      <Camera worldMap={worldMap}>
+      <Camera>
 
         <ambientLight intensity={0.9}/>
         <directionalLight 
@@ -54,7 +48,7 @@ export default function GameScene({ assets, BLOCK_SIZE, MAP_SIZE }) {
           shadow-mapSize-height={1024}
         />
        
-        {worldMap && worldMap.map((column, columnIndex)=>{
+        {active_map && active_map.map((column, columnIndex)=>{
           return column.map((block, rowIndex)=>{
             switch (block.type){
 
@@ -119,28 +113,28 @@ function getGLTFLoadingPromises(assets) {
 }  
 
 
-function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
-  return [...Array(MAP_SIZE).keys()].map((itemCol, colIndex)=>{
-    return [...Array(MAP_SIZE).keys()].map((itemRow, rowIndex)=>{
-      const positionVector = new THREE.Vector3(colIndex*BLOCK_SIZE, 0, rowIndex*BLOCK_SIZE);
-      const offset = new THREE.Vector3(-(MAP_SIZE-1)/2, 0, -(MAP_SIZE-1)/2);
-      return Math.random() > 0.7 ? {
-        type: 'wall',
-        textures: {
-          'texture_wall_sides': assets['texture_wall_sides'],
-          'texture_wall_top': assets['texture_wall_top']
-        },
-        position: positionVector.clone().add(offset),
-        size: new THREE.Vector3(1,1.333,1) 
-      } : {
-        type: 'floor',
-        textures: {
-          'texture_floor_stones': assets['texture_floor_stones'],
-        },
-        position: positionVector.clone().add(offset),
-        size: new THREE.Vector2(1,1),
-        rotation: new THREE.Euler(0, 0, 0),
-      } 
-    })
-  })
-}
+// function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
+//   return [...Array(MAP_SIZE).keys()].map((itemCol, colIndex)=>{
+//     return [...Array(MAP_SIZE).keys()].map((itemRow, rowIndex)=>{
+//       const positionVector = new THREE.Vector3(colIndex*BLOCK_SIZE, 0, rowIndex*BLOCK_SIZE);
+//       const offset = new THREE.Vector3(-(MAP_SIZE-1)/2, 0, -(MAP_SIZE-1)/2);
+//       return Math.random() > 1 ? {
+//         type: 'wall',
+//         textures: {
+//           'texture_wall_sides': assets['texture_wall_sides'],
+//           'texture_wall_top': assets['texture_wall_top']
+//         },
+//         position: positionVector.clone().add(offset),
+//         size: new THREE.Vector3(1,1.333,1) 
+//       } : {
+//         type: 'floor',
+//         textures: {
+//           'texture_floor_stones': assets['texture_floor_stones'],
+//         },
+//         position: positionVector.clone().add(offset),
+//         size: new THREE.Vector2(1,1),
+//         rotation: new THREE.Euler(-Math.PI/2, Math.PI/2*Math.floor(Math.random() * 4), 0, 'YXZ'),
+//       } 
+//     })
+//   })
+// }

@@ -4,19 +4,19 @@ import useStore from '../../../store';
 
 export default function Wall({ textures, position }) {
   
-  const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition)
-  const cameraVisibleRadius = useStore(state => state.cameraVisibleRadius)
+  // const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition)
+  // const cameraVisibleRadius = useStore(state => state.cameraVisibleRadius)
   
   
-  const difference = new THREE.Vector3(...cameraFocusPointPosition);
-  difference.sub(position)
+  // const difference = new THREE.Vector3(...cameraFocusPointPosition);
+  // difference.sub(position)
 
   const castShadow = true;
   const receiveShadow = true;
     
   
   return (
-    (difference.length() < cameraVisibleRadius) ? <group 
+    <group 
       position={new THREE.Vector3(0,0+(1.333)/2,0)}
     >
       <mesh
@@ -103,6 +103,5 @@ export default function Wall({ textures, position }) {
         </meshLambertMaterial>
       </mesh>
     </group>
-    :null
   )
 }
