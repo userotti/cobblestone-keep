@@ -7,5 +7,9 @@
       "path": "/Users/christian/sites/dungeon-crawler"
     }
   ],
-  "settings": {}
+  "settings": {
+    "editor.fontSize": 14,
+    "workbench.tree.indent": 16,
+    "workbench.fontAliasing": "antialiased"
+  }
 }
