@@ -59,7 +59,7 @@ function Camera({ children }) {
         right={animatedStuff.size.interpolate((value)=>value * cameraAspect)}
         top={animatedStuff.size.interpolate((value)=>value)}
         bottom={animatedStuff.size.interpolate((value)=>-value)}
-        near={1}
+        near={-1000}
         far={1000}
         onUpdate={self => {
           self.matrixAutoUpdate = false;

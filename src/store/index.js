@@ -10,7 +10,7 @@ const canvasContainerSizeInPixels = [800, 600];
 const [useStore] = create(set => ({
 
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
-  
+
   block_size: 1,
   map_size: 12,
   active_map: null,
@@ -35,7 +35,7 @@ const [useStore] = create(set => ({
       url: '/assets/walls/floor-stones_64x64.png',
     },
   },
-  
+
 
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],
@@ -45,27 +45,37 @@ const [useStore] = create(set => ({
   cameraDistanceFromFocusPoint: distanceFromOrigin,
   cameraOrthographicAngle: 0,
   cameraVisibleRadius: 16,
-  
+  loadedAssetData: null,
   setCameraFocusPointPosition: (newPostionArray) => set(state=>({cameraFocusPointPosition: newPostionArray})),
+  setLoadedAssetData: (loadedAssetData) => set(state=>({
+    loadedAssetData: loadedAssetData.reduce((total, item, index)=>{
+      console.log("item: ", item)
+      return {
+        ...total,
+        ...item
+      }
+    }, {})
+  })),
+
   createActiveMap: (loadedAssetData) => set((state)=>{
-    
+
     const map = createMap(state.map_size, state.block_size, loadedAssetData.reduce((total, item, index)=>{
       return {
         ...total,
         ...item
-      }  
+      }
     }, {}));
 
     return ({
-      active_map: map 
+      active_map: map
     })
   }),
-  
+
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
   increaseCameraSize: (amount) => set(state=>({cameraSize: state.cameraSize + amount})),
   rotateCamera: (amount) => set(state=>({cameraOrthographicAngle: state.cameraOrthographicAngle + amount}))
-  
-    
+
+
 }))
 
 export default useStore;
@@ -83,7 +93,7 @@ function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
           'texture_wall_top': assets['texture_wall_top']
         },
         position: positionVector.clone().add(offset),
-        size: new THREE.Vector3(1,1.333,1) 
+        size: new THREE.Vector3(1,1.333,1)
       } : {
         type: 'floor',
         textures: {
@@ -92,7 +102,7 @@ function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
         position: positionVector.clone().add(offset),
         size: new THREE.Vector2(1,1),
         rotation: new THREE.Euler(-Math.PI/2, Math.PI/2*Math.floor(Math.random() * 4), 0, 'YXZ'),
-      } 
+      }
     })
   })
 }
