@@ -80,7 +80,7 @@ export default function Structure({texture}) {
         20, 21, 22,  22, 21, 23,  // bottom
     ]);
 
-    const INSTANCES = 1024;
+    const INSTANCES = 64;
 
     const offsets = new Float32Array( INSTANCES * 3 ); // xyz
 
@@ -89,9 +89,9 @@ export default function Structure({texture}) {
         const index = 3 * i;
 
         // per-instance position offset
-        offsets[ index ] = ((i % 32) - Math.sqrt(INSTANCES)/2) * 3;
+        offsets[ index ] = (i % Math.sqrt(INSTANCES)) * 2;
         offsets[ index + 1 ] = 0;
-        offsets[ index + 2 ] = ((Math.floor(i / 32)) - Math.sqrt(INSTANCES)/2) * 3;
+        offsets[ index + 2 ] = Math.floor(i / Math.sqrt(INSTANCES)) * 2;
 
     }
 
@@ -106,8 +106,6 @@ export default function Structure({texture}) {
         shader.vertexShader = customLambertVertexShader;
     };
 
-    const cube = new THREE.Mesh(geometry, material);
-
     console.log("structure render texture", texture);
 
     return (
@@ -117,7 +115,7 @@ export default function Structure({texture}) {
             receiveShadow={true}
             onPointerOver={e => console.log('hover')}
             onClick={(e) => {
-                console.log('click');
+                console.log('click', e);
             }}
         >
             <primitive attach="geometry" object={geometry}/>

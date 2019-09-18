@@ -12,49 +12,50 @@ import useStore from '../../../store';
 
 export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
-    const active_map = useStore(state => state.active_map);
-    // const createActiveMap = useStore(state => state.createActiveMap);
+  const active_map = useStore(state => state.active_map);
+  const createActiveMap = useStore(state => state.createActiveMap);
   const loadedAssetData = useStore(state => state.loadedAssetData);
   const setLoadedAssetData = useStore(state => state.setLoadedAssetData);
 
 
-    useEffect(() => {
+  useEffect(() => {
 
-        const loadingAssetPromises = [
-            ...getGLTFLoadingPromises(assets),
-            ...getPNGLoadingPromises(assets),
-        ];
+      const loadingAssetPromises = [
+        ...getGLTFLoadingPromises(assets),
+        ...getPNGLoadingPromises(assets),
+      ];
 
-        Promise.all(loadingAssetPromises).then((assetData) => {
-            // createActiveMap(assetData);
-            setLoadedAssetData(assetData);
-        })
+      Promise.all(loadingAssetPromises).then((assetData) => {
+        setLoadedAssetData(assetData);
+        createActiveMap();
+      })
 
 
-    }, [setLoadedAssetData, assets]);
+  }, [setLoadedAssetData, createActiveMap, assets]);
 
-    return (<ThreeFibreHTMLCanvas>
-            <Camera>
-                <ambientLight intensity={0.9}/>
-                <directionalLight
-                    intensity={0.9}
-                    color={0xffffff}
-                    position={[100, 200, -100]}
-                    castShadow={true}
-                    shadow-camera-near={0.5}
-                    shadow-camera-far={500}
-                    shadow-camera-left={-8}
-                    shadow-camera-bottom={-8}
-                    shadow-camera-top={8}
-                    shadow-camera-right={8}
-                    shadow-mapSize-width={1024}
-                    shadow-mapSize-height={1024}
-                />
+  return (
+    <ThreeFibreHTMLCanvas>
+      <Camera>
+        <ambientLight intensity={0.9}/>
+        <directionalLight
+          intensity={0.9}
+          color={0xffffff}
+          position={[100, 200, -100]}
+          castShadow={true}
+          shadow-camera-near={0.5}
+          shadow-camera-far={500}
+          shadow-camera-left={-8}
+          shadow-camera-bottom={-8}
+          shadow-camera-top={8}
+          shadow-camera-right={8}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
 
-              {loadedAssetData && <Strucutre texture={loadedAssetData['texture_wall_top']}/>}
-            </Camera>
-        </ThreeFibreHTMLCanvas>
-    );
+      {loadedAssetData && <Strucutre texture={loadedAssetData['texture_wall_top']}/>}
+      </Camera>
+    </ThreeFibreHTMLCanvas>
+  );
 }
 
 /*

@@ -1,6 +1,6 @@
 import create from 'zustand'
 import * as THREE from 'three';
-
+import { buildOutTheMap } from '../utils/mapGenerators/basic';
 
 const origin = new THREE.Vector3(0,0,0);
 const distanceFromOrigin = 16;
@@ -57,18 +57,10 @@ const [useStore] = create(set => ({
     }, {})
   })),
 
-  createActiveMap: (loadedAssetData) => set((state)=>{
+  createActiveMap: () => set((state)=>{
 
-    const map = createMap(state.map_size, state.block_size, loadedAssetData.reduce((total, item, index)=>{
-      return {
-        ...total,
-        ...item
-      }
-    }, {}));
-
-    return ({
-      active_map: map
-    })
+    console.log("buildOutTheMap: ", buildOutTheMap(20,20,[4,8],3));
+    
   }),
 
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
