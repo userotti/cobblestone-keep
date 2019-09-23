@@ -26,7 +26,7 @@ export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
       Promise.all(loadingAssetPromises).then((assetData) => {
         setLoadedAssetData(assetData);
-        createActiveMapCells({width:60, height:60, roomSizeRange: [5,9], maxRooms: 16});
+        createActiveMapCells({width:20, height:20, roomSizeRange: [4,8], maxRooms: 5});
       })
 
 

@@ -32,6 +32,12 @@ const [useStore] = create(set => ({
     'texture_floor_stones': {
       url: '/assets/walls/floor-stones_64x64.png',
     },
+    'texture_karoo_floor': {
+      url: '/assets/walls/karoo_floor.png',
+    },
+    'karoo_wall': {
+      url: '/assets/walls/karoo_wall.png',
+    },
   },
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],

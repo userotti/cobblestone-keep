@@ -4,6 +4,9 @@ import customLambertVertexShader from '../../../../utils/shaders/meshlambert_ver
 
 export default function Floor({texture, offsets}) {
 
+    // function getRandomTexureUV() => {
+      
+    // }
     const vertices = [
       
         // bottom

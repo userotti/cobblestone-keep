@@ -12,8 +12,8 @@ export default function Structural({textures, activeCellMap}) {
   console.log("floorOffset: ",floorOffset)
   return (
     <Fragment>
-      <Wall texture={textures['texture_wall_top']} offsets={wallOffset}/>
-      <Floor texture={textures['texture_wall_top']} offsets={floorOffset}/>
+      <Wall texture={textures['karoo_wall']} offsets={wallOffset}/>
+      <Floor texture={textures['texture_karoo_floor']} offsets={floorOffset}/>
     </Fragment>
   )
 }
