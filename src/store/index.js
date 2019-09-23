@@ -41,11 +41,11 @@ const [useStore] = create(set => ({
   },
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],
-  cameraSize: 4,
+  cameraSize: 8,
 
   cameraFocusPointPosition: origin.toArray(),
   cameraDistanceFromFocusPoint: distanceFromOrigin,
-  cameraOrthographicAngle: 0,
+  cameraOrthographicAngle: 0.7853981633974483,
   cameraVisibleRadius: 16,
   loadedAssetData: null,
   setCameraFocusPointPosition: (newPostionArray) => set(state=>({cameraFocusPointPosition: newPostionArray})),
@@ -69,8 +69,13 @@ const [useStore] = create(set => ({
 
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
   increaseCameraSize: (amount) => set(state=>({cameraSize: state.cameraSize + amount})),
-  rotateCamera: (amount) => set(state=>({cameraOrthographicAngle: state.cameraOrthographicAngle + amount}))
-
+  rotateCamera: (amount) => set(state=> {
+    console.log("state.cameraOrthographicAngle + amount: ", state.cameraOrthographicAngle + amount)
+    return {
+      cameraOrthographicAngle: state.cameraOrthographicAngle + amount
+    }
+  })
+  
 
 }))
 

@@ -1,6 +1,7 @@
 export default /* glsl */`
 #define LAMBERT
 attribute vec3 instanceOffset;
+attribute float instanceRotation;
 
 varying vec3 vLightFront;
 varying vec3 vIndirectFront;
@@ -21,9 +22,20 @@ varying vec3 vIndirectFront;
 #include <shadowmap_pars_vertex>
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
+
+vec2 rotateUV(vec2 uv, float rotation)
+{
+    float mid = 0.5;
+    return vec2(
+        cos(rotation) * (uv.x - mid) + sin(rotation) * (uv.y - mid) + mid,
+        cos(rotation) * (uv.y - mid) - sin(rotation) * (uv.x - mid) + mid
+    );
+}
+
 void main() {
 	#include <uv_vertex>
-	#include <uv2_vertex>
+  vUv = rotateUV(vUv, instanceRotation);
+  #include <uv2_vertex>
 	#include <color_vertex>
 	#include <beginnormal_vertex>
 	#include <morphnormal_vertex>

@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import customLambertVertexShader from '../../../../utils/shaders/meshlambert_vert.glsl';
 
-export default function Floor({texture, offsets}) {
+export default function Floor({texture, offsets, rotations}) {
 
     // function getRandomTexureUV() => {
       
@@ -54,6 +54,8 @@ export default function Floor({texture, offsets}) {
     ]);
 
     geometry.addAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) );
+    geometry.addAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) );
+    
 
     const material = new THREE.MeshLambertMaterial( {
         map: texture,

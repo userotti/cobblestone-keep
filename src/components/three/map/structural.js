@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Wall from './cells/wall';
 import Floor from './cells/floor';
-
+import { getRandomInt } from '../../../utils/mapGenerators/basic/index';
 export default function Structural({textures, activeCellMap}) {
 
   
@@ -9,11 +9,24 @@ export default function Structural({textures, activeCellMap}) {
 
   const wallOffset = getOffesetsFromCellType(activeCellMap, 'wall');
   const floorOffset = getOffesetsFromCellType(activeCellMap, 'floor');
+  const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
+  
+  const voidOffset = getOffesetsFromCellType(activeCellMap, 'void');
+  const voidRotations = getRotationsFromCellType(activeCellMap, 'void');
+  
+  const doorOffset = getOffesetsFromCellType(activeCellMap, 'door');
+  const doorRotations = getRotationsFromCellType(activeCellMap, 'door');
+  
+  
+  console.log("floorRotations: ",floorRotations)
   console.log("floorOffset: ",floorOffset)
   return (
     <Fragment>
       <Wall texture={textures['karoo_wall']} offsets={wallOffset}/>
-      <Floor texture={textures['texture_karoo_floor']} offsets={floorOffset}/>
+      <Floor texture={textures['texture_karoo_floor']} offsets={floorOffset} rotations={floorRotations}/>
+      <Floor texture={textures['texture_karoo_floor']} offsets={voidOffset} rotations={voidRotations}/>
+      <Floor texture={textures['texture_karoo_floor']} offsets={doorOffset} rotations={doorRotations}/>
+      
     </Fragment>
   )
 }
@@ -43,4 +56,32 @@ function getOffesetsFromCellType(activeCellMap, type){
   }
   
   return offsets;
+}
+
+function getRotationsFromCellType(activeCellMap, type){
+
+  let typedCells = activeCellMap.reduce((total, cellColumn, xindex)=>{
+    return [...total, ...cellColumn.map((cell, yindex)=>{
+      return {
+        type: cell.type,
+        rotation: (Math.PI / 2) * getRandomInt(0,4),
+      }
+    })]
+
+  }, []).filter(cell=>cell.type === type)
+
+  console.log("typedCells: ", typedCells);
+  const rotations = new Float32Array( typedCells.length * 1 ); // xyz
+  for ( let i = 0, l = typedCells.length; i < l; i++ ) {
+
+      const index = 1 * i;
+      // per-instance position offset
+      rotations[ index ] = typedCells[i].rotation;
+      // rotations[ index + 1 ] = typedCells[i].rotation;
+      // rotations[ index + 2] = typedCells[i].rotation;
+      
+     
+  }
+  
+  return rotations;
 }
