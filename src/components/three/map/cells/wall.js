@@ -1,9 +1,10 @@
 import React from 'react';
 import * as THREE from 'three';
-import useStore from '../../../store';
-import customLambertVertexShader from '../../../utils/shaders/meshlambert_vert.glsl';
+import customLambertVertexShader from '../../../../utils/shaders/meshlambert_vert.glsl';
+import customDepthVertexShader from '../../../../utils/shaders/customDepth_vert.glsl';
 
-export default function Structure({texture}) {
+
+export default function Wall({texture, offsets}) {
 
     const vertices = [
         // front
@@ -80,21 +81,6 @@ export default function Structure({texture}) {
         20, 21, 22,  22, 21, 23,  // bottom
     ]);
 
-    const INSTANCES = 64;
-
-    const offsets = new Float32Array( INSTANCES * 3 ); // xyz
-
-    for ( let i = 0, l = INSTANCES; i < l; i ++ ) {
-
-        const index = 3 * i;
-
-        // per-instance position offset
-        offsets[ index ] = (i % Math.sqrt(INSTANCES)) * 2;
-        offsets[ index + 1 ] = 0;
-        offsets[ index + 2 ] = Math.floor(i / Math.sqrt(INSTANCES)) * 2;
-
-    }
-
     geometry.addAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) );
 
     const material = new THREE.MeshLambertMaterial( {
@@ -106,13 +92,20 @@ export default function Structure({texture}) {
         shader.vertexShader = customLambertVertexShader;
     };
 
-    console.log("structure render texture", texture);
+    // custom depth material - required for instanced shadows
+    var customDepthMaterial = new THREE.MeshDepthMaterial();
+    customDepthMaterial.onBeforeCompile = function( shader ) {
+      shader.vertexShader = customDepthVertexShader;
+    };
+    customDepthMaterial.depthPacking = THREE.RGBADepthPacking;
+    //
 
     return (
         <mesh
 
-            castShadow={false}
+            castShadow={true}
             receiveShadow={true}
+            customDepthMaterial={customDepthMaterial}
             onPointerOver={e => console.log('hover')}
             onClick={(e) => {
                 console.log('click', e);

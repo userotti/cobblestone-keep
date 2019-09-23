@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
-import Wall from '../map/wall.js';
-import Strucutre from '../map/structure.js';
+import Structural from '../map/structural.js';
 import Camera from '../Camera.js';
 
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
@@ -12,8 +11,8 @@ import useStore from '../../../store';
 
 export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
-  const active_map = useStore(state => state.active_map);
-  const createActiveMap = useStore(state => state.createActiveMap);
+  const activeCellMap = useStore(state => state.activeCellMap);
+  const createActiveMapCells = useStore(state => state.createActiveMapCells);
   const loadedAssetData = useStore(state => state.loadedAssetData);
   const setLoadedAssetData = useStore(state => state.setLoadedAssetData);
 
@@ -27,11 +26,11 @@ export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
       Promise.all(loadingAssetPromises).then((assetData) => {
         setLoadedAssetData(assetData);
-        createActiveMap();
+        createActiveMapCells({width:60, height:60, roomSizeRange: [5,9], maxRooms: 16});
       })
 
 
-  }, [setLoadedAssetData, createActiveMap, assets]);
+  }, [setLoadedAssetData, createActiveMapCells, assets]);
 
   return (
     <ThreeFibreHTMLCanvas>
@@ -44,41 +43,20 @@ export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
           castShadow={true}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
-          shadow-camera-left={-8}
-          shadow-camera-bottom={-8}
-          shadow-camera-top={8}
-          shadow-camera-right={8}
+          shadow-camera-left={-48}
+          shadow-camera-bottom={-48}
+          shadow-camera-top={48}
+          shadow-camera-right={48}
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
         />
 
-      {loadedAssetData && <Strucutre texture={loadedAssetData['texture_wall_top']}/>}
+      <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
+
       </Camera>
     </ThreeFibreHTMLCanvas>
   );
 }
-
-/*
-{active_map && active_map.map((column, columnIndex)=>{
-  return column.map((block, rowIndex)=>{
-    switch (block.type){
-
-      case 'wall': {
-        return <Wall key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position}/>
-      }
-
-      case 'floor': {
-        return <Floor key={columnIndex + '' + rowIndex} textures={block.textures} position={block.position} rotation={block.rotation}/>
-      }
-      default: {
-        return null;
-      }
-    }
-
-  })
-})}
-*/
-
 
 function getPNGLoadingPromises(assets) {
     const textureLoader = new THREE.TextureLoader();
@@ -120,29 +98,3 @@ function getGLTFLoadingPromises(assets) {
     })
 }
 
-
-// function createMap(MAP_SIZE,  BLOCK_SIZE, assets) {
-//   return [...Array(MAP_SIZE).keys()].map((itemCol, colIndex)=>{
-//     return [...Array(MAP_SIZE).keys()].map((itemRow, rowIndex)=>{
-//       const positionVector = new THREE.Vector3(colIndex*BLOCK_SIZE, 0, rowIndex*BLOCK_SIZE);
-//       const offset = new THREE.Vector3(-(MAP_SIZE-1)/2, 0, -(MAP_SIZE-1)/2);
-//       return Math.random() > 1 ? {
-//         type: 'wall',
-//         textures: {
-//           'texture_wall_sides': assets['texture_wall_sides'],
-//           'texture_wall_top': assets['texture_wall_top']
-//         },
-//         position: positionVector.clone().add(offset),
-//         size: new THREE.Vector3(1,1.333,1) 
-//       } : {
-//         type: 'floor',
-//         textures: {
-//           'texture_floor_stones': assets['texture_floor_stones'],
-//         },
-//         position: positionVector.clone().add(offset),
-//         size: new THREE.Vector2(1,1),
-//         rotation: new THREE.Euler(-Math.PI/2, Math.PI/2*Math.floor(Math.random() * 4), 0, 'YXZ'),
-//       } 
-//     })
-//   })
-// }
