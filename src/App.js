@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useStore from './store';
 import GameScene from './components/three/scenes/GameScene.js';
 import CameraControls from './components/ui/camera-controls';
-
+import MapGeneratorPanel from './components/ui/map-generator-panel';
 
 function App() {
 
@@ -36,14 +36,25 @@ function Home() {
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
   
   return <div>
+      <Layout>
+        <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
+          <GameScene assets={assets}/>
+          <CameraControls/>
+        </SceneContainer>
+        <MapGeneratorPanel/>
+      </Layout>
       
-      <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
-        <GameScene assets={assets}/>
-        <CameraControls/>
-      </SceneContainer>
     
   </div>;
 }
+
+const Layout = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: 1rem;
+`;
+
+
 
 const Button = styled.button`
   background: palevioletred;
@@ -62,7 +73,7 @@ const SceneContainer = styled.div`
   width: ${(props)=>props.width}px;
   height: ${(props)=>props.height}px;
   background-color: black;
-  margin: 1rem;
+  margin: 0rem;
 `
 
 

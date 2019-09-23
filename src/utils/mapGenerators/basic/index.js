@@ -97,7 +97,7 @@ function createRoomsFromSeed(grid, {x, y, width, height}, range = ROOM_SIZE_RANG
   roomValues.forEach(room => {
     if (isValidRoomPlacement(grid, room)) {
 
-      console.log("room: ", room);
+      // console.log("room: ", room);
       // place room
       grid = placeCells(grid, room);
       // place door
@@ -135,7 +135,7 @@ export function buildOutTheMap(gridWidth = GRID_WIDTH, gridHeight = GRID_HEIGHT,
 		width: firstRoomWidth
 	};
 
-  console.log("firstRoom: ",firstRoom);
+  // console.log("firstRoom: ",firstRoom);
 
 	// 3. place the first room on to grid
 	grid = placeCells(grid, firstRoom);

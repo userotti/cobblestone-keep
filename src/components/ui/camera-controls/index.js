@@ -13,10 +13,10 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
     <IconButton onClick={()=>{increaseCameraVisibleRadius(-1)}}>
       <span> -radius </span>
     </IconButton>
-    <IconButton onClick={()=>{increaseCameraSize(-1)}}>
+    <IconButton onClick={()=>{increaseCameraSize(-4)}}>
       <img src="../icons/zoom-in-32x32.png" alt="zoom-in"/>
     </IconButton>
-    <IconButton onClick={()=>{increaseCameraSize(1)}}>
+    <IconButton onClick={()=>{increaseCameraSize(4)}}>
       <img src="../icons/zoom-out-32x32.png" alt="zoom-out"/>
     </IconButton>
     <IconButton onClick={()=>{rotateCamera(Math.PI/8)}}>
@@ -35,7 +35,7 @@ const CameraControlsContainer = styled.div`
   align-items: center;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   background-color: ${(props)=>props.controlsBackgroundColor}
 `
 

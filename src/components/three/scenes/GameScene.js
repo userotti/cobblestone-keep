@@ -12,7 +12,6 @@ import useStore from '../../../store';
 export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
   const activeCellMap = useStore(state => state.activeCellMap);
-  const createActiveMapCells = useStore(state => state.createActiveMapCells);
   const loadedAssetData = useStore(state => state.loadedAssetData);
   const setLoadedAssetData = useStore(state => state.setLoadedAssetData);
 
@@ -26,11 +25,10 @@ export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
       Promise.all(loadingAssetPromises).then((assetData) => {
         setLoadedAssetData(assetData);
-        createActiveMapCells({width:20, height:20, roomSizeRange: [4,8], maxRooms: 5});
       })
 
 
-  }, [setLoadedAssetData, createActiveMapCells, assets]);
+  }, [setLoadedAssetData, assets]);
 
   return (
     <ThreeFibreHTMLCanvas>
@@ -52,7 +50,7 @@ export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
         />
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
-
+      <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
       </Camera>
     </ThreeFibreHTMLCanvas>
   );

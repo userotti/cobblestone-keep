@@ -13,6 +13,7 @@ const [useStore] = create(set => ({
   map_size: 12,
       
   activeCellMap: null,
+  
   assets: {
     'grey_brick_wall_three_gltf': {
       url: '/assets/walls_on_ground.gltf',
@@ -45,13 +46,12 @@ const [useStore] = create(set => ({
 
   cameraFocusPointPosition: origin.toArray(),
   cameraDistanceFromFocusPoint: distanceFromOrigin,
-  cameraOrthographicAngle: 0.7853981633974483,
+  cameraOrthographicAngle: 2.356194490192345,
   cameraVisibleRadius: 16,
   loadedAssetData: null,
   setCameraFocusPointPosition: (newPostionArray) => set(state=>({cameraFocusPointPosition: newPostionArray})),
   setLoadedAssetData: (loadedAssetData) => set(state=>({
     loadedAssetData: loadedAssetData.reduce((total, item, index)=>{
-      console.log("item: ", item)
       return {
         ...total,
         ...item
@@ -70,7 +70,6 @@ const [useStore] = create(set => ({
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
   increaseCameraSize: (amount) => set(state=>({cameraSize: state.cameraSize + amount})),
   rotateCamera: (amount) => set(state=> {
-    console.log("state.cameraOrthographicAngle + amount: ", state.cameraOrthographicAngle + amount)
     return {
       cameraOrthographicAngle: state.cameraOrthographicAngle + amount
     }

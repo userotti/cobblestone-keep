@@ -18,8 +18,7 @@ export default function Structural({textures, activeCellMap}) {
   const doorRotations = getRotationsFromCellType(activeCellMap, 'door');
   
   
-  console.log("floorRotations: ",floorRotations)
-  console.log("floorOffset: ",floorOffset)
+  
   return (
     <Fragment>
       <Wall texture={textures['karoo_wall']} offsets={wallOffset}/>
@@ -70,7 +69,6 @@ function getRotationsFromCellType(activeCellMap, type){
 
   }, []).filter(cell=>cell.type === type)
 
-  console.log("typedCells: ", typedCells);
   const rotations = new Float32Array( typedCells.length * 1 ); // xyz
   for ( let i = 0, l = typedCells.length; i < l; i++ ) {
 
