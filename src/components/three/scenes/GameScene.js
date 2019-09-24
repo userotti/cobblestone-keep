@@ -12,10 +12,12 @@ import useStore from '../../../store';
 export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
 
   const activeCellMap = useStore(state => state.activeCellMap);
+  const activeCellMapParameters = useStore(state => state.activeCellMapParameters);
+  const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const loadedAssetData = useStore(state => state.loadedAssetData);
   const setLoadedAssetData = useStore(state => state.setLoadedAssetData);
 
-
+  console.log("GameScene activeCellMap: ",activeCellMap);
   useEffect(() => {
 
       const loadingAssetPromises = [
@@ -50,11 +52,35 @@ export default function GameScene({assets, BLOCK_SIZE, MAP_SIZE}) {
         />
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
-      <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
+      {activeCellMapParameters && <StructuralOnTapPlane width={activeCellMapParameters.width} height={activeCellMapParameters.height} onTap={(event)=>{
+        setCameraFocusPointPosition([event.point.x, 0, event.point.z])
+      }}/> }
       </Camera>
     </ThreeFibreHTMLCanvas>
   );
 }
+
+// import React from 'react';
+// import * as THREE from 'three';
+
+function StructuralOnTapPlane({width, height, onTap}){
+  
+  return (
+    <mesh
+      position={new THREE.Vector3(0,-1,0)} 
+      rotation={new THREE.Euler(-Math.PI/2, 0, 0)}
+      onClick={onTap}
+    >
+      <planeBufferGeometry 
+
+        attach="geometry" 
+        args={[width*2, height*2]}/> 
+      <meshBasicMaterial attach="material" color="#405A71" alphaTest="0"/>
+    </mesh>
+  )
+}
+
+
 
 function getPNGLoadingPromises(assets) {
     const textureLoader = new THREE.TextureLoader();

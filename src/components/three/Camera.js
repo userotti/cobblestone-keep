@@ -63,6 +63,7 @@ function Camera({ children }) {
         far={1000}
         onUpdate={self => {
           self.matrixAutoUpdate = false;
+          self.updateMatrixWorld( true );
           self.updateProjectionMatrix();
         }}
       />

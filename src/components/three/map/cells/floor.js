@@ -69,7 +69,7 @@ export default function Floor({texture, offsets, rotations}) {
 
     return (
         <mesh
-
+            // frustumCulled={false}
             castShadow={true}
             receiveShadow={true}
             onPointerOver={e => console.log('hover')}

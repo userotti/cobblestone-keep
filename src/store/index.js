@@ -13,7 +13,7 @@ const [useStore] = create(set => ({
   map_size: 12,
       
   activeCellMap: null,
-  
+  activeCellMapParameters: null,
   assets: {
     'grey_brick_wall_three_gltf': {
       url: '/assets/walls_on_ground.gltf',
@@ -42,7 +42,7 @@ const [useStore] = create(set => ({
   },
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],
-  cameraSize: 8,
+  cameraSize: 18,
 
   cameraFocusPointPosition: origin.toArray(),
   cameraDistanceFromFocusPoint: distanceFromOrigin,
@@ -59,13 +59,14 @@ const [useStore] = create(set => ({
     }, {})
   })),
 
-  createActiveMapCells: ({width = 20, height = 20, roomSizeRange = [4,8], maxRooms = 4}) => set((state)=>{
-    let cellMap = buildOutTheMap(width,height,roomSizeRange,maxRooms);
-    console.log("buildOutTheMap: ", cellMap);
+  setActiveCellMapParameters: (cellMapParams) => set(state=>{
+    console.log("setActiveCellMapParameters cellMapParams");
     return {
-      activeCellMap: cellMap
+      activeCellMap: buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms),
+      activeCellMapParameters: cellMapParams,
     }
   }),
+
 
   increaseCameraVisibleRadius: (amount) => set(state=>({cameraVisibleRadius: state.cameraVisibleRadius + amount})),
   increaseCameraSize: (amount) => set(state=>({cameraSize: state.cameraSize + amount})),

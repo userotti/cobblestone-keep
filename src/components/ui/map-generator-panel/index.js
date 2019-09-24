@@ -44,8 +44,8 @@ const GenerateButton = styled.button`
 
 export default function MapGeneratorPanel() {
 
-  const createActiveMapCells = useStore(state => state.createActiveMapCells);
-
+  const setActiveCellMapParameters = useStore(state => state.setActiveCellMapParameters);
+  
   const [state, setState] = useState({
     fields:{
       width: 20,
@@ -119,12 +119,13 @@ export default function MapGeneratorPanel() {
         }}/>
         
         <GenerateButton onClick={()=>{
-          createActiveMapCells({
+          setActiveCellMapParameters({
             width: state.fields.width,
             height: state.fields.height,
             roomSizeRange: [state.fields.room_min_size,state.fields.room_max_size],
             maxRooms: state.fields.max_rooms
           })
+          
         }}>Generate</GenerateButton>
         
       </SidePanelControls>
