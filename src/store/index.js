@@ -9,9 +9,9 @@ const [useStore] = create(set => ({
 
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
 
-  block_size: 1,
-  map_size: 12,
-      
+  
+  interactionPlanePosition: [-1,-1,-1],    
+  cellSize: [1,1,1],
   activeCellMap: null,
   activeCellMapParameters: null,
   assets: {
@@ -49,7 +49,18 @@ const [useStore] = create(set => ({
   cameraOrthographicAngle: 2.356194490192345,
   cameraVisibleRadius: 16,
   loadedAssetData: null,
-  setCameraFocusPointPosition: (newPostionArray) => set(state=>({cameraFocusPointPosition: newPostionArray})),
+  setInteractionPlanePosition: (newPostionArray) => set(state=>({interactionPlanePosition: newPostionArray})),
+  setCameraFocusPointPosition: (newPostionArray) => set(state=>{
+    
+    let x = Math.floor((newPostionArray[0]+1) / (state.cellSize[0]*2))*2; 
+    let z = Math.floor((newPostionArray[2]+1) / (state.cellSize[2]*2))*2; 
+    
+    return {
+      cameraFocusPointPosition: [x, 0, z]
+    }
+    
+    
+  }),
   setLoadedAssetData: (loadedAssetData) => set(state=>({
     loadedAssetData: loadedAssetData.reduce((total, item, index)=>{
       return {
@@ -60,7 +71,6 @@ const [useStore] = create(set => ({
   })),
 
   setActiveCellMapParameters: (cellMapParams) => set(state=>{
-    console.log("setActiveCellMapParameters cellMapParams");
     return {
       activeCellMap: buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms),
       activeCellMapParameters: cellMapParams,

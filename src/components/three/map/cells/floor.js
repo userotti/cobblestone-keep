@@ -4,9 +4,6 @@ import customLambertVertexShader from '../../../../utils/shaders/meshlambert_ver
 
 export default function Floor({texture, offsets, rotations}) {
 
-    // function getRandomTexureUV() => {
-      
-    // }
     const vertices = [
       
         // bottom
@@ -69,7 +66,7 @@ export default function Floor({texture, offsets, rotations}) {
 
     return (
         <mesh
-            // frustumCulled={false}
+            frustumCulled={false}
             castShadow={true}
             receiveShadow={true}
             onPointerOver={e => console.log('hover')}

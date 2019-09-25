@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
-import Wall from './cells/wall';
-import Floor from './cells/floor';
+import Wall from './cells/Wall';
+import Floor from './cells/Floor';
 import { getRandomInt } from '../../../utils/mapGenerators/basic/index';
+
 export default function Structural({textures, activeCellMap}) {
 
   

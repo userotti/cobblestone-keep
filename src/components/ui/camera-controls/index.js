@@ -4,17 +4,30 @@ import useStore from '../../../store';
 
 const CameraControls = function({controlsColor, controlsBackgroundColor }){
 
-  const { increaseCameraSize, rotateCamera, increaseCameraVisibleRadius } = useStore();  
+  const { 
+    increaseCameraSize, 
+    rotateCamera,
+    interactionPlanePosition,
+    setInteractionPlanePosition } = useStore();  
 
   return (<CameraControlsContainer controlsBackgroundColor={controlsBackgroundColor}>
-    {/* <IconButton onClick={()=>{increaseCameraVisibleRadius(1)}}>
-      <span> +radius </span>
+   
+    {/* <IconButton onClick={()=>{
+      console.log([interactionPlanePosition[0] + 0.1, interactionPlanePosition[1]]);
+      setInteractionPlanePosition([interactionPlanePosition[0] + 0.1, interactionPlanePosition[1]])
+      }}>
+      <span> Do something - </span>
     </IconButton>
-    <IconButton onClick={()=>{increaseCameraVisibleRadius(-1)}}>
-      <span> -radius </span>
+    
+    <IconButton onClick={()=>{
+      console.log([interactionPlanePosition[0] -0.1, interactionPlanePosition[1]]);
+      setInteractionPlanePosition([interactionPlanePosition[0] -0.1, interactionPlanePosition[1]])
+      }}>
+      <span> Do something + </span>
     </IconButton> */}
+
     <IconButton onClick={()=>{increaseCameraSize(-4)}}>
-      <img src="../icons/zoom-in-32x32.png" alt="zoom-in"/>
+      <img src="../icons/zoom-in-32x32.png" alt="zoom-out"/>
     </IconButton>
     <IconButton onClick={()=>{increaseCameraSize(4)}}>
       <img src="../icons/zoom-out-32x32.png" alt="zoom-out"/>

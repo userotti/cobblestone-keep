@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import styled from 'styled-components';
@@ -10,7 +10,6 @@ import MapGeneratorPanel from './components/ui/map-generator-panel';
 function App() {
 
   
-  // return <GameScene assets={assets} BLOCK_SIZE={BLOCK_SIZE} MAP_SIZE={MAP_SIZE}/>
   return (
     <Router>
       <div>

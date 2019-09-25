@@ -10,28 +10,28 @@ export default function Wall({texture, offsets}) {
         // front
         {pos: [-1, -1, 1], norm: [0, 0, 1], uv: [0, 1]},
         {pos: [1, -1, 1], norm: [0, 0, 1], uv: [0.5, 1],},
-        {pos: [-1, 1.5, 1], norm: [0, 0, 1], uv: [0, 0],},
-        {pos: [1, 1.5, 1], norm: [0, 0, 1], uv: [0.5, 0],},
+        {pos: [-1, 1, 1], norm: [0, 0, 1], uv: [0, 0],},
+        {pos: [1, 1, 1], norm: [0, 0, 1], uv: [0.5, 0],},
         // right
         {pos: [1, -1, 1], norm: [1, 0, 0], uv: [0, 1],},
         {pos: [1, -1, -1], norm: [1, 0, 0], uv: [0.5, 1],},
-        {pos: [1, 1.5, 1], norm: [1, 0, 0], uv: [0, 0],},
-        {pos: [1, 1.5, -1], norm: [1, 0, 0], uv: [0.5, 0],},
+        {pos: [1, 1, 1], norm: [1, 0, 0], uv: [0, 0],},
+        {pos: [1, 1, -1], norm: [1, 0, 0], uv: [0.5, 0],},
         // back
         {pos: [1, -1, -1], norm: [0, 0, -1], uv: [0, 1],},
         {pos: [-1, -1, -1], norm: [0, 0, -1], uv: [0.5, 1],},
-        {pos: [1, 1.5, -1], norm: [0, 0, -1], uv: [0, 0],},
-        {pos: [-1, 1.5, -1], norm: [0, 0, -1], uv: [0.5, 0],},
+        {pos: [1, 1, -1], norm: [0, 0, -1], uv: [0, 0],},
+        {pos: [-1, 1, -1], norm: [0, 0, -1], uv: [0.5, 0],},
         // left
         {pos: [-1, -1, -1], norm: [-1, 0, 0], uv: [0, 1],},
         {pos: [-1, -1, 1], norm: [-1, 0, 0], uv: [0.5, 1],},
-        {pos: [-1, 1.5, -1], norm: [-1, 0, 0], uv: [0, 0],},
-        {pos: [-1, 1.5, 1], norm: [-1, 0, 0], uv: [0.5, 0],},
+        {pos: [-1, 1, -1], norm: [-1, 0, 0], uv: [0, 0],},
+        {pos: [-1, 1, 1], norm: [-1, 0, 0], uv: [0.5, 0],},
         // top
-        {pos: [1, 1.5, -1], norm: [0, 1, 0], uv: [0.5, 0.5],},
-        {pos: [-1, 1.5, -1], norm: [0, 1, 0], uv: [1, 0.5],},
-        {pos: [1, 1.5, 1], norm: [0, 1, 0], uv: [0.5, 0],},
-        {pos: [-1, 1.5, 1], norm: [0, 1, 0], uv: [1, 0],},
+        {pos: [1, 1, -1], norm: [0, 1, 0], uv: [0.5, 0.5],},
+        {pos: [-1, 1, -1], norm: [0, 1, 0], uv: [1, 0.5],},
+        {pos: [1, 1, 1], norm: [0, 1, 0], uv: [0.5, 0],},
+        {pos: [-1, 1, 1], norm: [0, 1, 0], uv: [1, 0],},
         // bottom
         {pos: [1, -1, 1], norm: [0, -1, 0], uv: [0, 1],},
         {pos: [-1, -1, 1], norm: [0, -1, 0], uv: [1, 1],},
@@ -102,7 +102,7 @@ export default function Wall({texture, offsets}) {
 
     return (
         <mesh
-            // frustumCulled={false}
+            frustumCulled={false}
             castShadow={true}
             receiveShadow={true}
             customDepthMaterial={customDepthMaterial}
