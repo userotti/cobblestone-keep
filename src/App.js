@@ -4,8 +4,8 @@ import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
 import GameScene from './components/three/scenes/GameScene.js';
-import CameraControls from './components/ui/camera-controls';
-import MapGeneratorPanel from './components/ui/map-generator-panel';
+import CameraControls from './components/ui/CameraControls';
+import MapGeneratorPanel from './components/ui/MapGeneratorPanel';
 
 function App() {
 

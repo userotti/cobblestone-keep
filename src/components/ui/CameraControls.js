@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import useStore from '../../../store';
+import useStore from '../../store';
 
 const CameraControls = function({controlsColor, controlsBackgroundColor }){
 
   const { 
     increaseCameraSize, 
     rotateCamera,
-    interactionPlanePosition,
-    setInteractionPlanePosition } = useStore();  
+  } = useStore();  
 
   return (<CameraControlsContainer controlsBackgroundColor={controlsBackgroundColor}>
    

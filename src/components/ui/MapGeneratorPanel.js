@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useStore from '../../../store';
+import useStore from '../../store';
 
 const SidePanel = styled.div`
   margin-left: 0.2rem;
