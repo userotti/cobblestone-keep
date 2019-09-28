@@ -122,6 +122,12 @@ export function buildOutTheMap(gridWidth = GRID_WIDTH, gridHeight = GRID_HEIGHT,
 		}
 	}
 
+  console.log("maxRooms", maxRooms);
+  if (parseInt(maxRooms) === 0) {
+    return grid;
+  }
+  console.log("wtf");
+  
 	// 2. random values for the first room
 	const [min, max] = roomSizeRange;
 	const firstRoomWidth = getRandomInt(min, max);
@@ -137,7 +143,7 @@ export function buildOutTheMap(gridWidth = GRID_WIDTH, gridHeight = GRID_HEIGHT,
 
   // console.log("firstRoom: ",firstRoom);
 
-	// 3. place the first room on to grid
+  // 3. place the first room on to grid
 	grid = placeCells(grid, firstRoom);
 
 	// 4. using the first room as a seed, recursivley add rooms to the grid

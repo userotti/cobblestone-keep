@@ -39,6 +39,9 @@ const [useStore] = create(set => ({
     'karoo_wall': {
       url: '/assets/walls/karoo_wall.png',
     },
+    'moon_floor': {
+      url: '/assets/walls/moon_floor_16x16.png',
+    },
   },
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],

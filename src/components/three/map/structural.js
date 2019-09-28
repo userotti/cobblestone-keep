@@ -22,10 +22,9 @@ export default function Structural({textures, activeCellMap}) {
   
   return (
     <Fragment>
-      <Wall texture={textures['karoo_wall']} offsets={wallOffset}/>
-      <Floor texture={textures['texture_karoo_floor']} offsets={floorOffset} rotations={floorRotations}/>
-      <Floor texture={textures['texture_karoo_floor']} offsets={voidOffset} rotations={voidRotations}/>
-      <Floor texture={textures['texture_karoo_floor']} offsets={doorOffset} rotations={doorRotations}/>
+      <Wall texture={textures['moon_floor']} offsets={wallOffset}/>
+      <Floor texture={textures['moon_floor']} offsets={floorOffset} rotations={floorRotations}/>
+      <Floor texture={textures['moon_floor']} offsets={doorOffset} rotations={doorRotations}/>
       
     </Fragment>
   )

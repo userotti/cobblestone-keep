@@ -53,7 +53,9 @@ export default function Floor({texture, offsets, rotations}) {
     geometry.addAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) );
     geometry.addAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) );
     
-
+    texture.minFilter = THREE.NearestFilter;
+    texture.magFilter = THREE.NearestFilter;
+    
     const material = new THREE.MeshLambertMaterial( {
         map: texture,
         color: "#878"
