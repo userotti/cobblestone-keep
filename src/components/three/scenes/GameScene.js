@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
+import Items from '../map/Items.js';
 import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import FocusedCell from '../map/FocusedCell.js';
@@ -54,11 +55,12 @@ export default function GameScene({assets}) {
         />
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
-      
+      <Items textures={loadedAssetData} activeItemMap={activeCellMap}/>
+
       <StructuralOnTapPlane onTap={(event)=>{
         setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
       }}/>
-      <FocusedCell/>
+      {/* <FocusedCell/> */}
       </Camera>
     </ThreeFibreHTMLCanvas>
   );

@@ -42,6 +42,9 @@ const [useStore] = create(set => ({
     'moon_floor': {
       url: '/assets/walls/moon_floor_16x16.png',
     },
+    'barrel': {
+      url: '/assets/sprites/barrel.png',
+    },
   },
 
   cameraAspect: canvasContainerSizeInPixels[0]/canvasContainerSizeInPixels[1],
