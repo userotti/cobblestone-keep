@@ -9,7 +9,7 @@ export default function Barrel({texture, position}) {
     // var sprite = new THREE.Sprite( spriteMaterial );
     console.log("spriteMaterial: ", spriteMaterial);
 
-    var geometry = new THREE.BoxGeometry(0.8,1.5,0.8); 
+    var geometry = new THREE.CylinderGeometry(0.5,0.5,1,8); 
     return (
       <Fragment>
         <sprite
