@@ -15,6 +15,8 @@ function Camera({ children }) {
   const camera = useRef()
   const { setDefaultCamera } = useThree()
     
+  const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
+  const setCameraAspectRatio = useStore(state => state.setCameraAspectRatio);  
   const cameraAspect = useStore(state => state.cameraAspect);
   const cameraSize = useStore(state => state.cameraSize);
   const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition);
@@ -47,7 +49,9 @@ function Camera({ children }) {
 
   useEffect(() => {
     void setDefaultCamera(camera.current);
-  }, [camera, setDefaultCamera])
+    console.log("canvasContainerSizeInPixels[0]", canvasContainerSizeInPixels[0]);
+    setCameraAspectRatio(canvasContainerSizeInPixels[0], canvasContainerSizeInPixels[1])
+  }, [camera, setDefaultCamera, setCameraAspectRatio, canvasContainerSizeInPixels])
 
 
   return (

@@ -33,6 +33,8 @@ function Home() {
 
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
+
+  
   
   return <div>
       <Layout>

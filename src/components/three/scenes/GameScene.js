@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react';
-import * as THREE from 'three';
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
 import Items from '../map/Items.js';
 import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import FocusedCell from '../map/FocusedCell.js';
-
+import Characters from '../map/Characters';
 
 import Camera from '../Camera.js';
 
@@ -18,22 +16,15 @@ export default function GameScene({assets}) {
 
   const activeCellMap = useStore(state => state.activeCellMap);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
+  const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);
-  const setLoadedAssetData = useStore(state => state.setLoadedAssetData);
+  
 
   useEffect(() => {
 
-      const loadingAssetPromises = [
-        ...getGLTFLoadingPromises(assets),
-        ...getPNGLoadingPromises(assets),
-      ];
+      loadAssets();
 
-      Promise.all(loadingAssetPromises).then((assetData) => {
-        setLoadedAssetData(assetData);
-      })
-
-
-  }, [setLoadedAssetData, assets]);
+  }, [loadAssets]);
 
   return (
     <ThreeFibreHTMLCanvas>
@@ -56,54 +47,13 @@ export default function GameScene({assets}) {
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
       <Items textures={loadedAssetData} activeItemMap={activeCellMap}/>
+      <Characters></Characters>
 
       <StructuralOnTapPlane onTap={(event)=>{
         setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
       }}/>
-      {/* <FocusedCell/> */}
+      <FocusedCell/>
       </Camera>
     </ThreeFibreHTMLCanvas>
   );
 }
-
-
-function getPNGLoadingPromises(assets) {
-    const textureLoader = new THREE.TextureLoader();
-
-    return Object.keys(assets).filter((assetKey) => assets[assetKey].url.endsWith('png')).map((assetKey, index) => {
-        return new Promise((resolve, reject) => {
-            textureLoader.load(assets[assetKey].url,
-                function (texture) {
-                    resolve({[assetKey]: texture});
-                },
-                function (xhr) {
-                    console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey);
-                },
-                function (error) {
-                    console.log('An error happened' + assetKey, error);
-                }
-            );
-        })
-    })
-}
-
-function getGLTFLoadingPromises(assets) {
-    const GLTFloader = new GLTFLoader();
-
-    return Object.keys(assets).filter((assetKey) => assets[assetKey].url.endsWith('gltf')).map((assetKey, index) => {
-        return new Promise((resolve, reject) => {
-            GLTFloader.load(assets[assetKey].url,
-                function (gltf) {
-                    resolve({[assetKey]: gltf});
-                },
-                function (xhr) {
-                    console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey);
-                },
-                function (error) {
-                    console.log('An error happened' + assetKey, error);
-                }
-            );
-        })
-    })
-}
-
