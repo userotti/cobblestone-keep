@@ -50,8 +50,8 @@ export default function MapGeneratorPanel() {
     fields:{
       width: 20,
       height: 20,
-      room_min_size: 4,
-      room_max_size: 8,
+      room_min_size: 14,
+      room_max_size: 18,
       max_rooms: 5
     }
   });

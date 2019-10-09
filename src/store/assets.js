@@ -35,6 +35,9 @@ export default function assets(set){
       },
       'barrel': {
         url: '/assets/sprites/barrel.png',
+      },
+      'robot': {
+        url: '/assets/sprites/robot.png',
       }
     },
 

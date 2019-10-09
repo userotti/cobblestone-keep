@@ -5,12 +5,10 @@ import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import FocusedCell from '../map/FocusedCell.js';
 import Characters from '../map/Characters';
-
 import Camera from '../Camera.js';
 
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
-
 
 export default function GameScene({assets}) {
 
@@ -19,11 +17,9 @@ export default function GameScene({assets}) {
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);
   
-
+  console.log("activeCellMap: ",  activeCellMap);
   useEffect(() => {
-
       loadAssets();
-
   }, [loadAssets]);
 
   return (
@@ -47,12 +43,12 @@ export default function GameScene({assets}) {
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
       <Items textures={loadedAssetData} activeItemMap={activeCellMap}/>
-      <Characters></Characters>
+      <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/>
 
       <StructuralOnTapPlane onTap={(event)=>{
         setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
       }}/>
-      <FocusedCell/>
+      {/* <FocusedCell/> */}
       </Camera>
     </ThreeFibreHTMLCanvas>
   );

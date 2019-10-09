@@ -1,17 +1,13 @@
+import { getRandomInt } from '../../functions';
+
 export const GRID_HEIGHT = 60;
 export const GRID_WIDTH = 80;
 export const MAX_ROOMS = 15;
 export const ROOM_SIZE_RANGE = [7, 12];
 
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-}
 
-export function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+
+
 
 // HELPER FUNCTIONS FOR CREATING THE MAP
 function isValidRoomPlacement(grid, {x, y, width = 1, height = 1}){
