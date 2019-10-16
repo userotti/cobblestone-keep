@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { useSprings , animated , config  } from 'react-spring/three'
+import { useSprings , animated , config  } from 'react-spring/three';
 import * as THREE from 'three';
 
 export default function Robot({texture, position}) {

@@ -7,6 +7,7 @@ export default function Characters({textures, activeItemMap}) {
 
   
   const [position, setPosition] = useState([2,0,2]);
+  const [position2, setPosition2] = useState([1,0,-2]);
   const cellSize = useStore(state => state.cellSize);
   
 
@@ -33,12 +34,13 @@ export default function Characters({textures, activeItemMap}) {
         default: break;
       }
     }, 800);
-  }, [setPosition, position, cellSize]);
+
+  }, [setPosition, position, cellSize, setPosition2, position2]);
 
   if (!textures || !activeItemMap) return null;
   return (
     <Fragment>
-      <Robot position={position} texture={textures['robot']} />
+      <Robot position={position} texture={textures['robot_with_barrel']} />
     </Fragment>
   )
 }
