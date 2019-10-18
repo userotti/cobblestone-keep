@@ -26,7 +26,7 @@ export default function GameScene({assets}) {
     <ThreeFibreHTMLCanvas>
       <Camera>
         <hemisphereLight color={0xffffff} intensity={0.9}/>
-       < directionalLight
+        <directionalLight
           intensity={0.9}
           color={0xffffff}
           position={[100, 200, -100]}

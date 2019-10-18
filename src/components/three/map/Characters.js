@@ -40,7 +40,7 @@ export default function Characters({textures, activeItemMap}) {
   if (!textures || !activeItemMap) return null;
   return (
     <Fragment>
-      <Robot position={position} texture={textures['robot_with_barrel']} />
+      <Robot position={position} texture={textures['robot']} />
     </Fragment>
   )
 }
