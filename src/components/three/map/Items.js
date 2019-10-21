@@ -1,17 +1,25 @@
 import React, { Fragment } from 'react';
-import Barrel from './items/Barrel';
+import StaticItem from './items/StaticItem';
+import useStore from '../../../store';
+import * as THREE from 'three';
 
-export default function Items({textures, activeItemMap}) {
+export default function Items({textures}) {
 
-  if (!textures || !activeItemMap) return null;
+  const items = useStore(state => state.items.all);
+  let cylinderShadowGeometry = new THREE.CylinderGeometry(0.5,0.5,1,8);   
   
   return (
     <Fragment>
-      <Barrel position={[-0.5,-0.25,-0.5]} texture={textures['barrel']} />
-      <Barrel position={[0.5,-0.25,-0.5]} texture={textures['barrel']} />
-      <Barrel position={[0.5,-0.25,0.5]} texture={textures['barrel']} />
-      <Barrel position={[-0.5,-0.25,0.5]} texture={textures['barrel']} />
-      
+      { items && items.map((item)=>{
+        return <StaticItem 
+          key={item.id}
+          materialTexture={textures[item.materialTextureName]} 
+          materialColor={item.materialColor} 
+          position={item.position}
+          scale={item.scale} 
+          shadowGeometry={cylinderShadowGeometry}
+        />
+      })}
     </Fragment>
   )
 }

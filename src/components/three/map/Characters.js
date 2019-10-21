@@ -1,46 +1,24 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import Robot from './characters/Robot';
-import { getRandomInt } from '../../../utils/functions'
+import Hopper from './characters/Hopper';
 import useStore from '../../../store';
+import * as THREE from 'three';
 
-export default function Characters({textures, activeItemMap}) {
+export default function Characters({textures}) {
 
+  const characters = useStore(state => state.characters.all);
+  let cylinderShadowGeometry = new THREE.CylinderGeometry(0.95,0.95,1.5,8);
   
-  const [position, setPosition] = useState([2,0,2]);
-  const [position2, setPosition2] = useState([1,0,-2]);
-  const cellSize = useStore(state => state.cellSize);
-  
-
-  useEffect(() => {
-    setTimeout(() => {
-      let direction = getRandomInt(1,4);
-      switch (direction){
-        case 1: {
-          setPosition([position[0] + (cellSize[0]*2), position[1] , position[2]]);
-          break;
-        }
-        case 2: {
-          setPosition([position[0], position[1], position[2] + (cellSize[0]*2)]);
-          break;
-        }
-        case 3: {
-          setPosition([position[0] - (cellSize[0]*2), position[1], position[2]]);
-          break;
-        }
-        case 4: {
-          setPosition([position[0], position[1], position[2] - (cellSize[0]*2)]);
-          break;
-        }
-        default: break;
-      }
-    }, 800);
-
-  }, [setPosition, position, cellSize, setPosition2, position2]);
-
-  if (!textures || !activeItemMap) return null;
   return (
     <Fragment>
-      <Robot position={position} texture={textures['robot']} />
+      { characters && characters.map((character)=>{
+        return <Hopper 
+          key={character.id} 
+          materialTexture={textures[character.materialTextureName]} 
+          materialColor={character.materialColor} 
+          position={character.position}
+          scale={character.scale} 
+          shadowGeometry={cylinderShadowGeometry} />
+      })}
     </Fragment>
   )
 }

@@ -23,7 +23,7 @@ export default function GameScene({assets}) {
   }, [loadAssets]);
 
   return (
-    <ThreeFibreHTMLCanvas>
+   loadedAssetData && <ThreeFibreHTMLCanvas>
       <Camera>
         <hemisphereLight color={0xffffff} intensity={0.9}/>
         <directionalLight
