@@ -40,6 +40,8 @@ function Home() {
       <CameraControls/>
     </SceneContainer>
     <MapGeneratorPanel/>
+    <br/>
+    <a href="https://games.truevalhalla.com/dungeonsweep/index.html">DungeonSweep Link</a>
   </div>
 }
 
