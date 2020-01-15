@@ -6,10 +6,10 @@ export default function camera(set){
   return {
 
     cameraAspect: 0,
-    cameraSize: 8,
+    cameraSize: 5,
     cameraFocusPointPosition: origin.toArray(),
     cameraDistanceFromFocusPoint: 16,
-    cameraOrthographicAngle: 2.356194490192345,
+    cameraOrthographicAngle: 0,//2.356194490192345,
     cameraVisibleRadius: 16,
 
     setCameraAspectRatio: (width, height) => set((state) => {
@@ -17,10 +17,9 @@ export default function camera(set){
         cameraAspect: width/height
       }
     }),
-    
     setCameraFocusPointPosition: (newPostionArray) => set(state=>{
-      let x = Math.floor((newPostionArray[0]+1) / (state.cellSize[0]*2))*2; 
-      let z = Math.floor((newPostionArray[2]+1) / (state.cellSize[2]*2))*2; 
+      let x = 0 // Math.floor((newPostionArray[0]+1) / (state.cellSize[0]*2))*2; 
+      let z = 0 // Math.floor((newPostionArray[2]+1) / (state.cellSize[2]*2))*2; 
       return {
         cameraFocusPointPosition: [x, 0, z]
       }

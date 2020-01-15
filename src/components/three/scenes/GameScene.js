@@ -7,12 +7,15 @@ import FocusedCell from '../map/FocusedCell.js';
 import Characters from '../map/Characters';
 import Camera from '../Camera.js';
 
+// import Shroud from '../map/tiles/Shroud';
+
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
 
 export default function GameScene({assets}) {
 
   const activeCellMap = useStore(state => state.activeCellMap);
+  const doCellClickAction = useStore(state => state.doCellClickAction);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);
@@ -42,12 +45,16 @@ export default function GameScene({assets}) {
         />
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
-      <Items textures={loadedAssetData} activeItemMap={activeCellMap}/>
+      {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
       <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/>
 
-      <StructuralOnTapPlane onTap={(event)=>{
-        setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
-      }}/>
+      {/* <Shroud /> */}
+      
+
+      {/* <StructuralOnTapPlane onTap={(event)=>{
+        doCellClickAction([event.point.x, event.point.y, event.point.z])
+        // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
+      }}/> */}
       {/* <FocusedCell/> */}
       </Camera>
     </ThreeFibreHTMLCanvas>

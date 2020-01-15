@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
-import Wall from './cells/Wall';
-import Floor from './cells/Floor';
-import { getRandomInt } from '../../../utils/functions';
+import React, { Fragment } from 'react'
+import Wall from './cells/Wall'
+import Floor from './cells/Floor'
+
+import { getRandomInt } from '../../../utils/functions'
 
 export default function Structural({textures, activeCellMap}) {
 
@@ -22,10 +23,9 @@ export default function Structural({textures, activeCellMap}) {
   
   return (
     <Fragment>
-      <Wall texture={textures['moon_floor']} offsets={wallOffset}/>
-      <Floor texture={textures['moon_floor']} offsets={floorOffset} rotations={floorRotations}/>
-      <Floor texture={textures['moon_floor']} offsets={doorOffset} rotations={doorRotations}/>
-      
+      <Wall texture={textures['basic_floor']} offsets={wallOffset}/>
+      <Floor texture={textures['basic_floor']} offsets={floorOffset} rotations={floorRotations}/>
+      <Floor texture={textures['basic_floor']} offsets={doorOffset} rotations={doorRotations}/>
     </Fragment>
   )
 }
@@ -36,9 +36,9 @@ function getOffesetsFromCellType(activeCellMap, type){
     return [...total, ...cellColumn.map((cell, yindex)=>{
       return {
         type: cell.type,
-        x: xindex * 2 - activeCellMap.length,
+        x: xindex * 2 - activeCellMap.length + 1, // ??  +1 to fix the offset issue
         y: 0,
-        z: yindex * 2 - cellColumn.length
+        z: yindex * 2 - cellColumn.length + 1 // ??  +1 to fix the offset issue
       }
     })]
 
@@ -63,7 +63,7 @@ function getRotationsFromCellType(activeCellMap, type){
     return [...total, ...cellColumn.map((cell, yindex)=>{
       return {
         type: cell.type,
-        rotation: (Math.PI / 2) * getRandomInt(0,4),
+        rotation: 0 //(Math.PI / 2) * getRandomInt(0,4),
       }
     })]
 

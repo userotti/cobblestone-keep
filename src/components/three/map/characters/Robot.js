@@ -8,7 +8,7 @@ export default function Robot({texture, position}) {
     texture.magFilter = THREE.NearestFilter;
     var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
     
-    var geometry = new THREE.CylinderGeometry(0.95,0.95,1.5,8);
+    var geometry = new THREE.CylinderGeometry(0.5,0.5,1.5,8);
 
     const springs = useSprings(2, [{
       to: {
@@ -44,17 +44,15 @@ export default function Robot({texture, position}) {
           return (progress - 1)*7*(-progress) + 0.5
         })}
       >
-        <sprite
-          scale={[3,3,3]}
-        >
+        <sprite scale={[2,2,2]}>
           <primitive attach="material" object={spriteMaterial}/>
         </sprite>
         <mesh
-          position-y={0.5}
+          position-x={0.8}
+          position-y={0.8}
           castShadow={true}
           material-colorWrite={false}
-          material-depthWrite={false}
-        >
+          material-depthWrite={false}>
           <primitive attach="geometry" object={geometry} visible={false}/>
         </mesh>
       </animated.group>

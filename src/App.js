@@ -17,18 +17,14 @@ function App() {
         
         <Route exact path="/" component={Home} />
         <Route exact path="/sprites" component={Sprites} />
-        <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
         
       </div>
     </Router>
-  );
+  )
 }
 
 
-export default App;
-
-
+export default App
 
 
 function Home() {
@@ -36,19 +32,13 @@ function Home() {
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
 
-  
-  
-  return <div>
-      <Layout>
-        <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
-          <GameScene assets={assets}/>
-          <CameraControls/>
-        </SceneContainer>
-        <MapGeneratorPanel/>
-      </Layout>
-      
-    
-  </div>;
+  return <div className="game-holder">
+    <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
+      <GameScene assets={assets}/>
+      <CameraControls/>
+    </SceneContainer>
+    <MapGeneratorPanel/>
+  </div>
 }
 
 function Sprites() {
@@ -56,40 +46,16 @@ function Sprites() {
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
 
-  
-  
   return <div>
-      <Layout>
-        <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
-          <NewScene assets={assets}/>
-          <CameraControls/>
-        </SceneContainer>
-        <MapGeneratorPanel/>
-      </Layout>
-      
-    
+    <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
+      <NewScene assets={assets}/>
+      <CameraControls/>
+    </SceneContainer>
+    <MapGeneratorPanel/>
   </div>
 }
 
-const Layout = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  margin: 1rem;
-`;
 
-
-
-const Button = styled.button`
-  background: palevioletred;
-  border-radius: 3px;
-  border: 2px solid palevioletred;
-  font-weight: bold;
-  font-size: 1rem;
-  color: white;
-  margin: 0 1em;
-  padding: 1em 1em;
-  cursor: pointer;
-`
 
 const SceneContainer = styled.div`
   position: relative;
@@ -98,36 +64,3 @@ const SceneContainer = styled.div`
   background-color: black;
   margin: 0rem;
 `
-
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Topic({ match }) {
-  return <h3>Requested Param: {match.params.id}</h3>;
-}
-
-function Topics({ match }) {
-  return (
-    <div>
-      <h2>Topics</h2>
-
-      <ul>
-        <li>
-          <Link to={`${match.url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-        </li>
-      </ul>
-
-      <Route path={`${match.path}/:id`} component={Topic} />
-      <Route
-        exact
-        path={match.path}
-        render={() => <h3>Please select a topic.</h3>}
-      />
-    </div>
-  );
-}

@@ -4,7 +4,7 @@ import customLambertVertexShader from '../../../../utils/shaders/meshlambert_ver
 import customDepthVertexShader from '../../../../utils/shaders/customDepth_vert.glsl';
 
 
-export default function Wall({texture, offsets}) {
+export default function Shroud({texture, offsets}) {
 
     const vertices = [
         // front

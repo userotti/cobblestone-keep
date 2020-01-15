@@ -48,14 +48,22 @@ export default function MapGeneratorPanel() {
   
   const [state, setState] = useState({
     fields:{
-      width: 20,
-      height: 20,
-      room_min_size: 14,
-      room_max_size: 18,
-      max_rooms: 5
+      width: 5,
+      height: 5,
+      room_min_size: 5,
+      room_max_size: 5,
+      max_rooms: 1
     }
   });
 
+  setActiveCellMapParameters({
+    width: state.fields.width,
+    height: state.fields.height,
+    roomSizeRange: [state.fields.room_min_size,state.fields.room_max_size],
+    maxRooms: state.fields.max_rooms
+  })
+
+  return null // ! Bypass the panel for now
   return (
     <SidePanel>
       <SidePanelHeading> Generate Map </SidePanelHeading>

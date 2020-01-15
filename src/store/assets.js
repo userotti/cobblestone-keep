@@ -41,7 +41,10 @@ export default function assets(set){
       },
       'robot_with_barrel': {
         url: '/assets/sprites/robot_with_barrel.png',
-      }
+      },
+      'basic_floor': {
+        url: '/assets/walls/basic_floor_16x16.png',
+      },
     },
 
     setLoadedAssetData: (loadedAssetData) => set((state) => {

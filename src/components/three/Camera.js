@@ -28,7 +28,8 @@ function Camera({ children }) {
   translate_focus_point.identity().makeTranslation(...cameraFocusPointPosition).transpose();
   translate_distance.identity().makeTranslation(0,0,cameraDistanceFromFocusPoint).transpose();
   y_rotate_m.identity().makeRotationY(cameraOrthographicAngle)
-  x_rotate_m.identity().makeRotationX(Math.atan( 1/Math.sqrt(2)))
+  x_rotate_m.identity().makeRotationX(1.5707) // ! 90 degrees = 1.5708
+  // x_rotate_m.identity().makeRotationX(Math.atan( 1/Math.sqrt(2)))
 
   m.identity();
   m.multiply(translate_distance); 

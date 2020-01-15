@@ -9,7 +9,18 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #000;
+}
+
+canvas {
+  background: #111;
+}
+
+.game-holder {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 100vh
 }
 
 .special {
