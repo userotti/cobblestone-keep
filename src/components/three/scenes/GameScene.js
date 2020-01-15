@@ -50,7 +50,7 @@ export default function GameScene({assets}) {
       {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
       <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/>
 
-        <Shroud texture={loadedAssetData['moon_floor']} position={[0,0,0]} />
+      {/* <Shroud texture={loadedAssetData['moon_floor']} position={[0,0,0]} /> */}
       
 
       {/* <StructuralOnTapPlane onTap={(event)=>{
