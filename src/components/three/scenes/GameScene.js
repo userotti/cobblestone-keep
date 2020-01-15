@@ -7,7 +7,7 @@ import FocusedCell from '../map/FocusedCell.js';
 import Characters from '../map/Characters';
 import Camera from '../Camera.js';
 
-// import Shroud from '../map/tiles/Shroud';
+import Shroud from '../map/tiles/Shroud';
 
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
@@ -22,8 +22,10 @@ export default function GameScene({assets}) {
   
   console.log("activeCellMap: ",  activeCellMap);
   useEffect(() => {
-      loadAssets();
-  }, [loadAssets]);
+      loadAssets()
+  }, [loadAssets])
+
+  if(!loadedAssetData) return null
 
   return (
     <ThreeFibreHTMLCanvas>
@@ -48,7 +50,7 @@ export default function GameScene({assets}) {
       {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
       <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/>
 
-      {/* <Shroud /> */}
+      <Shroud texture={loadedAssetData['moon_floor']} position={[0,5,0]} />
       
 
       {/* <StructuralOnTapPlane onTap={(event)=>{

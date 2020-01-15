@@ -1,83 +1,65 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { useSprings , animated , config  } from 'react-spring/three';
 import * as THREE from 'three';
-import customLambertVertexShader from '../../../../utils/shaders/meshlambert_vert.glsl';
 
-export default function Shroud({texture, offsets, rotations}) {
+export default function Shroud({texture, position}) {
 
-    const vertices = [
-      
-        // bottom
-        {pos: [-1, 5, -1], norm: [0, 1, 0], uv: [0, 1],},
-        {pos: [-1, 5, 1], norm: [0, 1, 0], uv: [1, 1],},
-        {pos: [1, 5, -1], norm: [0, 1, 0], uv: [0, 0],},
-        {pos: [1, 5, 1], norm: [0, 1, 0], uv: [1, 0],},
-    ];
-
-    const numVertices = vertices.length;
-    const positionNumComponents = 3;
-    const normalNumComponents = 3;
-    const uvNumComponents = 2;
-    const positions = new Float32Array(numVertices * positionNumComponents);
-    const normals = new Float32Array(numVertices * normalNumComponents);
-    const uvs = new Float32Array(numVertices * uvNumComponents);
-    let posNdx = 0;
-    let nrmNdx = 0;
-    let uvNdx = 0;
-
-
-    for (const vertex of vertices) {
-        positions.set(vertex.pos, posNdx);
-        normals.set(vertex.norm, nrmNdx);
-        uvs.set(vertex.uv, uvNdx);
-        posNdx += positionNumComponents;
-        nrmNdx += normalNumComponents;
-        uvNdx += uvNumComponents;
-    }
-
-    const geometry = new THREE.InstancedBufferGeometry();
-
-    geometry.addAttribute(
-        'position',
-        new THREE.BufferAttribute(positions, positionNumComponents));
-    geometry.addAttribute(
-        'normal',
-        new THREE.BufferAttribute(normals, normalNumComponents));
-    geometry.addAttribute(
-        'uv',
-        new THREE.BufferAttribute(uvs, uvNumComponents));
-
-    geometry.setIndex([
-        0,  1,  2,   2,  1,  3,  // front
-    ]);
-
-    geometry.addAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) );
-    geometry.addAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) );
+    texture.minFilter = THREE.NearestFilter;
+    texture.magFilter = THREE.NearestFilter;
+    var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
     
-    // texture.minFilter = THREE.NearestFilter;
-    // texture.magFilter = THREE.NearestFilter;
+    var geometry = new THREE.CylinderGeometry(0.5,0.5,1.5,8);
+
+    const springs = useSprings(2, [{
+      to: {
+        position: [...position],
+      },  
+      from: { 
+        position: [...position],
+      }
+    },{
+      to: {
+        progress: 1
+      },  
+      from: { 
+        progress: 0
+      },
+      reset: true,
+      config: config.default//{ mass: 1, tension: 290, friction: 32 }
+    }])
     
-    const material = new THREE.MeshLambertMaterial( {
-        map: texture,
-        color: "#878"
-    });
-
-    material.onBeforeCompile = function( shader ) {
-        shader.vertexShader = customLambertVertexShader;
-    };
-
-
     return (
+      
+      <animated.group
+        position-x={springs[0].position.interpolate((x)=>{
+          return x;
+        })}
+        position-z={springs[0].position.interpolate((x,y,z)=>{
+          return z;
+        })}
+        position-y={springs[1].progress.interpolate({
+          range: [0, 0.65, 1],
+          output: [0, 0.55, 1]
+        }).interpolate((progress)=>{
+          return (progress - 1)*7*(-progress) + 0.5
+        })}
+      >
+        <sprite scale={[2,2,2]}>
+          <primitive attach="material" object={spriteMaterial}/>
+        </sprite>
         <mesh
-            frustumCulled={false}
-            castShadow={true}
-            receiveShadow={true}
-            onPointerOver={e => console.log('hover')}
-            onClick={(e) => {
-                console.log('shroud click', e);
-            }}
-        >
-            <primitive attach="geometry" object={geometry}/>
-            <primitive attach="material" object={material}/>
+          position-x={0.8}
+          position-y={0.8}
+          castShadow={true}
+          onClick={(e) => {
+            console.log('click shroud', e);
+          }}
+          material-colorWrite={false}
+          material-depthWrite={false}>
+          <primitive attach="geometry" object={geometry} visible={false}/>
         </mesh>
+      </animated.group>
+      
+       
     )
 }
