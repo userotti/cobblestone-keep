@@ -6,7 +6,9 @@ import useStore from '../../store';
 export default function HUD() {
 
   const { 
-    health
+    health,
+    armour,
+    damage
   } = useStore();  
   
   console.log(health)
@@ -22,8 +24,10 @@ export default function HUD() {
 
 
   return (
-    <div>
-      {/* {health} */}
+    <div className="hud">
+      <span>Health<em>{health}</em></span>
+      <span>Armour<em>{armour}</em></span>
+      <span>Damage<em>{damage}</em></span>
     </div>
   )
 
