@@ -6,7 +6,7 @@ import useStore from '../../../store';
 export default function Characters({textures, activeItemMap}) {
 
   
-  const [position, setPosition] = useState([0,0,-0.2]);
+  const [position, setPosition] = useState([0,0,-0.8]);
   const [position2, setPosition2] = useState([1,0,-2]);
   const cellSize = useStore(state => state.cellSize);
   

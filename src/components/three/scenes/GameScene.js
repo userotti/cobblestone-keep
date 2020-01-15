@@ -34,7 +34,7 @@ export default function GameScene({assets}) {
         <directionalLight
           intensity={0.9}
           color={0xffffff}
-          position={[100, 200, -100]}
+          position={[95, 300, -95]}
           castShadow={true}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
@@ -50,7 +50,7 @@ export default function GameScene({assets}) {
       {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
       <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/>
 
-        <Shroud texture={loadedAssetData['moon_floor']} position={[0,0,0]} />
+        {/* <Shroud texture={loadedAssetData['moon_floor']} position={[0,0,0]} /> */}
       
 
       {/* <StructuralOnTapPlane onTap={(event)=>{

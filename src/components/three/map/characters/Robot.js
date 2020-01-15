@@ -8,8 +8,13 @@ export default function Robot({texture, position}) {
     texture.magFilter = THREE.NearestFilter;
     var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
     
-    var geometry = new THREE.CylinderGeometry(0.5,0.5,1.5,8);
+    var headGeometry = new THREE.BoxGeometry(0.5,0.5,0.4);
+    var bodyGeometry = new THREE.BoxGeometry(1.5,1.3,0.5);
+    var leftGeometry = new THREE.BoxGeometry(0.2,1.7,0.2);
+    var rightGeometry = new THREE.BoxGeometry(0.2,1.7,0.2);
 
+    // var geoCylinder = new THREE.CylinderGeometry(0.5,0.5,0.5);
+    
     const springs = useSprings(2, [{
       to: {
         position: [...position],
@@ -47,14 +52,49 @@ export default function Robot({texture, position}) {
         <sprite scale={[2,2,2]}>
           <primitive attach="material" object={spriteMaterial}/>
         </sprite>
-        <mesh
-          position-x={0.8}
-          position-y={0.8}
-          castShadow={true}
-          material-colorWrite={false}
-          material-depthWrite={false}>
-          <primitive attach="geometry" object={geometry} visible={false}/>
-        </mesh>
+
+        <group
+          position-x={0.1}
+          position-y={0}
+          position-z={0.7}>
+          <mesh
+            position-x={0}
+            position-y={1}
+            position-z={0}
+            material-colorWrite={false}
+            material-depthWrite={false}
+            castShadow={true}>
+            <primitive attach="geometry" object={bodyGeometry} visible={false}/>
+          </mesh>
+          <mesh
+            position-x={-0.3}
+            position-y={0}
+            position-z={0}
+            material-colorWrite={false}
+            material-depthWrite={false}
+            castShadow={true}>
+            <primitive attach="geometry" object={leftGeometry} visible={false}/>
+          </mesh>
+          <mesh
+            position-x={0.3}
+            position-y={0}
+            position-z={0}
+            material-colorWrite={false}
+            material-depthWrite={false}
+            castShadow={true}>
+            <primitive attach="geometry" object={rightGeometry} visible={false}/>
+          </mesh>
+          <mesh
+            position-x={0}
+            position-y={2.1}
+            position-z={0}
+            material-colorWrite={false}
+            material-depthWrite={false}
+            castShadow={true}>
+            <primitive attach="geometry" object={headGeometry} visible={false}/>
+          </mesh>
+        </group>
+        
       </animated.group>
       
        
