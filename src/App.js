@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
-import GameScene from './components/three/scenes/GameScene.js';
-import NewScene from './components/three/scenes/NewScene.js';
-import CameraControls from './components/ui/CameraControls';
-import MapGeneratorPanel from './components/ui/MapGeneratorPanel';
+import GameScene from './components/three/scenes/GameScene.js'
+import NewScene from './components/three/scenes/NewScene.js'
+import HUD from './components/ui/HUD'
+import CameraControls from './components/ui/CameraControls'
+import MapGeneratorPanel from './components/ui/MapGeneratorPanel'
 
 function App() {
 
@@ -29,6 +30,7 @@ export default App
 
 function Home() {
 
+  const game = useStore(state => state.game);
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
 
@@ -38,6 +40,7 @@ function Home() {
       <CameraControls/>
     </SceneContainer>
     <MapGeneratorPanel/>
+    <HUD/>
   </div>
 }
 
