@@ -45,21 +45,21 @@ const CameraControlsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
+  border-radius: 0 0 4px 4px;
+  background: #222;
   background-color: ${(props)=>props.controlsBackgroundColor}
 `
 
 const IconButton = styled.div`
-  background: #fff6;
+
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
   border: 0;
   cursor: pointer;
-  color: white;
+  color: #888;
+  opacity: 0.4;
 `
 
 export default CameraControls;

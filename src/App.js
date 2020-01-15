@@ -37,8 +37,8 @@ function Home() {
     <HUD/>
     <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
       <GameScene assets={assets}/>
-      <CameraControls/>
     </SceneContainer>
+    <CameraControls/>
     <MapGeneratorPanel/>
     <br/>
     <a href="https://games.truevalhalla.com/dungeonsweep/index.html">DungeonSweep Link</a>
