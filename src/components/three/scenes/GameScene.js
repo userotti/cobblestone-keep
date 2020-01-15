@@ -46,11 +46,11 @@ export default function GameScene({assets}) {
           shadow-mapSize-height={1024}
         />
 
-      <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
+      {/* <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/> */}
       {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
-      <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/>
+      {/* <Characters textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
 
-      <Shroud texture={loadedAssetData['moon_floor']} position={[0,5,0]} />
+        <Shroud texture={loadedAssetData['moon_floor']} position={[0,0,0]} />
       
 
       {/* <StructuralOnTapPlane onTap={(event)=>{
