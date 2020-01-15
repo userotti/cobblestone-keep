@@ -4,6 +4,7 @@ import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
 import GameScene from './components/three/scenes/GameScene.js';
+import NewScene from './components/three/scenes/NewScene.js';
 import CameraControls from './components/ui/CameraControls';
 import MapGeneratorPanel from './components/ui/MapGeneratorPanel';
 
@@ -15,6 +16,7 @@ function App() {
       <div>
         
         <Route exact path="/" component={Home} />
+        <Route exact path="/sprites" component={Sprites} />
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
         
@@ -47,6 +49,26 @@ function Home() {
       
     
   </div>;
+}
+
+function Sprites() {
+
+  const assets = useStore(state => state.assets);
+  const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
+
+  
+  
+  return <div>
+      <Layout>
+        <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
+          <NewScene assets={assets}/>
+          <CameraControls/>
+        </SceneContainer>
+        <MapGeneratorPanel/>
+      </Layout>
+      
+    
+  </div>
 }
 
 const Layout = styled.div`
