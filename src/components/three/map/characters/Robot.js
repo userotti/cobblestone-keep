@@ -15,8 +15,7 @@ export default function Robot({loadedAssetData, position}) {
     loadedAssetData['robot'].magFilter = THREE.NearestFilter;
     
     var spriteMaterial = new THREE.SpriteMaterial( { map: loadedAssetData['robot'], color: 0xffffff } );
-    
-    console.log(position)
+ 
     const springs = useSprings(2, [{
       to: {
         position: [...position],
@@ -61,14 +60,18 @@ export default function Robot({loadedAssetData, position}) {
         // })}
       
       >
-        {/* <sprite 
-          scale={[2,2,2]}>
+        <sprite 
+          scale={[2,2,2]}
+          position-x={0}
+          position-y={0}
+          position-z={-0.8}>
           <primitive attach="material" object={spriteMaterial}/>
-        </sprite> */}
+        </sprite>
 
         
         <primitive
           object={loadedAssetData['model_gltf'].scene}
+          rotation={[0, cameraOrthographicAngle*-1, 0]}
           position={[0, -1, 0]} 
         />
 

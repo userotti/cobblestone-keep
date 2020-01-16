@@ -118,11 +118,10 @@ export function buildOutTheMap(gridWidth = GRID_WIDTH, gridHeight = GRID_HEIGHT,
 		}
 	}
 
-  console.log("maxRooms", maxRooms);
+  // console.log("maxRooms", maxRooms);
   if (parseInt(maxRooms) === 0) {
     return grid;
   }
-  console.log("wtf");
   
 	// 2. random values for the first room
 	const [min, max] = roomSizeRange;

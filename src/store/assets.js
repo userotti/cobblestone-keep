@@ -48,6 +48,9 @@ export default function assets(set){
       'basic_floor': {
         url: '/assets/walls/basic_floor_16x16.png',
       },
+      'shroud': {
+        url: '/assets/walls/shroud.png',
+      },
     },
 
     setLoadedAssetData: (loadedAssetData) => set((state) => {
@@ -69,8 +72,7 @@ export default function assets(set){
       ];
 
       Promise.all(loadingAssetPromises).then((assetData) => {
-        console.log(assetData);
-        state.setLoadedAssetData(assetData);
+        state.setLoadedAssetData(assetData)
       })
 
     }) 
@@ -88,15 +90,15 @@ function getPNGLoadingPromises(assets) {
         return new Promise((resolve, reject) => {
             textureLoader.load(assets[assetKey].url,
                 function (texture) {
-                    resolve({[assetKey]: texture});
+                    resolve({[assetKey]: texture})
                 },
                 function (xhr) {
-                    console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey);
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey)
                 },
                 function (error) {
-                    console.log('An error happened' + assetKey, error);
+                    console.log('An error happened' + assetKey, error)
                 }
-            );
+            )
         })
     })
 }
@@ -108,20 +110,17 @@ function getGLTFLoadingPromises(assets) {
         return new Promise((resolve, reject) => {
             GLTFloader.load(assets[assetKey].url,
                 function (gltf) {
-                  const root = gltf.scene;
+                  const root = gltf.scene
                   root.traverse((obj) => {
                     if (obj.castShadow !== undefined) {
-                      obj.castShadow = true;
-                      obj.receiveShadow = false;
-                      // obj.traverseVisible = false
+                      obj.castShadow = true
+                      obj.receiveShadow = false
                     }
                   });
-
-
-                  resolve({[assetKey]: gltf});
+                  resolve({[assetKey]: gltf})
                 },
                 function (xhr) {
-                    console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey);
+                    // console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey); // ! Infinity Issue?
                 },
                 function (error) {
                     console.log('An error happened' + assetKey, error);

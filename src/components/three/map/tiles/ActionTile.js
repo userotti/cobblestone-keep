@@ -4,21 +4,18 @@ import * as THREE from 'three';
 
 import useStore from '../../../../store';
 
-export default function Shroud({texture, position}) {
+export default function ActionTile({texture, position}) {
 
     const { 
-      shroudRemoved,
-      removeShroud
+      updatePlayerPosition
     } = useStore()
-
-    texture.minFilter = THREE.NearestFilter;
-    texture.magFilter = THREE.NearestFilter;
-
 
     let material = new THREE.MeshLambertMaterial({ 
       map : texture,
-      side : THREE.DoubleSide
-    });
+      side : THREE.DoubleSide,
+      visible: false
+    })
+
 
     let planeGeometry = new THREE.PlaneGeometry(1, 1);
 
@@ -27,17 +24,21 @@ export default function Shroud({texture, position}) {
       <mesh
         receiveShadow={false}
         onClick={(e) => {
-          console.log('click shroud');
-          removeShroud(position)
+          console.log('click actiontile');
+          // removeShroud(position)
+          updatePlayerPosition([position[0],0,position[2]])
         }}
+
+        transparent={true}
         
         material-colorWrite={false}
         material-depthWrite={false}
         position={position}    
         scale={[2,2,2]}
+        // visible={false}
         rotation={[Math.PI/2,0,0]}    
       >
-        <primitive attach="geometry" object={planeGeometry}/>
+        <primitive attach="geometry" object={planeGeometry} />
         <primitive attach="material" object={material}/>
       </mesh>
       

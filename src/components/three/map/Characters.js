@@ -5,8 +5,12 @@ import useStore from '../../../store';
 
 export default function Characters({loadedAssetData, activeItemMap}) {
 
+  const { 
+    playerPosition
+  } = useStore()
   
-  const [position, setPosition] = useState([0,0,0]);
+  // console.log(playerPosition)
+  // const [position, setPosition] = useState(playerPosition)
   // const [position2, setPosition2] = useState([1,0,-2]);
   // const cellSize = useStore(state => state.cellSize);
   
@@ -40,7 +44,7 @@ export default function Characters({loadedAssetData, activeItemMap}) {
   if (!loadedAssetData || !activeItemMap) return null
   return (
     <Fragment>
-      <Robot position={position} loadedAssetData={loadedAssetData} />
+      <Robot position={playerPosition} loadedAssetData={loadedAssetData} />
     </Fragment>
   )
 }

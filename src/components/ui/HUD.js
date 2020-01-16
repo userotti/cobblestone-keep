@@ -1,7 +1,6 @@
 
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import useStore from '../../store';
+import React, { useState } from 'react'
+import useStore from '../../store'
 
 export default function HUD() {
 
@@ -9,9 +8,8 @@ export default function HUD() {
     health,
     armour,
     damage
-  } = useStore();  
+  } = useStore()
   
-  console.log(health)
   const [state, setState] = useState({
     fields:{
       width: 5,
@@ -20,7 +18,7 @@ export default function HUD() {
       room_max_size: 5,
       max_rooms: 1
     }
-  });
+  })
 
 
   return (

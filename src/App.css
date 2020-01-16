@@ -71,8 +71,8 @@ canvas {
 
 .camera-controls .value {
   color: #eee;
-  width: 40px;
-  margin: 0 -10px;
+  width: 80px;
+  margin: 0 0px;
   font-size: 13px;
   text-align: center;
   font-family: 'Courier New', Courier, monospace;

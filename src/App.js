@@ -4,21 +4,16 @@ import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
 import GameScene from './components/three/scenes/GameScene.js'
-import NewScene from './components/three/scenes/NewScene.js'
 import HUD from './components/ui/HUD'
 import CameraControls from './components/ui/CameraControls'
 import MapGeneratorPanel from './components/ui/MapGeneratorPanel'
 
 function App() {
 
-  
   return (
     <Router>
       <div>
-        
-        <Route exact path="/" component={Home} />
-        <Route exact path="/sprites" component={Sprites} />
-        
+        <Route exact path="/" component={Home} />        
       </div>
     </Router>
   )
@@ -44,21 +39,6 @@ function Home() {
     <a href="https://games.truevalhalla.com/dungeonsweep/index.html">DungeonSweep Link</a>
   </div>
 }
-
-function Sprites() {
-
-  const assets = useStore(state => state.assets);
-  const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
-
-  return <div>
-    <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
-      <NewScene assets={assets}/>
-      <CameraControls/>
-    </SceneContainer>
-    <MapGeneratorPanel/>
-  </div>
-}
-
 
 
 const SceneContainer = styled.div`

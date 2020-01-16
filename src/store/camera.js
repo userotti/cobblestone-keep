@@ -6,12 +6,12 @@ export default function camera(set){
   return {
 
     cameraAspect: 0,
-    cameraSize: 2,
+    cameraSize: 5,
     cameraFocusPointPosition: origin.toArray(),
     cameraDistanceFromFocusPoint: 16,
     cameraOrthographicAngle: 0,
-    cameraTiltValues: [0.0,0.01,0.3,0.7,1.0,1.2,1.5707],
-    cameraTiltIndex: 2,
+    cameraTiltValues: [0.0, 0.01, 0.3,  0.7,  1.0,  1.2,  1.5707],
+    cameraTiltIndex: 6,
     cameraVisibleRadius: 16,
 
     setCameraAspectRatio: (width, height) => set((state) => {
