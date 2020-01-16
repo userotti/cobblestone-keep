@@ -22,14 +22,17 @@ function Camera({ children }) {
   const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition);
   const cameraDistanceFromFocusPoint = useStore(state => state.cameraDistanceFromFocusPoint);
   const cameraOrthographicAngle = useStore(state => state.cameraOrthographicAngle);
-  
+  const cameraTiltValues = useStore(state => state.cameraTiltValues);
+  const cameraTiltIndex = useStore(state => state.cameraTiltIndex);
+
   const m = new THREE.Matrix4();
 
   translate_focus_point.identity().makeTranslation(...cameraFocusPointPosition).transpose();
   translate_distance.identity().makeTranslation(0,0,cameraDistanceFromFocusPoint).transpose();
   y_rotate_m.identity().makeRotationY(cameraOrthographicAngle)
-  x_rotate_m.identity().makeRotationX(1.5707) // ! 90 degrees = 1.5708
-  // x_rotate_m.identity().makeRotationX(Math.atan( 1/Math.sqrt(2)))
+
+  // TILT Camera
+  x_rotate_m.identity().makeRotationX(cameraTiltValues[cameraTiltIndex])
 
   m.identity();
   m.multiply(translate_distance); 

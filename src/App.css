@@ -69,3 +69,11 @@ canvas {
   background-color: #ff0;
 }
 
+.camera-controls .value {
+  color: #eee;
+  width: 40px;
+  margin: 0 -10px;
+  font-size: 13px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}

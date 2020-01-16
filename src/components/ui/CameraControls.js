@@ -1,15 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
-import useStore from '../../store';
+import React from 'react'
+import styled from 'styled-components'
+import useStore from '../../store'
 
 const CameraControls = function({controlsColor, controlsBackgroundColor }){
 
   const { 
     increaseCameraSize, 
     rotateCamera,
-  } = useStore();  
+    tiltCamera,
+    cameraTiltIndex,
+    cameraTiltValues,
+    cameraSize,
+    cameraOrthographicAngle
+  } = useStore()
 
-  return (<CameraControlsContainer controlsBackgroundColor={controlsBackgroundColor}>
+  return (<CameraControlsContainer className="camera-controls" controlsBackgroundColor={controlsBackgroundColor}>
    
     {/* <IconButton onClick={()=>{
       console.log([interactionPlanePosition[0] + 0.1, interactionPlanePosition[1]]);
@@ -25,18 +30,30 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
       <span> Do something + </span>
     </IconButton> */}
 
-    <IconButton onClick={()=>{increaseCameraSize(-4)}}>
+    <IconButton onClick={()=>{increaseCameraSize(-2)}}>
       <img src="../icons/zoom-in-32x32.png" alt="zoom-out"/>
     </IconButton>
-    <IconButton onClick={()=>{increaseCameraSize(4)}}>
+    <span className='value'>
+      { cameraSize.toFixed(2) }
+    </span>
+    <IconButton onClick={()=>{increaseCameraSize(2)}}>
       <img src="../icons/zoom-out-32x32.png" alt="zoom-out"/>
     </IconButton>
     <IconButton onClick={()=>{rotateCamera(Math.PI/8)}}>
       <img src="../icons/rotate-left-32x32.png" alt="zoom-in"/>
     </IconButton>
+    <span className='value'>
+      { cameraOrthographicAngle.toFixed(2) }
+    </span>
     <IconButton onClick={()=>{rotateCamera(-Math.PI/8)}}>
       <img src="../icons/rotate-right-32x32.png" alt="zoom-out"/>
     </IconButton>
+    <IconButton onClick={()=>{tiltCamera()}}>
+      TILT
+    </IconButton>
+    <span className='value'>
+      { cameraTiltValues[cameraTiltIndex] }
+    </span>
   </CameraControlsContainer>)
 }
 

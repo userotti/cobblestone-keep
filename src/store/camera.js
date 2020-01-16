@@ -1,15 +1,17 @@
-import * as THREE from 'three';
+import * as THREE from 'three'
 
-const origin = new THREE.Vector3(0,0,0);
+const origin = new THREE.Vector3(0,0,0)
 
 export default function camera(set){
   return {
 
     cameraAspect: 0,
-    cameraSize: 5,
+    cameraSize: 2,
     cameraFocusPointPosition: origin.toArray(),
     cameraDistanceFromFocusPoint: 16,
-    cameraOrthographicAngle: 0,//2.356194490192345,
+    cameraOrthographicAngle: 0,
+    cameraTiltValues: [0.0,0.01,0.3,0.7,1.0,1.2,1.5707],
+    cameraTiltIndex: 2,
     cameraVisibleRadius: 16,
 
     setCameraAspectRatio: (width, height) => set((state) => {
@@ -37,6 +39,11 @@ export default function camera(set){
     rotateCamera: (amount) => set( (state) => {
       return {
         cameraOrthographicAngle: state.cameraOrthographicAngle + amount
+      }
+    }),
+    tiltCamera: () => set( (state) => {
+      return {
+        cameraTiltIndex: state.cameraTiltIndex !== state.cameraTiltValues.length-1 ? state.cameraTiltIndex + 1 : 0
       }
     })
   }

@@ -3,12 +3,12 @@ import Robot from './characters/Robot';
 import { getRandomInt } from '../../../utils/functions'
 import useStore from '../../../store';
 
-export default function Characters({textures, activeItemMap}) {
+export default function Characters({loadedAssetData, activeItemMap}) {
 
   
-  const [position, setPosition] = useState([0,0,-0.8]);
-  const [position2, setPosition2] = useState([1,0,-2]);
-  const cellSize = useStore(state => state.cellSize);
+  const [position, setPosition] = useState([0,0,0]);
+  // const [position2, setPosition2] = useState([1,0,-2]);
+  // const cellSize = useStore(state => state.cellSize);
   
 
   // useEffect(() => {
@@ -37,10 +37,10 @@ export default function Characters({textures, activeItemMap}) {
 
   // }, [setPosition, position, cellSize, setPosition2, position2]);
 
-  if (!textures || !activeItemMap) return null
+  if (!loadedAssetData || !activeItemMap) return null
   return (
     <Fragment>
-      <Robot position={position} texture={textures['robot']} />
+      <Robot position={position} loadedAssetData={loadedAssetData} />
     </Fragment>
   )
 }

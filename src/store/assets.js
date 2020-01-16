@@ -9,6 +9,9 @@ export default function assets(set){
       'grey_brick_wall_three_gltf': {
         url: '/assets/walls_on_ground.gltf',
       },
+      'model_gltf': {
+        url: '/assets/models/robot1.gltf',
+      },
       'brown_floor_three_gltf': {
         url: '/assets/tiled_floor.gltf',
       },
@@ -105,7 +108,17 @@ function getGLTFLoadingPromises(assets) {
         return new Promise((resolve, reject) => {
             GLTFloader.load(assets[assetKey].url,
                 function (gltf) {
-                    resolve({[assetKey]: gltf});
+                  const root = gltf.scene;
+                  root.traverse((obj) => {
+                    if (obj.castShadow !== undefined) {
+                      obj.castShadow = true;
+                      obj.receiveShadow = false;
+                      // obj.traverseVisible = false
+                    }
+                  });
+
+
+                  resolve({[assetKey]: gltf});
                 },
                 function (xhr) {
                     console.log((xhr.loaded / xhr.total * 100) + '% loaded' + assetKey);
@@ -113,7 +126,7 @@ function getGLTFLoadingPromises(assets) {
                 function (error) {
                     console.log('An error happened' + assetKey, error);
                 }
-            );
+            )
         })
     })
 }

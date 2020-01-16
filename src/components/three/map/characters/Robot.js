@@ -1,20 +1,22 @@
 import React, { Fragment } from 'react';
 import { useSprings , animated , config  } from 'react-spring/three';
 import * as THREE from 'three';
+import useStore from '../../../../store'
 
-export default function Robot({texture, position}) {
+var show_shadow_geom = false
 
-    texture.minFilter = THREE.NearestFilter;
-    texture.magFilter = THREE.NearestFilter;
-    var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
+export default function Robot({loadedAssetData, position}) {
+
+    const { 
+      cameraOrthographicAngle
+    } = useStore()
+
+    loadedAssetData['robot'].minFilter = THREE.NearestFilter;
+    loadedAssetData['robot'].magFilter = THREE.NearestFilter;
     
-    var headGeometry = new THREE.BoxGeometry(0.5,0.5,0.4);
-    var bodyGeometry = new THREE.BoxGeometry(1.5,1.3,0.5);
-    var leftGeometry = new THREE.BoxGeometry(0.2,1.7,0.2);
-    var rightGeometry = new THREE.BoxGeometry(0.2,1.7,0.2);
-
-    // var geoCylinder = new THREE.CylinderGeometry(0.5,0.5,0.5);
+    var spriteMaterial = new THREE.SpriteMaterial( { map: loadedAssetData['robot'], color: 0xffffff } );
     
+    console.log(position)
     const springs = useSprings(2, [{
       to: {
         position: [...position],
@@ -36,67 +38,43 @@ export default function Robot({texture, position}) {
     return (
       
       <animated.group
+
         position-x={springs[0].position.interpolate((x)=>{
           return x;
         })}
         position-z={springs[0].position.interpolate((x,y,z)=>{
           return z;
         })}
-        position-y={springs[1].progress.interpolate({
-          range: [0, 0.65, 1],
-          output: [0, 0.55, 1]
-        }).interpolate((progress)=>{
-          return (progress - 1)*7*(-progress) + 0.5
-        })}
+        // position-y={springs[1].progress.interpolate({
+        //   range: [0, 0.65, 1],
+        //   output: [0, 0.55, 0]
+        // }).interpolate((progress)=>{
+        //   return (progress - 1)*7*(-progress) + 0.5
+        // })}
+      
       >
-        <sprite scale={[2,2,2]}>
+        {/* <sprite 
+          scale={[2,2,2]}>
           <primitive attach="material" object={spriteMaterial}/>
-        </sprite>
+        </sprite> */}
 
-        <group
-          position-x={0.1}
-          position-y={0}
-          position-z={0.7}>
-          <mesh
-            position-x={0}
-            position-y={1}
-            position-z={0}
-            material-colorWrite={false}
-            material-depthWrite={false}
-            castShadow={true}>
-            <primitive attach="geometry" object={bodyGeometry} visible={false}/>
-          </mesh>
-          <mesh
-            position-x={-0.3}
-            position-y={0}
-            position-z={0}
-            material-colorWrite={false}
-            material-depthWrite={false}
-            castShadow={true}>
-            <primitive attach="geometry" object={leftGeometry} visible={false}/>
-          </mesh>
-          <mesh
-            position-x={0.3}
-            position-y={0}
-            position-z={0}
-            material-colorWrite={false}
-            material-depthWrite={false}
-            castShadow={true}>
-            <primitive attach="geometry" object={rightGeometry} visible={false}/>
-          </mesh>
-          <mesh
-            position-x={0}
-            position-y={2.1}
-            position-z={0}
-            material-colorWrite={false}
-            material-depthWrite={false}
-            castShadow={true}>
-            <primitive attach="geometry" object={headGeometry} visible={false}/>
-          </mesh>
-        </group>
+
+        <mesh
+
+          rotation={[0,cameraOrthographicAngle*-1,0]}
+          material-colorWrite={show_shadow_geom}
+          material-depthWrite={show_shadow_geom}
+          castShadow={true}
+          >
+          <primitive
+            attach="geometry"
+            visible={true}
+            object={loadedAssetData['model_gltf'].scene}
+            castShadow={true}
+            position={[0, -1, 0]} 
+          />
+        </mesh>
         
       </animated.group>
-      
-       
     )
 }
