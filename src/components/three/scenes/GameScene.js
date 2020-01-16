@@ -42,12 +42,12 @@ export default function GameScene({assets}) {
           castShadow={true}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
-          shadow-camera-left={-28}
-          shadow-camera-bottom={-28}
-          shadow-camera-top={28}
-          shadow-camera-right={28}
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
+          shadow-camera-left={-18}
+          shadow-camera-bottom={-18}
+          shadow-camera-top={18}
+          shadow-camera-right={18}
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
         />
 
         <Suspense fallback={<Fallback />}>

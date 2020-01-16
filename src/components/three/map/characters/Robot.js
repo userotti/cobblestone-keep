@@ -35,6 +35,14 @@ export default function Robot({loadedAssetData, position}) {
       config: config.default//{ mass: 1, tension: 290, friction: 32 }
     }])
     
+    let { children } = loadedAssetData['model_gltf'].scene;
+    children.forEach((mesh)=>{
+      mesh.geometry.visible = false
+      mesh.material.colorWrite = false;
+      mesh.material.depthWrite = false;
+    })
+    
+    
     return (
       
       <animated.group
@@ -58,22 +66,19 @@ export default function Robot({loadedAssetData, position}) {
           <primitive attach="material" object={spriteMaterial}/>
         </sprite> */}
 
+        
+        <primitive
+          object={loadedAssetData['model_gltf'].scene}
+          position={[0, -1, 0]} 
+        />
 
-        <mesh
-
-          rotation={[0,cameraOrthographicAngle*-1,0]}
-          material-colorWrite={show_shadow_geom}
-          material-depthWrite={show_shadow_geom}
-          castShadow={true}
-          >
-          <primitive
-            attach="geometry"
-            visible={true}
-            object={loadedAssetData['model_gltf'].scene}
-            castShadow={true}
+        {/* {newChildren.map((child)=>{
+          return <primitive
+            key={child.name}
+            object={child}
             position={[0, -1, 0]} 
           />
-        </mesh>
+        })} */}
         
       </animated.group>
     )
