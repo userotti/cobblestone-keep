@@ -34,12 +34,12 @@ export default function Robot({loadedAssetData, position}) {
       config: config.default//{ mass: 1, tension: 290, friction: 32 }
     }])
     
-    let { children } = loadedAssetData['model_gltf'].scene;
-    children.forEach((mesh)=>{
-      mesh.geometry.visible = false
-      mesh.material.colorWrite = false;
-      mesh.material.depthWrite = false;
-    })
+    // let { children } = loadedAssetData['model_gltf'].scene;
+    // children.forEach((mesh)=>{
+    //   mesh.geometry.visible = false
+    //   mesh.material.colorWrite = false;
+    //   mesh.material.depthWrite = false;
+    // })
     
     
     return (
@@ -60,13 +60,13 @@ export default function Robot({loadedAssetData, position}) {
         // })}
       
       >
-        <sprite 
+        {/* <sprite 
           scale={[2,2,2]}
           position-x={0}
           position-y={0}
           position-z={-0.8}>
           <primitive attach="material" object={spriteMaterial}/>
-        </sprite>
+        </sprite> */}
 
         
         <primitive

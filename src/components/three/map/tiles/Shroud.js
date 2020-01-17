@@ -28,6 +28,7 @@ export default function Shroud({texture, position}) {
         receiveShadow={false}
         onClick={(e) => {
           console.log('click shroud');
+          console.log(shroudRemoved)
           removeShroud(position)
         }}
         

@@ -1,4 +1,4 @@
-import React, {Suspense, Fallback, useEffect} from 'react';
+import React, {Suspense, useEffect} from 'react';
 
 import Items from '../map/Items.js';
 import Structural from '../map/Structural.js';
@@ -8,6 +8,8 @@ import Characters from '../map/Characters';
 import Camera from '../Camera.js';
 
 // import ModelX from '../../../models/Model'
+// import Model from '../../../models/robot'
+// import Model from '../../../models/box'
 
 import Shroud from '../map/tiles/Shroud';
 
@@ -64,8 +66,9 @@ export default function GameScene({assets}) {
           shadow-mapSize-height={2048}
         />
 
-      {/* <Suspense fallback={<Fallback />}>
-        <ModelX />
+
+      {/* <Suspense fallback={null}>
+        <Model />
       </Suspense> */}
 
       <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
