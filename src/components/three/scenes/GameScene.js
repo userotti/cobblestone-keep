@@ -12,7 +12,12 @@ export default function GameScene({assets}) {
 
   const floorOffsets = useStore(state => state.cellMap.floorOffsets);
   const floorRotations = useStore(state => state.cellMap.floorRotations);
-    
+
+  const doorOffsets = useStore(state => state.cellMap.doorOffsets);
+  const doorRotations = useStore(state => state.cellMap.doorRotations);
+  
+  const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
+
   const doCellClickAction = useStore(state => state.doCellClickAction);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const loadAssets = useStore(state => state.loadAssets);
@@ -21,7 +26,13 @@ export default function GameScene({assets}) {
 
   useEffect(() => {
     loadAssets()
-  }, [loadAssets])
+    setActiveCellMapParameters({
+      width: 15,
+      height: 15,
+      roomSizeRange: [15,15],
+      maxRooms: 1
+    })
+  }, [loadAssets, setActiveCellMapParameters])
 
   if(!loadedAssetData) return null
 
@@ -49,6 +60,8 @@ export default function GameScene({assets}) {
           textures={loadedAssetData} 
           floorOffsets={floorOffsets}
           floorRotations={floorRotations}
+          doorOffsets={doorOffsets}
+          doorRotations={doorRotations}
         />
 
       {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}

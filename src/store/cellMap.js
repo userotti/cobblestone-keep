@@ -12,14 +12,20 @@ export default function cellMap(set){
     setActiveCellMapParameters: (cellMapParams) => set(state=>{
 
       const activeCellMap = buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms);
-      console.log("floorOffsets: ", getOffesetsFromCellType(activeCellMap, 'floor'));
-      console.log("floorRotations: ", getRotationsFromCellType(activeCellMap, 'floor'));
+
+      const floorOffsets = getOffesetsFromCellType(activeCellMap, 'floor');
+      const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
+
+      const doorOffsets = getOffesetsFromCellType(activeCellMap, 'door');
+      const doorRotations = getRotationsFromCellType(activeCellMap, 'door');
         
       return {
         cellMap: {
           ...state.cellMap,
-          floorOffsets: getOffesetsFromCellType(activeCellMap, 'floor'),
-          floorRotations: getRotationsFromCellType(activeCellMap, 'floor'),
+          floorOffsets: floorOffsets,
+          floorRotations: floorRotations,
+          doorOffsets: doorOffsets,
+          doorRotations: doorRotations,
           activeCellMap: buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms),
           activeCellMapParameters: cellMapParams,
         }
