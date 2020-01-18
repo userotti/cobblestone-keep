@@ -5,27 +5,15 @@ import Floor from './cells/Floor'
 import { getRandomInt } from '../../../utils/functions'
 
 export default function Structural({textures, activeCellMap}) {
-
   
   if (!textures || !activeCellMap) return null;
 
-  const wallOffset = getOffesetsFromCellType(activeCellMap, 'wall');
   const floorOffset = getOffesetsFromCellType(activeCellMap, 'floor');
   const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
   
-  const voidOffset = getOffesetsFromCellType(activeCellMap, 'void');
-  const voidRotations = getRotationsFromCellType(activeCellMap, 'void');
-  
-  const doorOffset = getOffesetsFromCellType(activeCellMap, 'door');
-  const doorRotations = getRotationsFromCellType(activeCellMap, 'door');
-  
-  
-  
   return (
     <Fragment>
-      <Wall texture={textures['basic_floor']} offsets={wallOffset}/>
       <Floor texture={textures['basic_floor']} offsets={floorOffset} rotations={floorRotations}/>
-      <Floor texture={textures['basic_floor']} offsets={doorOffset} rotations={doorRotations}/>
     </Fragment>
   )
 }
