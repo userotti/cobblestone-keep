@@ -5,9 +5,7 @@ import useStore from '../../../store';
 
 export default function Characters({loadedAssetData, activeItemMap}) {
 
-  const { 
-    playerPosition
-  } = useStore()
+  const robotPosition = useStore(state => state.characters.robotPosition);
   
   // console.log(playerPosition)
   // const [position, setPosition] = useState(playerPosition)
@@ -44,7 +42,7 @@ export default function Characters({loadedAssetData, activeItemMap}) {
   if (!loadedAssetData || !activeItemMap) return null
   return (
     <Fragment>
-      <Robot position={playerPosition} loadedAssetData={loadedAssetData} />
+      <Robot position={robotPosition} loadedAssetData={loadedAssetData} />
     </Fragment>
   )
 }

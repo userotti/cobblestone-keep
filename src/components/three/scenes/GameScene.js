@@ -10,15 +10,9 @@ import useStore from '../../../store';
 
 export default function GameScene({assets}) {
 
-  const floorOffsets = useStore(state => state.cellMap.floorOffsets);
-  const floorRotations = useStore(state => state.cellMap.floorRotations);
-
-  const doorOffsets = useStore(state => state.cellMap.doorOffsets);
-  const doorRotations = useStore(state => state.cellMap.doorRotations);
   
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
-
-  const doCellClickAction = useStore(state => state.doCellClickAction);
+  const onPlaneTap = useStore(state => state.interaction.onPlaneTap);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);
@@ -56,21 +50,15 @@ export default function GameScene({assets}) {
         />
 
 
-        <Structural 
-          textures={loadedAssetData} 
-          floorOffsets={floorOffsets}
-          floorRotations={floorRotations}
-          doorOffsets={doorOffsets}
-          doorRotations={doorRotations}
-        />
+        <Structural loadedAssetData={loadedAssetData}/>
 
-      {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
-      {/* <Characters loadedAssetData={loadedAssetData} activeItemMap={activeCellMap}/> */}
+        {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
+        <Characters loadedAssetData={loadedAssetData}/>
      
-      {/* <StructuralOnTapPlane onTap={(event)=>{
-        doCellClickAction([event.point.x, event.point.y, event.point.z])
-        // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
-      }}/> */}
+        <StructuralOnTapPlane onTap={(event)=>{
+          onPlaneTap([event.point.x, event.point.y, event.point.y])
+          // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
+        }}/>
       </Camera>
     </ThreeFibreHTMLCanvas>
   );
