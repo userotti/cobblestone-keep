@@ -12,7 +12,8 @@
     "react-three-fiber": "^3.0.13",
     "styled-components": "^4.4.1",
     "three": "^0.110.0",
-    "zustand": "^1.0.7"
+    "zustand": "^1.0.7",
+    "rot-js": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
