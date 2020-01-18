@@ -5,9 +5,9 @@ import useStore from '../../../store';
 
 export default function FocusedCell() {
 
-  const activeCellMap = useStore(state => state.activeCellMap);
+  const activeCellMap = useStore(state => state.cellMap.activeCellMap);
   const cameraFocusPointPosition = useStore(state => state.cameraFocusPointPosition);
-  const cellSize = useStore(state => state.cellSize);
+  const cellSize = useStore(state => state.cellMap.cellSize);
 
   var geometry = new THREE.BoxBufferGeometry( cellSize[0]*2.01,cellSize[1]*2.01,cellSize[2]*2.01 );
   var geo = new THREE.EdgesGeometry( geometry );

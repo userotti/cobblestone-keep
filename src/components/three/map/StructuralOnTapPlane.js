@@ -6,7 +6,7 @@ import useStore from '../../../store';
 export default function StructuralOnTapPlane({onTap}){
   const visible = false;
   const interactionPlanePosition = useStore(state => state.interactionPlanePosition);
-  const activeCellMapParameters = useStore(state => state.activeCellMapParameters);
+  const activeCellMapParameters = useStore(state => state.cellMap.activeCellMapParameters);
   
   if (!activeCellMapParameters) return null;
   return (

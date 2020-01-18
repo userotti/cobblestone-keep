@@ -12,7 +12,7 @@ export default function Characters({loadedAssetData, activeItemMap}) {
   // console.log(playerPosition)
   // const [position, setPosition] = useState(playerPosition)
   // const [position2, setPosition2] = useState([1,0,-2]);
-  // const cellSize = useStore(state => state.cellSize);
+  // const cellSize = useStore(state => state.cellMap.cellSize);
   
 
   // useEffect(() => {

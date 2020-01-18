@@ -10,18 +10,17 @@ import useStore from '../../../store';
 
 export default function GameScene({assets}) {
 
-  const activeCellMap = useStore(state => state.activeCellMap);
+  const floorOffsets = useStore(state => state.cellMap.floorOffsets);
+  const floorRotations = useStore(state => state.cellMap.floorRotations);
+    
   const doCellClickAction = useStore(state => state.doCellClickAction);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);
 
-  const { 
-    shroudRemoved
-  } = useStore()
 
   useEffect(() => {
-      loadAssets()
+    loadAssets()
   }, [loadAssets])
 
   if(!loadedAssetData) return null
@@ -46,9 +45,14 @@ export default function GameScene({assets}) {
         />
 
 
-      <Structural textures={loadedAssetData} activeCellMap={activeCellMap}/>
+        <Structural 
+          textures={loadedAssetData} 
+          floorOffsets={floorOffsets}
+          floorRotations={floorRotations}
+        />
+
       {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
-      <Characters loadedAssetData={loadedAssetData} activeItemMap={activeCellMap}/>
+      {/* <Characters loadedAssetData={loadedAssetData} activeItemMap={activeCellMap}/> */}
      
       {/* <StructuralOnTapPlane onTap={(event)=>{
         doCellClickAction([event.point.x, event.point.y, event.point.z])

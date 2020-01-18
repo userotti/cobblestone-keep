@@ -20,8 +20,8 @@ export default function camera(set){
       }
     }),
     setCameraFocusPointPosition: (newPostionArray) => set(state=>{
-      let x = 0 // Math.floor((newPostionArray[0]+1) / (state.cellSize[0]*2))*2; 
-      let z = 0 // Math.floor((newPostionArray[2]+1) / (state.cellSize[2]*2))*2; 
+      let x = 0 // Math.floor((newPostionArray[0]+1) / (state.cellMap.cellSize[0]*2))*2; 
+      let z = 0 // Math.floor((newPostionArray[2]+1) / (state.cellMap.cellSize[2]*2))*2; 
       return {
         cameraFocusPointPosition: [x, 0, z]
       }

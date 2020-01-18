@@ -14,7 +14,7 @@ const [useStore] = create(set => ({
   
   ...camera(set),
   ...assets(set),
-  ...cellMap(set),
+  cellMap: cellMap(set),
   ...characters(set),
   ...game(set)
 

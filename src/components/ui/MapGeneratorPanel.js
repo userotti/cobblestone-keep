@@ -44,7 +44,7 @@ const GenerateButton = styled.button`
 
 export default function MapGeneratorPanel() {
 
-  const setActiveCellMapParameters = useStore(state => state.setActiveCellMapParameters);
+  const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
   
   const [state, setState] = useState({
     fields:{
