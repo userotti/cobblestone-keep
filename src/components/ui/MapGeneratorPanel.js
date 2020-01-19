@@ -5,12 +5,18 @@ import useStore from '../../store';
 
 const SidePanel = styled.div`
   margin-left: 0.2rem;
-  padding: 0.5rem;
-  background-color: #567;  
+  padding: 1rem;
+  background-color: #35303E; 
+  position: fixed; 
+  top: 0;
+  right: 0;
+  width: 200px
 `;
 const SidePanelHeading = styled.h4`
   color: white;
   font-family: Helvetica;
+  margin: 0;
+  text-transform: uppercase;
 `;
 
 const SidePanelControls = styled.form`
@@ -20,24 +26,27 @@ const SidePanelControls = styled.form`
 const StyledInputLabel = styled.label`
   margin-top: 0.2rem;
   padding: 0.1rem;
-  color: white;
-  font-size: 12px;
+  color: rgba(255,255,255,0.4);;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
 `;
 const StyledInput = styled.input`
   margin-top: 0.2rem;
   border: 0;
   padding: 0.5rem;
-  background-color: #9ab;
-  color: white;
-  font-size: 16px;
+  background-color: rgba(0,0,0,0.4);
+  color: #306082;
+  font-size: 13px;
+  font-weight: bold;
 `;
 
 const StyledSelect = styled.select`
   margin-top: 0.2rem;
   border: 0;
   padding: 0.5rem;
-  background-color: #9ab;
-  color: white;
+  background-color: rgba(0,0,0,0.4);
+  color: #306082;
   font-size: 16px;
 `;
 
@@ -48,8 +57,9 @@ const GenerateButton = styled.button`
   padding: 0.5rem;
   margin-top: 1rem;
   color: white;
-  background-color: #bcb;
+  background-color: #306082;
   cursor: pointer;
+  border-radius: 4px;
 `;
 
 export default function MapGeneratorPanel() {

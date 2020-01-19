@@ -28,7 +28,7 @@ function Home() {
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
   return <div className="game-holder">
-    <h1>MoonSweep</h1>
+    <h1>MoonSweeper</h1>
     <HUD/>
     <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
       <GameScene assets={assets}/>
