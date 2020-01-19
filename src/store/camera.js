@@ -26,6 +26,7 @@ export default function camera(set){
         cameraFocusPointPosition: [x, 0, z]
       }
     }),
+    
     increaseCameraVisibleRadius: (amount) => set((state) => {
       return {
         cameraVisibleRadius: state.cameraVisibleRadius + amount

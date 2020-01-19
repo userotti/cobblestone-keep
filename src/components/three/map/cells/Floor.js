@@ -79,13 +79,9 @@ export default function Floor({texture, offsets, rotations}) {
 
     return (
         <mesh
-            frustumCulled={false}
-            castShadow={true}
-            receiveShadow={true}
-            onPointerOver={e => console.log('hover')}
-            onClick={(e) => {
-                console.log('click', e);
-            }}
+          frustumCulled={false}
+          castShadow={true}
+          receiveShadow={true}
         >
             <primitive attach="geometry" object={geometry}/>
             <primitive attach="material" object={material}/>

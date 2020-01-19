@@ -12,6 +12,9 @@ export default function GameScene({assets}) {
 
   
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
+  const setPositionFromPosition = useStore(state => state.player.setPositionFromPosition);
+  
+  
   const onPlaneTap = useStore(state => state.interaction.onPlaneTap);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const loadAssets = useStore(state => state.loadAssets);
@@ -27,6 +30,9 @@ export default function GameScene({assets}) {
       maxRooms: 1,
       type: 'cellular'
     })
+    
+    
+
   }, [loadAssets, setActiveCellMapParameters])
 
   if(!loadedAssetData) return null
@@ -38,7 +44,7 @@ export default function GameScene({assets}) {
         <directionalLight
           intensity={0.9}
           color={0xffffff}
-          position={[-45, 50, 45]}
+          position={[35, 60, -35]}
           castShadow={true}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
@@ -57,8 +63,9 @@ export default function GameScene({assets}) {
         <Characters loadedAssetData={loadedAssetData}/>
      
         <StructuralOnTapPlane onTap={(event)=>{
-          onPlaneTap([event.point.x, event.point.y, event.point.z])
-          // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
+          // onPlaneTap([event.point.x, event.point.y, event.point.z]);
+          setPositionFromPosition([event.point.x, event.point.y, event.point.z]);
+          setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
         }}/>
       </Camera>
     </ThreeFibreHTMLCanvas>

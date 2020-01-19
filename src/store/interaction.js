@@ -1,24 +1,28 @@
 import * as THREE from 'three';
+import { positionVectorToCell, cellToPositionVector } from './cellMap.js';
 
 const origin = new THREE.Vector3(0,0,0);
 
 export default function interaction(set){
   return {
 
-
+    
     onPlaneTap: (positionVectorArray) => set(state=>{
       
-      const cellTappedLocation = [Math.floor(positionVectorArray[0]/2 + state.cellMap.activeCellMapParameters.width/2), Math.floor(positionVectorArray[2]/2 + state.cellMap.activeCellMapParameters.height/2)];
+      const cellTappedLocation = positionVectorToCell(positionVectorArray, state.cellMap.cellSize, state.cellMap.activeCellMapParameters);
+      
+      state.setCameraFocusPointPosition(positionVectorArray);
+      
       const cellTappedType = state.cellMap.activeCellMap[cellTappedLocation[0]][cellTappedLocation[1]].type;
 
-      console.log("cellTappedLocation: ", cellTappedLocation);
-      console.log("cellTappedType: ", cellTappedType);
-      
-
       return {
-        ...state.interaction,
-        cellTappedLocation,
-        cellTappedType
+        interaction: {
+          ...state.interaction,
+          cellTappedLocation,
+          cellTappedType
+        }
+       
+        
       }
     })
     

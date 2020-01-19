@@ -10,7 +10,10 @@ export default function cellMap(set){
     activeCellMap: null,
     activeCellMapParameters: null,
 
-    
+    cellToPositionVector: (cell)=>{
+      return cell
+    },
+
     setActiveCellMapParameters: (cellMapParams) => set(state=>{
 
       let activeCellMap;
@@ -54,6 +57,21 @@ export default function cellMap(set){
   }
 }
 
+export function positionVectorToCell(positionVectorArray, cellSize, activeCellMapParameters){
+  const cellTappedLocation = [
+    Math.floor(positionVectorArray[0]/(cellSize[0]*2) + activeCellMapParameters.width/2), 
+    Math.floor(positionVectorArray[2]/(cellSize[2]*2) + activeCellMapParameters.height/2)
+  ];
+  return cellTappedLocation
+}
+
+export function cellToPositionVector(cellCoord, cellSize, activeCellMapParameters){
+  return [
+    (cellCoord[0] * cellSize[0]*2) - activeCellMapParameters.width + cellSize[0],
+    0,
+    (cellCoord[1] * cellSize[1]*2) - activeCellMapParameters.height + cellSize[1]
+  ];
+}
 
 
 function getOffesetsFromCellType(activeCellMap, type){

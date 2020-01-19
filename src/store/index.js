@@ -2,9 +2,9 @@ import create from 'zustand'
 import camera from './camera'
 import assets from './assets'
 import cellMap from './cellMap'
-import characters from './characters'
 import interaction from './interaction'
 import game from './game'
+import player from './player'
 
 const canvasContainerSizeInPixels = [500, 500];
 const [useStore] = create(set => ({
@@ -16,9 +16,8 @@ const [useStore] = create(set => ({
   ...camera(set),
   ...assets(set),
   cellMap: cellMap(set),
-  characters: characters(set),
   interaction: interaction(set),
-  
+  player: player(set),
   ...game(set)
 
 }))
