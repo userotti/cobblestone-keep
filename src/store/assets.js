@@ -46,7 +46,10 @@ export default function assets(set){
         url: '/assets/sprites/robot_with_barrel.png',
       },
       'basic_floor': {
-        url: '/assets/walls/basic_floor_16x16.png',
+        url: '/assets/walls/basic_floor_1_16x16.png',
+      },
+      'basic_floor2': {
+        url: '/assets/walls/basic_floor_2_16x16.png',
       },
       'shroud': {
         url: '/assets/walls/shroud.png',

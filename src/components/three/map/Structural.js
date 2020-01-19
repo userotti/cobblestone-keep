@@ -11,12 +11,12 @@ export default function Structural({loadedAssetData}) {
   const doorOffsets = useStore(state => state.cellMap.doorOffsets);
   const doorRotations = useStore(state => state.cellMap.doorRotations);
 
-  if (!loadedAssetData) return null;
-  
+  if (!loadedAssetData) return null
+
   return (
     <Fragment>
-      <Floor texture={loadedAssetData['basic_floor']} offsets={floorOffsets} rotations={floorRotations}/>
-      <Floor texture={loadedAssetData['basic_floor']} offsets={doorOffsets} rotations={doorRotations}/>
+      <Floor texture={loadedAssetData['basic_floor2']} offsets={floorOffsets} rotations={floorRotations}/>
+      {/* <Floor texture={loadedAssetData['basic_floor']} offsets={doorOffsets} rotations={doorRotations}/> */}
     </Fragment>
   )
 }

@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import * as THREE from 'three';
 import customLambertVertexShader from '../../../../utils/shaders/meshlambert_vert.glsl';
 
-export default function Floor({texture, offsets, rotations}) {
 
+export default function Floor({texture, offsets, rotations}) {
+    
     console.log("floor render")
     const { geometry, material } = useMemo(()=>{
       console.log("floor render memo")
@@ -14,7 +15,7 @@ export default function Floor({texture, offsets, rotations}) {
           {pos: [-1, -1, 1], norm: [0, 1, 0], uv: [1, 1],},
           {pos: [1, -1, -1], norm: [0, 1, 0], uv: [0, 0],},
           {pos: [1, -1, 1], norm: [0, 1, 0], uv: [1, 0],},
-      ];
+      ]
 
       const numVertices = vertices.length;
       const positionNumComponents = 3;
@@ -26,7 +27,6 @@ export default function Floor({texture, offsets, rotations}) {
       let posNdx = 0;
       let nrmNdx = 0;
       let uvNdx = 0;
-
 
       for (const vertex of vertices) {
           positions.set(vertex.pos, posNdx);
@@ -41,32 +41,34 @@ export default function Floor({texture, offsets, rotations}) {
 
       geometry.setAttribute(
           'position',
-          new THREE.BufferAttribute(positions, positionNumComponents));
+          new THREE.BufferAttribute(positions, positionNumComponents))
       geometry.setAttribute(
           'normal',
-          new THREE.BufferAttribute(normals, normalNumComponents));
+          new THREE.BufferAttribute(normals, normalNumComponents))
       geometry.setAttribute(
           'uv',
-          new THREE.BufferAttribute(uvs, uvNumComponents));
+          new THREE.BufferAttribute(uvs, uvNumComponents))
 
       geometry.setIndex([
           0,  1,  2,   2,  1,  3,  // front
       ]);
 
-      geometry.setAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) );
-      geometry.setAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) );
+      geometry.setAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) )
+      geometry.setAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) )
       
-      texture.minFilter = THREE.NearestFilter;
-      texture.magFilter = THREE.NearestFilter;
+
+
+      texture.minFilter = THREE.NearestFilter
+      texture.magFilter = THREE.NearestFilter
       
       const material = new THREE.MeshLambertMaterial( {
           map: texture,
           color: "#878"
-      });
+      })
 
       material.onBeforeCompile = function( shader ) {
-          shader.vertexShader = customLambertVertexShader;
-      };
+          shader.vertexShader = customLambertVertexShader
+      }
 
       return { 
         geometry,
