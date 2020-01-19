@@ -48,11 +48,12 @@ export default function MapGeneratorPanel() {
   
   const [state, setState] = useState({
     fields:{
-      width: 50,
-      height: 50,
-      room_min_size: 3,
-      room_max_size: 3,
-      max_rooms: 10
+      width: 10,
+      height: 10,
+      room_min_size: 10,
+      room_max_size: 10,
+      max_rooms: 1,
+      type: 'basic'
     }
   });
 
@@ -126,13 +127,24 @@ export default function MapGeneratorPanel() {
             }
           })
         }}/>
+
+        <StyledInputLabel>type: </StyledInputLabel>
+        <StyledInput name="type" id="type" value={state.fields.type} onChange={(event)=>{
+          setState({
+            fields: {
+              ...state.fields,
+              type: event.target.value
+            }
+          })
+        }}/>
         
         <GenerateButton onClick={()=>{
           setActiveCellMapParameters({
             width: state.fields.width,
             height: state.fields.height,
             roomSizeRange: [state.fields.room_min_size,state.fields.room_max_size],
-            maxRooms: state.fields.max_rooms
+            maxRooms: state.fields.max_rooms,
+            type: state.fields.type
           })
           
         }}>Generate</GenerateButton>

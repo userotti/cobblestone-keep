@@ -7,3 +7,11 @@ export function getRandomInt(min, max) {
 export function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
+
+export function rotjsToCustomMapFormat(rotMap) {
+    return rotMap.map((row)=>{
+      return row.map((cell)=>{
+        return cell == 0 ? {type: 'void'} : {type: 'floor'} 
+      })
+    })
+}

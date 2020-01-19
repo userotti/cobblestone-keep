@@ -1,5 +1,6 @@
 
 import { buildOutTheMap } from '../utils/mapGenerators/basic';
+import { cellular } from '../utils/mapGenerators/rotjs';
 
 export default function cellMap(set){
   return {
@@ -8,10 +9,27 @@ export default function cellMap(set){
     cellSize: [1,1,1],
     activeCellMap: null,
     activeCellMapParameters: null,
+
     
     setActiveCellMapParameters: (cellMapParams) => set(state=>{
 
-      const activeCellMap = buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms);
+      let activeCellMap;
+
+      console.log("cellMapParams: ", cellMapParams);
+      if (cellMapParams) {
+        switch (cellMapParams.type){
+
+          case 'basic': 
+            activeCellMap = buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms);
+            break;
+
+          case 'cellular':
+            activeCellMap = cellular(cellMapParams.width, cellMapParams.height);  
+            break;
+        }
+      }
+
+      console.log("activeCellMap: ", activeCellMap);
 
       const floorOffsets = getOffesetsFromCellType(activeCellMap, 'floor');
       const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
@@ -26,7 +44,7 @@ export default function cellMap(set){
           floorRotations: floorRotations,
           doorOffsets: doorOffsets,
           doorRotations: doorRotations,
-          activeCellMap: buildOutTheMap(cellMapParams.width, cellMapParams.height, cellMapParams.roomSizeRange, cellMapParams.maxRooms),
+          activeCellMap: activeCellMap,
           activeCellMapParameters: cellMapParams,
         }
         

@@ -8,10 +8,17 @@ export default function interaction(set){
 
     onPlaneTap: (positionVectorArray) => set(state=>{
       
-      console.log("positionVectorArray: ", positionVectorArray);
+      const cellTappedLocation = [Math.floor(positionVectorArray[0]/2 + state.cellMap.activeCellMapParameters.width/2), Math.floor(positionVectorArray[2]/2 + state.cellMap.activeCellMapParameters.height/2)];
+      const cellTappedType = state.cellMap.activeCellMap[cellTappedLocation[0]][cellTappedLocation[1]].type;
+
+      console.log("cellTappedLocation: ", cellTappedLocation);
+      console.log("cellTappedType: ", cellTappedType);
+      
 
       return {
-        ...state.interaction
+        ...state.interaction,
+        cellTappedLocation,
+        cellTappedType
       }
     })
     

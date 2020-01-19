@@ -24,7 +24,8 @@ export default function GameScene({assets}) {
       width: 15,
       height: 15,
       roomSizeRange: [15,15],
-      maxRooms: 1
+      maxRooms: 1,
+      type: 'cellular'
     })
   }, [loadAssets, setActiveCellMapParameters])
 
@@ -56,7 +57,7 @@ export default function GameScene({assets}) {
         <Characters loadedAssetData={loadedAssetData}/>
      
         <StructuralOnTapPlane onTap={(event)=>{
-          onPlaneTap([event.point.x, event.point.y, event.point.y])
+          onPlaneTap([event.point.x, event.point.y, event.point.z])
           // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
         }}/>
       </Camera>
