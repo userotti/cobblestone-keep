@@ -31,6 +31,16 @@ const StyledInput = styled.input`
   color: white;
   font-size: 16px;
 `;
+
+const StyledSelect = styled.select`
+  margin-top: 0.2rem;
+  border: 0;
+  padding: 0.5rem;
+  background-color: #9ab;
+  color: white;
+  font-size: 16px;
+`;
+
 const GenerateButton = styled.button`
   font-size: 16px;
   font-weight: bold;
@@ -129,14 +139,18 @@ export default function MapGeneratorPanel() {
         }}/>
 
         <StyledInputLabel>type: </StyledInputLabel>
-        <StyledInput name="type" id="type" value={state.fields.type} onChange={(event)=>{
+        <StyledSelect name="type" id="type" value={state.fields.type} onChange={(event)=>{
           setState({
             fields: {
               ...state.fields,
               type: event.target.value
             }
           })
-        }}/>
+          
+        }}>
+          <option value="basic">basic</option>
+          <option value="cellular">cellular</option>
+        </StyledSelect>  
         
         <GenerateButton onClick={()=>{
           setActiveCellMapParameters({
