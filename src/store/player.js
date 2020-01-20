@@ -9,33 +9,22 @@ const sound = new Howl({
 
 const origin = new THREE.Vector3(0,0,0);
 
-export default function player(set){
+export default function player(set, get){
   return {
 
     position: [0,0,0],
     hopping: false,
-    setPositionFromPosition: (positionVectorArray) => set(state=>{
-     
-      const cellLocation = positionVectorToCell(positionVectorArray, state.cellMap.cellSize, state.cellMap.activeCellMapParameters);
+    movePlayerTowardsCellAt: (positionVectorArray) => {
+
+      get().player.setPositionFromCell(positionVectorArray);
+    },
+    setPlayerPositionFromTapPoint: (positionVectorArray) => {
+      const cellLocation = positionVectorToCell(positionVectorArray, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);
+      get().player.setPositionFromCell(cellLocation);
+    },
+
+    setPositionFromCell: (cellLocation) => set(state=>{
       const position = cellToPositionVector(cellLocation, state.cellMap.cellSize, state.cellMap.activeCellMapParameters);
-
-      const shouldHop = (state.player.position[0] != position[0] || state.player.position[2] != position[2]);
-
-      // sound.play()
-
-      return {
-        player: {
-          ...state.player,
-          position: position,
-          hopping: shouldHop
-        }
-      }
-
-    }),
-    setPositionFromCell: (cellCoord) => set(state=>{
-      
-      const position = cellToPositionVector(cellCoord, state.cellMap.cellSize, state.cellMap.activeCellMapParameters);
-      
       return {
         player: {
           ...state.player,
@@ -43,7 +32,6 @@ export default function player(set){
           hopping: true
         }
       }
-
     })
     
   }

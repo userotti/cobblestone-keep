@@ -12,7 +12,8 @@ export default function GameScene({assets}) {
 
   
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
-  const setPositionFromPosition = useStore(state => state.player.setPositionFromPosition);
+  const setPlayerPositionFromTapPoint = useStore(state => state.player.setPlayerPositionFromTapPoint);
+  const movePlayerTowardsCellAt = useStore(state => state.player.movePlayerTowardsCellAt);
   
   
   const onPlaneTap = useStore(state => state.interaction.onPlaneTap);
@@ -64,8 +65,9 @@ export default function GameScene({assets}) {
      
         <StructuralOnTapPlane onTap={(event)=>{
           // onPlaneTap([event.point.x, event.point.y, event.point.z]);
-          setPositionFromPosition([event.point.x, event.point.y, event.point.z]);
-          setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
+          movePlayerTowardsCellAt([event.point.x, event.point.y, event.point.z]);
+          // setPlayerPositionFromTapPoint([event.point.x, event.point.y, event.point.z]);
+          // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
         }}/>
       </Camera>
     </ThreeFibreHTMLCanvas>

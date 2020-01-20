@@ -35,7 +35,7 @@ export default App
 
 function Home() {
 
-  music.play()
+  // music.play()
   
   const game = useStore(state => state.game);
   const assets = useStore(state => state.assets);

@@ -7,18 +7,18 @@ import game from './game'
 import player from './player'
 
 const canvasContainerSizeInPixels = [500, 500];
-const [useStore] = create(set => ({
+const [useStore] = create((set,get) => ({
 
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
   interactionPlanePosition: [0,-1,0],    
   setInteractionPlanePosition: (newPostionArray) => set(state=>({interactionPlanePosition: newPostionArray})),
   
-  ...camera(set),
-  ...assets(set),
-  cellMap: cellMap(set),
-  interaction: interaction(set),
-  player: player(set),
-  ...game(set)
+  ...camera(set, get),
+  ...assets(set, get),
+  cellMap: cellMap(set, get),
+  interaction: interaction(set, get),
+  player: player(set, get),
+  ...game(set, get)
 
 }))
 
