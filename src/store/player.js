@@ -21,7 +21,7 @@ export default function player(set){
 
       const shouldHop = (state.player.position[0] != position[0] || state.player.position[2] != position[2]);
 
-      sound.play()
+      // sound.play()
 
       return {
         player: {

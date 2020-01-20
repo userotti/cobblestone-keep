@@ -8,7 +8,14 @@ import HUD from './components/ui/HUD'
 import CameraControls from './components/ui/CameraControls'
 import MapGeneratorPanel from './components/ui/MapGeneratorPanel'
 
+import {Howl, Howler} from 'howler';
 
+
+const music = new Howl({
+  src: ['/assets/sounds/sound_music_loop.wav'],
+  volume: 0.2,
+  loop: true
+});
 
 
 function App() {
@@ -28,7 +35,7 @@ export default App
 
 function Home() {
 
-
+  music.play()
   
   const game = useStore(state => state.game);
   const assets = useStore(state => state.assets);

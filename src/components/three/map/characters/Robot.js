@@ -2,6 +2,18 @@ import React, { Fragment, useMemo } from 'react';
 import { useSprings , animated , config  } from 'react-spring/three';
 import * as THREE from 'three';
 import useStore from '../../../../store'
+import {Howl, Howler} from 'howler';
+
+
+const sound = new Howl({
+  src: ['/assets/sounds/sound_jump.wav'],
+  volume: 0.3
+});
+const sound_end = new Howl({
+  src: ['/assets/sounds/sound_robot_speak.wav'],
+  volume: 0.1
+});
+
 
 export default function Robot({loadedAssetData, position, hopping}) {
 
@@ -39,8 +51,9 @@ export default function Robot({loadedAssetData, position, hopping}) {
       },
       to: {
         progress: hopping ? 1 : 0
-      },  
-      
+      },
+      onStart: () => { console.log('start', sound); sound.play() },
+      onRest: () => { console.log('rest', sound_end); sound_end.play() },
       reset: true,
       config: config.default//{ mass: 1, tension: 290, friction: 32 }
     }])
@@ -69,6 +82,7 @@ export default function Robot({loadedAssetData, position, hopping}) {
           scale={[2,2,2]}
           position-x={0}
           position-y={0}
+          
           position-z={springs[1].progress.interpolate((progress)=>{
             return -(progress - 1)*2.8*(-progress) - cellSize[2]*0.50
           })}>
