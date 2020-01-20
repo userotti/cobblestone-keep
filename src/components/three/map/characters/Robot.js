@@ -52,8 +52,8 @@ export default function Robot({loadedAssetData, position, hopping}) {
       to: {
         progress: hopping ? 1 : 0
       },
-      onStart: () => { console.log('start', sound); sound.play() },
-      onRest: () => { console.log('rest', sound_end); sound_end.play() },
+      onStart: () => { sound.play() },
+      onRest: () => { sound_end.play() },
       reset: true,
       config: config.default//{ mass: 1, tension: 290, friction: 32 }
     }])
