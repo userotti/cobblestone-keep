@@ -50,13 +50,20 @@ h1 {
 
 .hud span {
   display: flex;
-  border: 2px solid #666;
+  border: 1px solid #464646;
   color: #fff;
   padding: 8px 20px;
   margin: 12px 0;
   background: #222;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
+  line-height: 1em;
+  border-radius: 3px;
+}
+.hud span img {
+  display: block;
+  width: 16px;
+  height: 16px;
 }
 .hud span em {
   font-weight: bold;

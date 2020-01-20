@@ -30,13 +30,13 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
       <span> Do something + </span>
     </IconButton> */}
 
-    <IconButton onClick={()=>{increaseCameraSize(-2)}}>
+    <IconButton onClick={()=>{increaseCameraSize(-1)}}>
       <img src="../icons/zoom-in-32x32.png" alt="zoom-out"/>
     </IconButton>
     <span className='value'>
       { cameraSize.toFixed(2) }
     </span>
-    <IconButton onClick={()=>{increaseCameraSize(2)}}>
+    <IconButton onClick={()=>{increaseCameraSize(1)}}>
       <img src="../icons/zoom-out-32x32.png" alt="zoom-out"/>
     </IconButton>
     <IconButton onClick={()=>{rotateCamera(Math.PI/8)}}>

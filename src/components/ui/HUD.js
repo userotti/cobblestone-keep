@@ -23,9 +23,9 @@ export default function HUD() {
 
   return (
     <div className="hud">
-      <span>Health<em>{health}</em></span>
-      <span>Armour<em>{armour}</em></span>
-      <span>Damage<em>{damage}</em></span>
+      <span><img src="/assets/hud/heart.png"/><em>{health}</em></span>
+      <span><img src="/assets/hud/armour.png"/><em>{armour}</em></span>
+      <span><img src="/assets/hud/damage.png"/><em>{damage}</em></span>
     </div>
   )
 

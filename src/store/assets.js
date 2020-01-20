@@ -45,6 +45,9 @@ export default function assets(set){
       'robot_with_barrel': {
         url: '/assets/sprites/robot_with_barrel.png',
       },
+      'enemy1': {
+        url: '/assets/sprites/enemy1.png',
+      },
       'basic_floor': {
         url: '/assets/walls/basic_floor_1_16x16.png',
       },
