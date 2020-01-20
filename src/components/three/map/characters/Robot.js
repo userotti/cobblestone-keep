@@ -17,6 +17,7 @@ const sound_end = new Howl({
 
 export default function Robot({loadedAssetData, position, hopping}) {
 
+    
     const cellSize = useStore(state => state.cellMap.cellSize);
 
     loadedAssetData['robot'].minFilter = THREE.NearestFilter;

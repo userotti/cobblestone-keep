@@ -65,6 +65,7 @@ const GenerateButton = styled.button`
 export default function MapGeneratorPanel() {
 
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
+  const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
   
   const [state, setState] = useState({
     fields:{
@@ -170,6 +171,7 @@ export default function MapGeneratorPanel() {
             maxRooms: state.fields.max_rooms,
             type: state.fields.type
           })
+          setPlayerPositionToRandomOpenCell();
           
         }}>Generate</GenerateButton>
         

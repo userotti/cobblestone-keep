@@ -12,12 +12,12 @@ export default function GameScene({assets}) {
 
   
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
-  const setPlayerPositionFromTapPoint = useStore(state => state.player.setPlayerPositionFromTapPoint);
   const movePlayerTowardsCellAt = useStore(state => state.player.movePlayerTowardsCellAt);
-  
-  
-  const onPlaneTap = useStore(state => state.interaction.onPlaneTap);
+  const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
   const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
+  const setCameraFocusPointOnPlayer = useStore(state => state.setCameraFocusPointOnPlayer);
+
+  
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);
 
@@ -31,8 +31,9 @@ export default function GameScene({assets}) {
       maxRooms: 1,
       type: 'cellular'
     })
-    
-    
+
+    setPlayerPositionToRandomOpenCell()
+    setCameraFocusPointOnPlayer()
 
   }, [loadAssets, setActiveCellMapParameters])
 

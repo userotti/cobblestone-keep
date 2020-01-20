@@ -9,7 +9,7 @@ export default function cellMap(set){
     cellSize: [1,1,1],
     activeCellMap: null,
     activeCellMapParameters: null,
-
+    
     cellToPositionVector: (cell)=>{
       return cell
     },

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 const origin = new THREE.Vector3(0,0,0)
 
-export default function camera(set){
+export default function camera(set,get){
   return {
 
     cameraAspect: 0,
@@ -26,7 +26,12 @@ export default function camera(set){
         cameraFocusPointPosition: [x, 0, z]
       }
     }),
-    
+    setCameraFocusPointOnPlayer: () => set(state=>{
+      console.log("state.player.position: ", state.player.position); 
+      return {
+        cameraFocusPointPosition: state.player.position
+      }
+    }),
     increaseCameraVisibleRadius: (amount) => set((state) => {
       return {
         cameraVisibleRadius: state.cameraVisibleRadius + amount

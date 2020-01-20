@@ -9,7 +9,7 @@ export default function Characters({loadedAssetData}) {
   const robotPosition = useStore(state => state.player.position);
   const robotHopping = useStore(state => state.player.hopping);
   
-  
+  if (!robotPosition) return null;
   return (
     <Fragment>
       <Robot position={robotPosition} loadedAssetData={loadedAssetData} hopping={robotHopping} />
