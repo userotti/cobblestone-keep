@@ -16,7 +16,7 @@ export default function Structural({loadedAssetData}) {
   return (
     <Fragment>
       <Floor texture={loadedAssetData['basic_floor2']} offsets={floorOffsets} rotations={floorRotations}/>
-      {/* <Floor texture={loadedAssetData['basic_floor']} offsets={doorOffsets} rotations={doorRotations}/> */}
+      <Floor texture={loadedAssetData['basic_floor']} offsets={doorOffsets} rotations={doorRotations}/>
     </Fragment>
   )
 }

@@ -67,7 +67,7 @@ export default function GameScene({assets}) {
           // onPlaneTap([event.point.x, event.point.y, event.point.z]);
           movePlayerTowardsCellAt([event.point.x, event.point.y, event.point.z]);
           // setPlayerPositionFromTapPoint([event.point.x, event.point.y, event.point.z]);
-          // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
+          setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
         }}/>
       </Camera>
     </ThreeFibreHTMLCanvas>
