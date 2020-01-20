@@ -8,7 +8,11 @@ import HUD from './components/ui/HUD'
 import CameraControls from './components/ui/CameraControls'
 import MapGeneratorPanel from './components/ui/MapGeneratorPanel'
 
+
+
+
 function App() {
+  
 
   return (
     <Router>
@@ -24,6 +28,8 @@ export default App
 
 function Home() {
 
+
+  
   const game = useStore(state => state.game);
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
