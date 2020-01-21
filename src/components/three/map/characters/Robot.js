@@ -19,17 +19,16 @@ export default function Robot({loadedAssetData, position, hopping}) {
 
     
     const cellSize = useStore(state => state.cellMap.cellSize);
-
+    const {
+      muted
+    } = useStore()
     loadedAssetData['robot'].minFilter = THREE.NearestFilter;
     loadedAssetData['robot'].magFilter = THREE.NearestFilter;
     
-    
-
     const { 
       shadowGeometry,
       shadowMaterial, 
-      spriteMaterial
-      
+      spriteMaterial,
     } = useMemo(()=>{
       return {
         spriteMaterial: new THREE.SpriteMaterial( { map: loadedAssetData['robot'], color: 0xffffff }),
@@ -53,8 +52,8 @@ export default function Robot({loadedAssetData, position, hopping}) {
       to: {
         progress: hopping ? 1 : 0
       },
-      onStart: () => { /*sound.play()*/ },
-      onRest: () => { /*sound_end.play()*/ },
+      onStart: () => { !muted && sound.play() },
+      onRest: () => { !muted && sound_end.play() },
       reset: true,
       config: config.default//{ mass: 1, tension: 290, friction: 32 }
     }])

@@ -11,7 +11,9 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
     cameraTiltIndex,
     cameraTiltValues,
     cameraSize,
-    cameraOrthographicAngle
+    cameraOrthographicAngle,
+    muteSwitch,
+    muted
   } = useStore()
 
   return (<CameraControlsContainer className="camera-controls" controlsBackgroundColor={controlsBackgroundColor}>
@@ -54,6 +56,9 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
     <span className='value'>
       { cameraTiltValues[cameraTiltIndex] }
     </span>
+    <IconButton onClick={()=>{muteSwitch()}}>
+      {muted ? 'UNMUTE' : 'MUTE'}
+    </IconButton>
   </CameraControlsContainer>)
 }
 

@@ -20,7 +20,7 @@ const music = new Howl({
 
 function App() {
   
-
+  music.play()
   return (
     <Router>
       <div>
@@ -35,11 +35,18 @@ export default App
 
 function Home() {
 
-  // music.play()
+  const { 
+    muted
+  } = useStore()
   
   const game = useStore(state => state.game);
   const assets = useStore(state => state.assets);
-  const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels);  
+  const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels); 
+
+  // music.play()
+  console.log('one?')
+  muted ? music.volume(0) : music.volume(0.5)
+
   return <div className="game-holder">
     <h1>MoonSweeper</h1>
     <HUD/>

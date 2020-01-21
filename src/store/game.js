@@ -12,6 +12,14 @@ export default function game(set){
     
     playerPosition: [0,0,0],
 
+    muted: true,
+
+    muteSwitch: () => set(state => {
+      return {
+        muted: !state.muted
+      }
+    }),
+
     updatePlayerPosition: (newPostionArray) => set(state=>{
       return {
         playerPosition: newPostionArray
