@@ -73,7 +73,8 @@ h1 {
 }
 
 canvas {
-  background: #111;
+  background: #111 url(/assets/space-2.png);
+  background-size: cover;
   border-radius: 0 0 4px 4px;
   border: 1px solid #666;
   border-width: 0px 2px 2px 2px;
@@ -87,7 +88,7 @@ canvas {
 
 .camera-controls .value {
   color: #eee;
-  width: 80px;
+  /* width: 80px; */
   margin: 0 0px;
   font-size: 13px;
   text-align: center;
