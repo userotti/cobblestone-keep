@@ -10,6 +10,7 @@ export default function cellMap(set){
     activeCellMap: null,
     activeCellMapParameters: null,
     
+    
     cellToPositionVector: (cell)=>{
       return cell
     },
@@ -36,6 +37,7 @@ export default function cellMap(set){
 
       const floorOffsets = getOffesetsFromCellType(activeCellMap, 'floor');
       const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
+      const floorUvs = getUVsFromCellType(activeCellMap, 'floor');
 
       const doorOffsets = getOffesetsFromCellType(activeCellMap, 'door');
       const doorRotations = getRotationsFromCellType(activeCellMap, 'door');
@@ -45,10 +47,15 @@ export default function cellMap(set){
           ...state.cellMap,
           floorOffsets: floorOffsets,
           floorRotations: floorRotations,
+          floorUvs: floorUvs,
+
           doorOffsets: doorOffsets,
           doorRotations: doorRotations,
+          
           activeCellMap: activeCellMap,
           activeCellMapParameters: cellMapParams,
+          
+        
         }
         
       }
@@ -107,7 +114,7 @@ function getRotationsFromCellType(activeCellMap, type){
     return [...total, ...cellColumn.map((cell, yindex)=>{
       return {
         type: cell.type,
-        rotation: 0 //(Math.PI / 2) * getRandomInt(0,4),
+        rotation: (Math.PI / 2) * Math.floor(Math.random()*4)
       }
     })]
 
@@ -126,4 +133,31 @@ function getRotationsFromCellType(activeCellMap, type){
   }
   
   return rotations;
+}
+
+
+function getUVsFromCellType(activeCellMap, type){
+
+  let typedCells = activeCellMap.reduce((total, cellColumn, xindex)=>{
+    return [...total, ...cellColumn.map((cell, yindex)=>{
+      return {
+        type: cell.type,
+        x: 0, // ??  +1 to fix the offset issue
+        y: Math.floor(Math.random()*4) / 4 
+        
+      }
+    })]
+
+  }, []).filter(cell=>cell.type === type)
+
+  const uvs = new Float32Array( typedCells.length * 2 ); // xyz
+  for ( let i = 0, l = typedCells.length; i < l; i++ ) {
+
+      const index = 2 * i;
+      // per-instance position offset
+      uvs[ index ] = typedCells[i].x;
+      uvs[ index + 1 ] = typedCells[i].y
+  }
+  
+  return uvs;
 }

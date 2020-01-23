@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import customLambertVertexShader from '../../../../utils/shaders/meshlambert_vert.glsl';
+import floorTextureShareVertexShader from '../../../../utils/shaders/floor/floorTextureShareVertexShader.glsl';
 
 
-export default function Floor({texture, offsets, rotations}) {
+export default function FloorTextureShare({texture, offsets, rotations, instanceUvs, tileSize}) {
     
     const { geometry, material } = useMemo(()=>{
       const vertices = [
@@ -51,21 +51,36 @@ export default function Floor({texture, offsets, rotations}) {
           0,  1,  2,   2,  1,  3,  // front
       ]);
 
+           
+
       geometry.setAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) )
       geometry.setAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) )
+      geometry.setAttribute( 'instanceUv', new THREE.InstancedBufferAttribute(instanceUvs, 2) )
+
       
+
 
 
       texture.minFilter = THREE.NearestFilter
       texture.magFilter = THREE.NearestFilter
+
+      console.log("texture.image.width: ", texture.image.width);
+      console.log("texture.image.height: ", texture.image.height);
+      
       
       const material = new THREE.MeshLambertMaterial( {
           map: texture,
-          color: "#878"
+          color: "#878",
+          uniforms: {
+            uvTextureSize: new THREE.Uniform(new THREE.Vector2(texture.image.width, texture.image.height)),
+            uvTileSize: new THREE.Uniform(new THREE.Vector2(tileSize[0], tileSize[1]))
+          }
       })
 
+      console.log("material:", material )
+
       material.onBeforeCompile = function( shader ) {
-          shader.vertexShader = customLambertVertexShader
+          shader.vertexShader = floorTextureShareVertexShader
       }
 
       return { 

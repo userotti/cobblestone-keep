@@ -1,12 +1,16 @@
 import React, { Fragment } from 'react'
 import Wall from './cells/Wall'
+import FloorTextureShare from './cells/FloorTextureShare'
 import Floor from './cells/Floor'
+
 import useStore from '../../../store';
 
 export default function Structural({loadedAssetData}) {
   
   const floorOffsets = useStore(state => state.cellMap.floorOffsets);
   const floorRotations = useStore(state => state.cellMap.floorRotations);
+  const floorUvs = useStore(state => state.cellMap.floorUvs);
+  
 
   const doorOffsets = useStore(state => state.cellMap.doorOffsets);
   const doorRotations = useStore(state => state.cellMap.doorRotations);
@@ -15,7 +19,7 @@ export default function Structural({loadedAssetData}) {
 
   return (
     <Fragment>
-      <Floor texture={loadedAssetData['basic_floor2']} offsets={floorOffsets} rotations={floorRotations}/>
+      <FloorTextureShare texture={loadedAssetData['texture_share_floor']} offsets={floorOffsets} rotations={floorRotations} instanceUvs={floorUvs} tileSize={[16,16]}/>
       <Floor texture={loadedAssetData['basic_floor']} offsets={doorOffsets} rotations={doorRotations}/>
     </Fragment>
   )
