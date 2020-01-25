@@ -4,8 +4,8 @@ attribute vec3 instanceOffset;
 attribute float instanceRotation;
 attribute vec2 instanceUv;
 
-uniform vec2 uvTextureSize;
-uniform vec2 uvTileSize; 
+uniform vec2 uv_texture_size;
+uniform vec2 uv_tile_size; 
 
 
 varying vec3 vLightFront;
@@ -40,23 +40,29 @@ vec2 rotateUV(vec2 uv, float rotation)
 void main() {
 	
 
-  vUv = rotateUV(uv, instanceRotation);
-
   #ifdef USE_UV
 
-    float x_scale = uvTileSize.x / uvTextureSize.x;
-    float y_scale = uvTileSize.y / uvTextureSize.y;
+    vUv = rotateUV(uv, instanceRotation);
+
+    // float x_scale = 1.0; 
+    // float y_scale = 0.25;
+
+    float x_scale = uv_tile_size.x / uv_texture_size.x;
+    float y_scale = uv_tile_size.y / uv_texture_size.y;
+    
+    float instanceUvFixed = uv_tile_size.y - 1.0;
+    instanceUvFixed =  instanceUvFixed - instanceUv.y;
 
     mat3 scaleMatrix = mat3(
-      1, 0, 0, // first column (not row!)
-      0, 0.25, 0, // second column
+      x_scale, 0, 0, // first column (not row!)
+      0, y_scale, 0, // second column
       0, 0, 1  // third column
     );
 
     mat3 translateMatrix = mat3(
       1, 0, 0, // first column (not row!)
       0, 1, 0, // second column
-      instanceUv.x, instanceUv.y, 1  // third column
+      instanceUv.x, instanceUvFixed, 1  // third column
     );
 
     mat3 rotationMatrix = mat3(
@@ -65,7 +71,7 @@ void main() {
       0, 0, 1  // third column
     );
     
-    vUv = ( translateMatrix * scaleMatrix * rotationMatrix * uvTransform * vec3( vUv, 1 ) ).xy;
+    vUv = ( scaleMatrix * translateMatrix * rotationMatrix * uvTransform * vec3( vUv, 1 ) ).xy;
 
     
 
