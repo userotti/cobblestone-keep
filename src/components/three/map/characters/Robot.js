@@ -90,7 +90,7 @@ export default function Robot({loadedAssetData, position, hopping}) {
           >
           <primitive attach="material" object={spriteMaterial}/>
           <Dom>
-            <span className="object-label"><img src="/assets/hud/heart.png"/></span>
+            <span className="object-label"><img src="/assets/hud/heart.svg"/></span>
           </Dom>
         </animated.sprite>
        
