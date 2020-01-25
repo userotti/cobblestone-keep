@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import useStore from '../../../../store'
 import {Howl, Howler} from 'howler';
 
+import { Dom } from 'react-three-fiber';
 
 const sound = new Howl({
   src: ['/assets/sounds/sound_jump.wav'],
@@ -88,7 +89,9 @@ export default function Robot({loadedAssetData, position, hopping}) {
           })}>
           <primitive attach="material" object={spriteMaterial}/>
         </animated.sprite>
-
+        <Dom>
+          <h1 style={{color: '#fff'}}>Robotie</h1>
+        </Dom>
         <mesh
           position-x={0.2}
           position-y={0.1}
