@@ -3,6 +3,7 @@ import React, {Suspense, Fallback, useEffect} from 'react';
 import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import Characters from '../map/Characters';
+import Items from '../map/Items';
 import Camera from '../Camera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
@@ -61,7 +62,7 @@ export default function GameScene({assets}) {
 
         <Structural loadedAssetData={loadedAssetData}/>
 
-        {/* <Items textures={loadedAssetData} activeItemMap={activeCellMap}/> */}
+        <Items textures={loadedAssetData}/>
         <Characters loadedAssetData={loadedAssetData}/>
      
         <StructuralOnTapPlane onTap={(event)=>{

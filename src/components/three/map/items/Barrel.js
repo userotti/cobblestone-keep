@@ -3,15 +3,21 @@ import * as THREE from 'three';
 
 export default function Barrel({texture, position}) {
 
-    texture.minFilter = THREE.NearestFilter;
-    texture.magFilter = THREE.NearestFilter;
-    var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
-    
+    // texture.minFilter = THREE.NearestFilter;
+    // texture.magFilter = THREE.NearestFilter;
+    // var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
+
   
     var geometry = new THREE.CylinderGeometry(0.5,0.5,1,8); 
     return (
       <Fragment>
-        <sprite
+        <primitive
+          object={texture.scene.clone()}
+          
+          // rotation={[0, cameraOrthographicAngle*-1, 0]}
+          position={position} 
+        />
+        {/* <sprite
           scale={[1.5,1.5,1.5]}
           position={new THREE.Vector3(...position)}
         >
@@ -24,7 +30,7 @@ export default function Barrel({texture, position}) {
             material-depthWrite={false}
         >
             <primitive attach="geometry" object={geometry} visible={false}/>
-        </mesh>
+        </mesh> */}
       </Fragment>  
        
     )
