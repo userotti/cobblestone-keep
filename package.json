@@ -10,11 +10,11 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.3.0",
     "react-spring": "^8.0.27",
-    "react-three-fiber": "^3.0.13",
+    "react-three-fiber": "^4.0.11",
+    "rot-js": "^2.1.1",
     "styled-components": "^4.4.1",
     "three": "^0.110.0",
-    "zustand": "^1.0.7",
-    "rot-js": "^2.1.1"
+    "zustand": "^1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
