@@ -107,3 +107,56 @@ canvas {
   font-family: 'Courier New', Courier, monospace;
 }
 
+.map-controls {
+  opacity: 0;
+}
+.map-controls:hover {
+  opacity: 1;
+}
+
+
+
+.object-label {
+  font-size:12px;
+  color: white;
+  font-size: bold;
+  text-transform: uppercase;
+  transform: scale(1,1);
+  /* border: 1px solid red; */
+  
+}
+.object-label img {
+  animation: pulse 2s infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    /* -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4); */
+    transform: scale(1,1);
+  }
+  70% {
+      /* -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0); */
+      transform: scale(2,2);
+  }
+  100% {
+      /* -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0); */
+      transform: scale(1,1);
+  }
+}
+@keyframes pulse {
+  0% {
+    /* -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4); */
+    transform: scale(1,1);
+  }
+  70% {
+      /* -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0); */
+      transform: scale(2,2);
+  }
+  100% {
+      /* -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0); */
+      transform: scale(1,1);
+  }
+}

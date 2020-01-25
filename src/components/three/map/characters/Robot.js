@@ -84,14 +84,16 @@ export default function Robot({loadedAssetData, position, hopping}) {
           position-x={0}
           position-y={0}
           
-          position-z={springs[1].progress.interpolate((progress)=>{
-            return -(progress - 1)*2.8*(-progress) - cellSize[2]*0.50
-          })}>
+          // position-z={springs[1].progress.interpolate((progress)=>{
+          //   return -(progress - 1)*2.8*(-progress) - cellSize[2]*0.50
+          // })}
+          >
           <primitive attach="material" object={spriteMaterial}/>
+          <Dom>
+            <span className="object-label"><img src="/assets/hud/heart.png"/></span>
+          </Dom>
         </animated.sprite>
-        <Dom>
-          <h1 style={{color: '#fff'}}>Robotie</h1>
-        </Dom>
+       
         <mesh
           position-x={0.2}
           position-y={0.1}

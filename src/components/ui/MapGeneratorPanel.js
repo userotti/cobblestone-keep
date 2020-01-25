@@ -88,7 +88,7 @@ export default function MapGeneratorPanel() {
   // return null // ! Bypass the panel for now
 
   return (
-    <SidePanel>
+    <SidePanel className="map-controls">
       <SidePanelHeading> Generate Map </SidePanelHeading>
       <SidePanelControls onSubmit={(event)=>{
         event.preventDefault();
