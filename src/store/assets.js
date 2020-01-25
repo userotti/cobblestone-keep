@@ -55,7 +55,7 @@ export default function assets(set){
         url: '/assets/walls/basic_floor_2_16x16.png',
       },
       'texture_share_floor': {
-        url: '/assets/walls/basic_floor_combo_16x64.png',
+        url: '/assets/walls/basic_floor_combo_16x16-2.png',
       },
       'shroud': {
         url: '/assets/walls/shroud.png',
