@@ -143,7 +143,7 @@ function getUVsFromCellType(activeCellMap, type){
       return {
         type: cell.type,
         x: 0, // ??  +1 to fix the offset issue
-        y: Math.floor(Math.random()*4) / 4 
+        y: 4 
         
       }
     })]

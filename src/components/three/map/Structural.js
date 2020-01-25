@@ -19,7 +19,7 @@ export default function Structural({loadedAssetData}) {
 
   return (
     <Fragment>
-      <FloorTextureShare texture={loadedAssetData['texture_share_floor']} offsets={floorOffsets} rotations={floorRotations} instanceUvs={floorUvs} tileSize={[16,16]}/>
+      <FloorTextureShare texture={loadedAssetData['texture_share_floor_16_256']} offsets={floorOffsets} rotations={floorRotations} instanceUvs={floorUvs} tileSize={[16,16]}/>
       <Floor texture={loadedAssetData['basic_floor']} offsets={doorOffsets} rotations={doorRotations}/>
     </Fragment>
   )

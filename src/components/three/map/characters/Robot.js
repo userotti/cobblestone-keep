@@ -94,6 +94,7 @@ export default function Robot({loadedAssetData, position, hopping}) {
           </Dom>
         </animated.sprite>
        
+        
         <mesh
           position-x={0.2}
           position-y={0.1}
