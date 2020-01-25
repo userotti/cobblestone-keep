@@ -1,6 +1,8 @@
 import React, { Fragment, useMemo } from 'react';
 import { useSprings , animated , config  } from 'react-spring/three';
 import * as THREE from 'three';
+import {  useFrame } from 'react-three-fiber'
+
 import useStore from '../../../../store'
 import {Howl, Howler} from 'howler';
 
@@ -16,7 +18,7 @@ const sound_end = new Howl({
 });
 
 
-export default function Robot({loadedAssetData, position, hopping}) {
+export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
 
     
     const cellSize = useStore(state => state.cellMap.cellSize);
@@ -37,8 +39,9 @@ export default function Robot({loadedAssetData, position, hopping}) {
         shadowMaterial: null
       }
     })  
-    
-    const springs = useSprings(2, [{
+      
+    // console.log("rotation-y={springs[2].Yrotation}", Yrotation);
+    const springs = useSprings(3, [{
       from: { 
         position: [...position],
       },
@@ -57,12 +60,35 @@ export default function Robot({loadedAssetData, position, hopping}) {
       onRest: () => { !muted && sound_end.play() },
       reset: true,
       config: config.default//{ mass: 1, tension: 290, friction: 32 }
+    },{
+      from: { 
+        Yrotation: Yrotation,
+      },
+      to: {
+        Yrotation: Yrotation,
+      }
     }])
+
+    // console.log(loadedAssetData['model_gltf'].scene)
+
+    useFrame(state => {
+      let { children } = loadedAssetData['model_gltf'].scene
+
+
+      children.forEach(element => {
+        // console.log(element.rotation.x)
+        if(element.name == 'cuibe_head'){
+          element.rotation.y = element.rotation.y + 0.01
+          element.scale.x = 0.2
+        }
+      });
+
+    })
+
     
     return (
-      
       <animated.group
-
+        rotation-y={springs[2].Yrotation}
         position-x={springs[0].position.interpolate((x)=>{
           return x;
         })}
@@ -79,7 +105,9 @@ export default function Robot({loadedAssetData, position, hopping}) {
 
        
       >
-        <animated.sprite 
+        <primitive object={loadedAssetData['model_gltf'].scene }/>
+
+        {/* <animated.sprite 
           scale={[2,2,2]}
           position-x={0}
           position-y={0}
@@ -88,12 +116,15 @@ export default function Robot({loadedAssetData, position, hopping}) {
           //   return -(progress - 1)*2.8*(-progress) - cellSize[2]*0.50
           // })}
           >
-          <primitive attach="material" object={spriteMaterial}/>
+
+          <primitive object={spriteMaterial}/>
+
           <Dom>
             <span className="object-label"><img src="/assets/hud/heart.svg"/></span>
           </Dom>
-        </animated.sprite>
-       
+        </animated.sprite> */}
+        
+{/*         
         <mesh
           position-x={0.2}
           position-y={0.1}
@@ -106,7 +137,7 @@ export default function Robot({loadedAssetData, position, hopping}) {
             attach="geometry"
             object={shadowGeometry}
           />
-        </mesh>
+        </mesh> */}
         
       </animated.group>
     )

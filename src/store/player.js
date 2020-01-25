@@ -13,11 +13,15 @@ export default function player(set, get){
   return {
 
     position: null,
+    Yrotation: 0,
+        
     hopping: false,
     setPlayerPositionToRandomOpenCell: () => { 
       let cellMap = get().cellMap;
       for (let x = 0; x < cellMap.activeCellMap.length; x++){
         for (let y = 0; y < cellMap.activeCellMap[x].length; y++){
+
+
           console.log("cellMap.activeCellMap[x][y].type", cellMap.activeCellMap[x][y].type);
           if (cellMap.activeCellMap[x][y].type == "floor"){
             get().player.setPositionFromCell([x, y]);
@@ -44,8 +48,10 @@ export default function player(set, get){
 
 
       const passableCallback = function(x, y) {
-        let type = get().cellMap.activeCellMap[x][y].type;
-        return (type === "floor" || type === "door");
+        if (get().cellMap && get().cellMap.activeCellMap[x] && get().cellMap.activeCellMap[x][y]){
+          let type = get().cellMap.activeCellMap[x][y].type;
+          return (type === "floor" || type === "door");
+        }
       }
 
 
@@ -60,6 +66,7 @@ export default function player(set, get){
         path.push([x,y]);    
       });
 
+      get().player.setYRotationFromPath(path);
       get().player.setPositionFromCell(path[1]);
 
     },
@@ -67,6 +74,19 @@ export default function player(set, get){
       const cellLocation = positionVectorToCell(positionVectorArray, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);
       get().player.setPositionFromCell(cellLocation);
     },
+
+    setYRotationFromPath: (path) => set(state=>{
+      
+      console.log(path)
+      let Yrotation = Math.atan((path[0][1] - path[1][1])/(path[0][0] - path[1][0])) + (Math.PI/2) 
+      console.log("Yrotation: ", Yrotation);   
+      return {
+        player: {
+          ...state.player,
+          Yrotation: Yrotation
+        }
+      }
+    }),
 
     setPositionFromCell: (cellLocation) => set(state=>{
       const position = cellToPositionVector(cellLocation, state.cellMap.cellSize, state.cellMap.activeCellMapParameters);

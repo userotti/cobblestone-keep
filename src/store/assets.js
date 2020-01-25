@@ -10,7 +10,7 @@ export default function assets(set){
         url: '/assets/walls_on_ground.gltf',
       },
       'model_gltf': {
-        url: '/assets/models/robot1.gltf',
+        url: '/assets/models/robot2.gltf',
       },
       'brown_floor_three_gltf': {
         url: '/assets/tiled_floor.gltf',

@@ -9,9 +9,9 @@ export default function camera(set,get){
     cameraSize: 7,
     cameraFocusPointPosition: origin.toArray(),
     cameraDistanceFromFocusPoint: 16,
-    cameraOrthographicAngle: 0,
+    cameraOrthographicAngle: 0.39,
     cameraTiltValues: [0.0, 0.01, 0.3,  0.7,  1.0,  1.2,  1.5707],
-    cameraTiltIndex: 6,
+    cameraTiltIndex: 4,
     cameraVisibleRadius: 16,
 
     setCameraAspectRatio: (width, height) => set((state) => {

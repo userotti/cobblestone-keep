@@ -8,11 +8,12 @@ export default function Characters({loadedAssetData}) {
 
   const robotPosition = useStore(state => state.player.position);
   const robotHopping = useStore(state => state.player.hopping);
+  const robotYRotation = useStore(state => state.player.Yrotation);
   
   if (!robotPosition) return null;
   return (
     <Fragment>
-      <Robot position={robotPosition} loadedAssetData={loadedAssetData} hopping={robotHopping} />
+      <Robot position={robotPosition} loadedAssetData={loadedAssetData} hopping={robotHopping} Yrotation={robotYRotation}/>
       <Enemy position={[-4,0,-2]} loadedAssetData={loadedAssetData} />
       <Enemy position={[2,0,12]} loadedAssetData={loadedAssetData} /> 
       <Enemy position={[4,0,-8]} loadedAssetData={loadedAssetData} /> 

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import * as THREE from 'three';
 
+import {  useFrame } from 'react-three-fiber'
+
 export default function Barrel({texture, position}) {
 
     // texture.minFilter = THREE.NearestFilter;
@@ -8,11 +10,27 @@ export default function Barrel({texture, position}) {
     // var spriteMaterial = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
 
   
-    var geometry = new THREE.CylinderGeometry(0.5,0.5,1,8); 
+    // var geometry = new THREE.CylinderGeometry(0.5,0.5,1,8); 
+
+  
+
+    useFrame(state => {
+      let { children } = texture.scene
+
+      children.forEach(element => {
+        // console.log(element.rotation.x)
+        if(element.name == 'cuibe_head'){
+          element.rotation.y = element.rotation.y + 0.01
+          element.scale.x = 0.1
+        }
+      });
+
+    })
+
     return (
       <Fragment>
         <primitive
-          object={texture.scene.clone()}
+          object={texture.scene}
           
           // rotation={[0, cameraOrthographicAngle*-1, 0]}
           position={position} 

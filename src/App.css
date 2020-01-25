@@ -43,7 +43,7 @@ h1 {
 }
 .hud {
   background: #333;
-  width: 500px;
+  width: 1000px;
   height: 80px;
   display: flex;
   flex-direction: row;
@@ -80,7 +80,7 @@ h1 {
 }
 
 canvas {
-  background: #111 url(/assets/space-2.png);
+  background: #111 url(/assets/space-3.jpg);
   background-size: cover;
   border-radius: 0 0 4px 4px;
   border: 1px solid #666;
