@@ -13,7 +13,10 @@ import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
 
 export default function GameScene({assets}) {
+
   
+  const loadAssets = useStore(state => state.loadAssets);
+  const loadedAssetData = useStore(state => state.loadedAssetData);  
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
   const movePlayerTowardsCellAt = useStore(state => state.player.movePlayerTowardsCellAt);
   const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
@@ -22,11 +25,9 @@ export default function GameScene({assets}) {
   const player = useStore(state => state.player);
 
   const getCellFromPositionVectorArray = useStore(state => state.cellMap.getCellFromPositionVectorArray);
-
+  const getAllCellLocationsOfType = useStore(state => state.cellMap.getAllCellLocationsOfType);
   
-  const loadAssets = useStore(state => state.loadAssets);
-  const loadedAssetData = useStore(state => state.loadedAssetData);
-  const createRock = useStore(state => state.items.createRock);
+  const scatterRocks = useStore(state => state.items.scatterRocks);
   
 
   const mouse = useRef([0, 0])
@@ -44,7 +45,7 @@ export default function GameScene({assets}) {
     setPlayerPositionToRandomOpenCell();
     setCameraFocusPointOnPlayer();
 
-    
+    scatterRocks(100, getAllCellLocationsOfType("floor"));
 
   }, [loadAssets, setActiveCellMapParameters])
 
@@ -102,9 +103,8 @@ export default function GameScene({assets}) {
         <StructuralOnTapPlane onTap={(event)=>{
           // onPlaneTap([event.point.x, event.point.y, event.point.z]);
           movePlayerTowardsCellAt([event.point.x, event.point.y, event.point.z]);
-          setCameraFocusPointOnPlayer()
-      
-          createRock(getCellFromPositionVectorArray([event.point.x, event.point.y, event.point.z]));
+          setCameraFocusPointOnPlayer();
+          
           // setPlayerPositionFromTapPoint([event.point.x, event.point.y, event.point.z]);
           // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
         }}/>

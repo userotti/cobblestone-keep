@@ -13,7 +13,7 @@ export default function Items({textures}) {
   return (
     <Fragment>
       {rocks.map((rock)=>{
-        return <Rock texture={textures['rock_gltf']} position={rock.position} key={rock.id}/> 
+        return <Rock blenderScene={textures['rock_gltf'].scene} position={rock.position} Yrotation={rock.Yrotation} key={rock.id}/> 
       })}
       
     </Fragment>

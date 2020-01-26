@@ -6,19 +6,40 @@ export default function items(set, get){
   return {
 
     rocks: [],
-    createRock: (cellLocation) => set((state) => {
+    makeRock: (cellLocation)=>{
 
-      let rock = {
+      const { cellSize, activeCellMapParameters } = get().cellMap;
+      
+
+      return {
         id: Math.random(),
         cellLocation: cellLocation,
-        position: cellToPositionVector(cellLocation, state.cellMap.cellSize, state.cellMap.activeCellMapParameters)
+        position: cellToPositionVector(cellLocation, cellSize, activeCellMapParameters),
+        Yrotation: Math.random() * Math.PI
       }
-
-      console.log("state.items.rocks: ", state.items.rocks);
+    },
+    
+    addRock: (rock) => set((state) => {
       return {
         items: {
           ...state.items,
           rocks: [...state.items.rocks, rock]
+        }
+      }
+    }),
+
+    scatterRocks: (rockCount, openCellLocations) => set((state) => {
+      
+      let openCellsCount = openCellLocations.length;
+      let newRocks = [];
+      for (let i = 0; i < rockCount; i++){
+        newRocks.push(get().items.makeRock(openCellLocations[Math.floor(Math.random()*openCellsCount)]));
+      }
+
+      return {
+        items: {
+          ...state.items,
+          rocks: [...newRocks]
         }
       }
     })

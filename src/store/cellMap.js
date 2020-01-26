@@ -10,7 +10,29 @@ export default function cellMap(set, get){
     activeCellMap: null,
     activeCellMapParameters: null,
     
-    
+    getAllCellLocationsOfType: (type)=>{
+      const flatActiveCellMap = get().cellMap.flattenCellMap(get().cellMap.activeCellMap);
+      return flatActiveCellMap.filter((cell)=>{
+        return (cell.type == type); 
+      }).map((cell)=>{
+        return [...cell.cellLocation]
+      })
+    },
+
+    flattenCellMap: (cellMap)=>{
+
+      let flat = cellMap.reduce((total, cellColumn, xindex)=>{
+        return [...total, ...cellColumn.map((cell, yindex)=>{
+          return {
+            ...cell,
+            cellLocation: [xindex, yindex]
+          }
+        })]
+      }, [])
+
+      return flat
+    },
+
     getCellFromPositionVectorArray: (position)=>{
       return positionVectorToCell(position, get().cellMap.cellSize, get().cellMap.activeCellMapParameters)
     },
