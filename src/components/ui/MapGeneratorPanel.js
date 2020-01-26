@@ -69,8 +69,8 @@ export default function MapGeneratorPanel() {
   
   const [state, setState] = useState({
     fields:{
-      width: 15,
-      height: 15,
+      width: 45,
+      height: 45,
       room_min_size: 10,
       room_max_size: 10,
       max_rooms: 1,
