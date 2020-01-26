@@ -2,7 +2,7 @@
 import { buildOutTheMap } from '../utils/mapGenerators/basic';
 import { cellular } from '../utils/mapGenerators/rotjs';
 
-export default function cellMap(set){
+export default function cellMap(set, get){
   return {
 
 
@@ -11,8 +11,8 @@ export default function cellMap(set){
     activeCellMapParameters: null,
     
     
-    cellToPositionVector: (cell)=>{
-      return cell
+    getCellFromPositionVectorArray: (position)=>{
+      return positionVectorToCell(position, get().cellMap.cellSize, get().cellMap.activeCellMapParameters)
     },
 
     setActiveCellMapParameters: (cellMapParams) => set(state=>{

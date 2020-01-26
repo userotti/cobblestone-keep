@@ -100,6 +100,7 @@ export default function player(set, get){
         player: {
           ...state.player,
           position: position,
+          cellLocation: cellLocation,
           hopping: true
         }
       }

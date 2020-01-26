@@ -80,7 +80,7 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
 
     }, [texture, offsets, rotations])
     
-
+    
 
     return (
         <mesh
