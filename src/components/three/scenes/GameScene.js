@@ -91,6 +91,10 @@ export default function GameScene({assets}) {
           // setPlayerPositionFromTapPoint([event.point.x, event.point.y, event.point.z]);
           // setCameraFocusPointPosition([event.point.x, event.point.y, event.point.z])
         }}/>
+
+
+        <primitive object={loadedAssetData['moonfloor_gltf'].scene }/>
+
       </Camera>
     </ThreeFibreHTMLCanvas>
   );

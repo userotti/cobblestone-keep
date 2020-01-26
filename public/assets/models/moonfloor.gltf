@@ -1,0 +1,253 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v0.9.36",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1,
+                2,
+                3
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "rock",
+            "scale" : [
+                1,
+                1,
+                0.9027650952339172
+            ],
+            "translation" : [
+                25.469985961914062,
+                15.555238723754883,
+                -1.4226694107055664
+            ]
+        },
+        {
+            "mesh" : 1,
+            "name" : "Grid",
+            "scale" : [
+                1367.0831298828125,
+                5.4662184715271,
+                1163.504638671875
+            ],
+            "translation" : [
+                1.5194398164749146,
+                9.994344711303711,
+                0.4582977294921875
+            ]
+        },
+        {
+            "name" : "Sun",
+            "translation" : [
+                22.518497467041016,
+                71.09187316894531,
+                0
+            ]
+        },
+        {
+            "name" : "Spot",
+            "rotation" : [
+                0,
+                0,
+                -0.4252622723579407,
+                0.9050701856613159
+            ],
+            "scale" : [
+                2.522294521331787,
+                2.522294521331787,
+                2.522294521331787
+            ],
+            "translation" : [
+                34.47250747680664,
+                26.97224998474121,
+                0
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "Material",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.21223074197769165,
+                    0.2541521191596985,
+                    0.2663556635379791,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 1
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "Material.001",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.2523823082447052,
+                    0.2523823082447052,
+                    0.2523823082447052,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.781818151473999
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cube",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        },
+        {
+            "name" : "Grid.002",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 128,
+            "max" : [
+                0.9961552023887634,
+                1.3488038778305054,
+                1.1413992643356323
+            ],
+            "min" : [
+                -0.9644301533699036,
+                -0.6550615429878235,
+                -1.1420542001724243
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 128,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 128,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 192,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 15876,
+            "max" : [
+                0.10496015846729279,
+                -2.098344326019287,
+                0.1073911190032959
+            ],
+            "min" : [
+                -0.11293603479862213,
+                -5.279986381530762,
+                -0.11050505936145782
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 15876,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 15876,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 23814,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 1536,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1536,
+            "byteOffset" : 1536
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1024,
+            "byteOffset" : 3072
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 384,
+            "byteOffset" : 4096
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 190512,
+            "byteOffset" : 4480
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 190512,
+            "byteOffset" : 194992
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 127008,
+            "byteOffset" : 385504
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 47628,
+            "byteOffset" : 512512
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 560140,
+            "uri" : "moonfloor.bin"
+        }
+    ]
+}
