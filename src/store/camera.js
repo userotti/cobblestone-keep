@@ -6,7 +6,7 @@ export default function camera(set,get){
   return {
 
     cameraAspect: 0,
-    cameraSize: 7,
+    cameraSize: 5,
     cameraFocusPointPosition: origin.toArray(),
     cameraDistanceFromFocusPoint: 16,
     cameraOrthographicAngle: 0.78,
