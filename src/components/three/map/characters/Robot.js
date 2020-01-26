@@ -68,18 +68,14 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
       }
     }])
 
-
     // useFrame(state => {
     //   let { children } = loadedAssetData['model_gltf'].scene
-
-
     //   children.forEach(element => {
-    //     if(element.name == 'cuibe_head'){
+    //     if(element.name == 'cube_head'){
     //       element.rotation.y = element.rotation.y + 0.01
     //       element.scale.x = 0.2
     //     }
-    //   });
-
+    //   })
     // })
 
     
