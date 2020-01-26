@@ -12,6 +12,9 @@ export default function assets(set){
       'model_gltf': {
         url: '/assets/models/robot2.gltf',
       },
+      'rock_gltf': {
+        url: '/assets/models/rock1.gltf',
+      },
       'brown_floor_three_gltf': {
         url: '/assets/tiled_floor.gltf',
       },

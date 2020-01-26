@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import Characters from '../map/Characters.js';
+import Items from '../map/Items.js';
 import Swarm from '../effects/Swarm.js';
 import * as THREE from 'three';
 
@@ -79,8 +80,8 @@ export default function GameScene({assets}) {
 
         <Structural loadedAssetData={loadedAssetData}/>
 
-        {/* <Items textures={loadedAssetData}/>
-         */}
+        <Items textures={loadedAssetData}/>
+        
         <Characters loadedAssetData={loadedAssetData}/>
      
         <StructuralOnTapPlane onTap={(event)=>{
