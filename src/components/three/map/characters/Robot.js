@@ -32,14 +32,16 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
       shadowGeometry,
       shadowMaterial, 
       spriteMaterial,
+      robotMesh
     } = useMemo(()=>{
       return {
         spriteMaterial: new THREE.SpriteMaterial( { map: loadedAssetData['robot'], color: 0xffffff }),
         shadowGeometry: new THREE.BoxGeometry(cellSize[0]*1.2,cellSize[1]*1.2,cellSize[2]/2,1,1,1),
-        shadowMaterial: null
+        shadowMaterial: null,
+        robotMesh : loadedAssetData['model_gltf'].scene.clone()
       }
     })  
-    
+
     const springs = useSprings(3, [{
       from: { 
         position: [...position],
@@ -94,44 +96,8 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
         }).interpolate((progress)=>{
           return (progress - 1)*5*(-progress) + 0.1
         })}
-
-
-       
       >
-        <primitive object={loadedAssetData['model_gltf'].scene }/>
-
-        {/* <animated.sprite 
-          scale={[2,2,2]}
-          position-x={0}
-          position-y={0}
-          
-          // position-z={springs[1].progress.interpolate((progress)=>{
-          //   return -(progress - 1)*2.8*(-progress) - cellSize[2]*0.50
-          // })}
-          >
-
-          <primitive object={spriteMaterial}/>
-
-          <Dom>
-            <span className="object-label"><img src="/assets/hud/heart.svg"/></span>
-          </Dom>
-        </animated.sprite> */}
-        
-{/*         
-        <mesh
-          position-x={0.2}
-          position-y={0.1}
-          position-z={-0.1}
-          material-colorWrite={false}
-          material-depthWrite={false}
-          castShadow={true}
-        > 
-          <primitive
-            attach="geometry"
-            object={shadowGeometry}
-          />
-        </mesh> */}
-        
+        <primitive object={robotMesh}/>
       </animated.group>
     )
 }

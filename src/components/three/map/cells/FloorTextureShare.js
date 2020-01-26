@@ -9,10 +9,10 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
       const vertices = [
         
           // bottom
-          {pos: [-1, -1, -1], norm: [0, 1, 0], uv: [0, 1],},
-          {pos: [-1, -1, 1], norm: [0, 1, 0], uv: [1, 1],},
-          {pos: [1, -1, -1], norm: [0, 1, 0], uv: [0, 0],},
-          {pos: [1, -1, 1], norm: [0, 1, 0], uv: [1, 0],},
+          {pos: [-1, 0, -1], norm: [0, 1, 0], uv: [0, 1],},
+          {pos: [-1, 0, 1], norm: [0, 1, 0], uv: [1, 1],},
+          {pos: [1, 0, -1], norm: [0, 1, 0], uv: [0, 0],},
+          {pos: [1, 0, 1], norm: [0, 1, 0], uv: [1, 0],},
       ]
 
       const numVertices = vertices.length;
@@ -80,7 +80,7 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
 
     }, [texture, offsets, rotations])
     
-
+    
 
     return (
         <mesh

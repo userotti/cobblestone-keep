@@ -5,6 +5,7 @@ import cellMap from './cellMap'
 import interaction from './interaction'
 import game from './game'
 import player from './player'
+import items from './items'
 
 const canvasContainerSizeInPixels = [1000, 500];
 const [useStore] = create((set,get) => ({
@@ -18,7 +19,8 @@ const [useStore] = create((set,get) => ({
   cellMap: cellMap(set, get),
   interaction: interaction(set, get),
   player: player(set, get),
-  ...game(set, get)
+  ...game(set, get),
+  items: items(set, get)
 
 }))
 

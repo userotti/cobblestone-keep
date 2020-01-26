@@ -1,16 +1,20 @@
 import React, { Fragment } from 'react';
-import Barrel from './items/Barrel';
+import Rock from './items/Rock';
+import useStore from '../../../store';
 
-export default function Items({textures, activeItemMap}) {
+export default function Items({textures}) {
+
+  
+  const rocks = useStore(state => state.items.rocks);
+
 
   if (!textures) return null;
-  
+
   return (
     <Fragment>
-      <Barrel position={[-2,-1,-2]} texture={textures['rock_gltf']} />
-      {/* <Barrel position={[8,-1,8]} texture={textures['model_gltf']} />
-      <Barrel position={[-10,-1,8]} texture={textures['model_gltf']} />
-      <Barrel position={[10,-1,-8]} texture={textures['model_gltf']} /> */}
+      {rocks.map((rock)=>{
+        return <Rock blenderScene={textures['rock_gltf'].scene} position={rock.position} Yrotation={rock.Yrotation} key={rock.id}/> 
+      })}
       
     </Fragment>
   )
