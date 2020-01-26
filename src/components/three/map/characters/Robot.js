@@ -94,7 +94,7 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
           range: [0, 0.65, 1],
           output: [0, 0.55, 1]
         }).interpolate((progress)=>{
-          return (progress - 1)*5*(-progress) + 0.1
+          return (progress - 1)*4*(-progress) + 0.1
         })}
       >
         <primitive object={robotMesh}/>

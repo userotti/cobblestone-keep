@@ -16,7 +16,11 @@ export default function game(set, get){
 
     muteSwitch: () => set(state => {
       return {
-        muted: !state.muted
+        game: {
+          ...state.game,
+          muted: !state.muted
+        }
+        
       }
     }),
 

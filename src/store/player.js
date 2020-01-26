@@ -31,9 +31,7 @@ export default function player(set, get){
       }
     },
 
-
     movePlayerTowardsCellAt: (positionVectorArray) => {
-
 
       const cellLocation = positionVectorToCell(positionVectorArray, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);
       const playerAtCell = positionVectorToCell(get().player.position, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);

@@ -11,7 +11,7 @@ const canvasContainerSizeInPixels = [1000, 500];
 const [useStore] = create((set,get) => ({
 
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
-  interactionPlanePosition: [0,-1,0],    
+  interactionPlanePosition: [0,0,0],    
   setInteractionPlanePosition: (newPostionArray) => set(state=>({interactionPlanePosition: newPostionArray})),
   
   ...camera(set, get),
