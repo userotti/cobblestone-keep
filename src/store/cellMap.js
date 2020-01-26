@@ -19,7 +19,6 @@ export default function cellMap(set){
 
       let activeCellMap;
 
-      console.log("cellMapParams: ", cellMapParams);
       if (cellMapParams) {
         switch (cellMapParams.type){
 
@@ -33,7 +32,6 @@ export default function cellMap(set){
         }
       }
 
-      console.log("activeCellMap: ", activeCellMap);
 
       const floorOffsets = getOffesetsFromCellType(activeCellMap, 'floor');
       const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
@@ -143,7 +141,7 @@ function getUVsFromCellType(activeCellMap, type){
       return {
         type: cell.type,
         x: 0, // ??  +1 to fix the offset issue
-        y: 4 
+        y: Math.floor(Math.random() * 4)  
         
       }
     })]

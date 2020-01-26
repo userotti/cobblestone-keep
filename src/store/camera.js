@@ -9,9 +9,9 @@ export default function camera(set,get){
     cameraSize: 7,
     cameraFocusPointPosition: origin.toArray(),
     cameraDistanceFromFocusPoint: 16,
-    cameraOrthographicAngle: 0.39,
+    cameraOrthographicAngle: 0.78,
     cameraTiltValues: [0.0, 0.01, 0.3,  0.7,  1.0,  1.2,  1.5707],
-    cameraTiltIndex: 4,
+    cameraTiltIndex: 3,
     cameraVisibleRadius: 16,
 
     setCameraAspectRatio: (width, height) => set((state) => {
@@ -27,7 +27,6 @@ export default function camera(set,get){
       }
     }),
     setCameraFocusPointOnPlayer: () => set(state=>{
-      console.log("state.player.position: ", state.player.position); 
       return {
         cameraFocusPointPosition: state.player.position
       }

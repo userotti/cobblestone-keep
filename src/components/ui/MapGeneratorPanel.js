@@ -69,8 +69,8 @@ export default function MapGeneratorPanel() {
   
   const [state, setState] = useState({
     fields:{
-      width: 15,
-      height: 15,
+      width: 45,
+      height: 45,
       room_min_size: 10,
       room_max_size: 10,
       max_rooms: 1,
@@ -92,11 +92,9 @@ export default function MapGeneratorPanel() {
       <SidePanelHeading> Generate Map </SidePanelHeading>
       <SidePanelControls onSubmit={(event)=>{
         event.preventDefault();
-        console.log("gooi", event);
       }}>
         <StyledInputLabel>width: </StyledInputLabel>
         <StyledInput name="width" id="width" value={state.fields.width} onChange={(event)=>{
-          console.log("event: ", event);
           setState({
             fields: {
               ...state.fields,
@@ -107,7 +105,6 @@ export default function MapGeneratorPanel() {
         
         <StyledInputLabel>height: </StyledInputLabel>
         <StyledInput name="height" id="height" value={state.fields.height} onChange={(event)=>{
-          console.log("event: ", event);
           setState({
             fields: {
               ...state.fields,
@@ -118,7 +115,6 @@ export default function MapGeneratorPanel() {
 
         <StyledInputLabel>room min size: </StyledInputLabel>
         <StyledInput name="room_min_size" id="room_min_size" value={state.fields.room_min_size} onChange={(event)=>{
-          console.log("event: ", event);
           setState({
             fields: {
               ...state.fields,
@@ -129,7 +125,6 @@ export default function MapGeneratorPanel() {
 
         <StyledInputLabel>room max size: </StyledInputLabel>
         <StyledInput name="room_max_size" id="room_max_size" value={state.fields.room_max_size} onChange={(event)=>{
-          console.log("event: ", event);
           setState({
             fields: {
               ...state.fields,
@@ -140,7 +135,6 @@ export default function MapGeneratorPanel() {
 
         <StyledInputLabel>max rooms: </StyledInputLabel>
         <StyledInput name="max_rooms" id="max_rooms" value={state.fields.max_rooms} onChange={(event)=>{
-          console.log("event: ", event);
           setState({
             fields: {
               ...state.fields,

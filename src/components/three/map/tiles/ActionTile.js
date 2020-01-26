@@ -24,7 +24,6 @@ export default function ActionTile({texture, position}) {
       <mesh
         receiveShadow={false}
         onClick={(e) => {
-          console.log('click actiontile');
           // removeShroud(position)
           updatePlayerPosition([position[0],0,position[2]])
         }}
