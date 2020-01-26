@@ -71,10 +71,10 @@ export default function GameScene({assets}) {
     <ThreeFibreHTMLCanvas>
       <primitive object={dicrectionalLightTarget}/>
       <Camera>
-        <hemisphereLight color={0xffffff} intensity={1.9}/>
+        <hemisphereLight color={0x8888aa} intensity={1.2}/>
 
         <directionalLight
-          intensity={0.9}
+          intensity={1.2}
           color={0xffffff}
           position={[player.position[0] + 8, player.position[1] + 10, player.position[2] + 8]}
           target={dicrectionalLightTarget}
@@ -94,6 +94,8 @@ export default function GameScene({assets}) {
 
         {/* <Swarm mouse={mouse} count={20} /> */}
 
+        <primitive object={loadedAssetData['moonfloor_gltf'].scene }/>
+
         <Structural loadedAssetData={loadedAssetData}/>
 
         <Items textures={loadedAssetData}/>
@@ -110,7 +112,7 @@ export default function GameScene({assets}) {
         }}/>
 
 
-        <primitive object={loadedAssetData['moonfloor_gltf'].scene }/>
+      
 
       </Camera>
     </ThreeFibreHTMLCanvas>
