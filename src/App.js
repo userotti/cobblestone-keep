@@ -35,11 +35,11 @@ export default App
 
 function Home() {
 
-  const { 
+  const {
+    game, 
     muted
-  } = useStore()
+  } = useStore(state => state.game)
   
-  const game = useStore(state => state.game);
   const assets = useStore(state => state.assets);
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels); 
 

@@ -64,8 +64,7 @@ const GenerateButton = styled.button`
 
 export default function MapGeneratorPanel() {
 
-  const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
-  const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
+  const makeNewScene = useStore(state => state.game.makeNewScene);
   
   const [state, setState] = useState({
     fields:{
@@ -158,14 +157,23 @@ export default function MapGeneratorPanel() {
         </StyledSelect>  
         
         <GenerateButton onClick={()=>{
-          setActiveCellMapParameters({
+
+          makeNewScene({
             width: state.fields.width,
             height: state.fields.height,
             roomSizeRange: [state.fields.room_min_size,state.fields.room_max_size],
             maxRooms: state.fields.max_rooms,
             type: state.fields.type
+          }, {
+            items:{
+              rocks: {
+                count: 100,
+                placeOnTileType: "floor"
+              }
+            }
           })
-          setPlayerPositionToRandomOpenCell();
+         
+          
           
         }}>Generate</GenerateButton>
         

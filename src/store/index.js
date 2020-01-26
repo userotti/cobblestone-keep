@@ -19,7 +19,7 @@ const [useStore] = create((set,get) => ({
   cellMap: cellMap(set, get),
   interaction: interaction(set, get),
   player: player(set, get),
-  ...game(set, get),
+  game: game(set, get),
   items: items(set, get)
 
 }))

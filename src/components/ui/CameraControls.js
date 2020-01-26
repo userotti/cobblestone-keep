@@ -12,9 +12,13 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
     cameraTiltValues,
     cameraSize,
     cameraOrthographicAngle,
+    
+  } = useStore()
+
+  const {
     muteSwitch,
     muted
-  } = useStore()
+  } = useStore(state => state.game);
 
   return (<CameraControlsContainer className="camera-controls" controlsBackgroundColor={controlsBackgroundColor}>
    

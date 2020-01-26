@@ -1,5 +1,5 @@
 
-export default function game(set){
+export default function game(set, get){
   return {
 
     health: 7,
@@ -30,6 +30,33 @@ export default function game(set){
       return {
         shroudRemoved: [...state.shroudRemoved, newPostionArray]
       }
-    })
+    }),
+
+    makeNewScene(cellMapParams, params){
+      
+      const {
+        setActiveCellMapParameters,
+        getAllCellLocationsOfType
+      } = get().cellMap;
+
+      const {
+        setPlayerPositionToRandomOpenCell,
+      } = get().player;
+
+      const {
+        setCameraFocusPointOnPlayer,
+      } = get()
+
+      const {
+        scatterRocks
+      } = get().items;
+
+      setActiveCellMapParameters({...cellMapParams});
+
+      setPlayerPositionToRandomOpenCell();
+      setCameraFocusPointOnPlayer();
+
+      scatterRocks(params.items.rocks.count, getAllCellLocationsOfType(params.items.rocks.placeOnTileType));
+    }
   }
 }

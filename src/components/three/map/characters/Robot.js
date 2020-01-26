@@ -24,7 +24,7 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
     const cellSize = useStore(state => state.cellMap.cellSize);
     const {
       muted
-    } = useStore()
+    } = useStore(state => state.game);
     loadedAssetData['robot'].minFilter = THREE.NearestFilter;
     loadedAssetData['robot'].magFilter = THREE.NearestFilter;
     
