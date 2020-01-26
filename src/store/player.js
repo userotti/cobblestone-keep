@@ -74,7 +74,12 @@ export default function player(set, get){
 
     setYRotationFromPath: (path) => set(state=>{
       
-      let Yrotation = Math.atan((path[0][1] - path[1][1])/(path[0][0] - path[1][0])) + (Math.PI/2) 
+      let Yrotation = Math.atan((path[0][1] - path[1][1])/(path[0][0] - path[1][0])) - (Math.PI/2);
+    
+      if (path[0][0] - path[1][0] > 0){
+        Yrotation = Yrotation + Math.PI;
+      }
+
       return {
         player: {
           ...state.player,
