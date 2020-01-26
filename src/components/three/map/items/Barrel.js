@@ -18,7 +18,6 @@ export default function Barrel({texture, position}) {
       let { children } = texture.scene
 
       children.forEach(element => {
-        // console.log(element.rotation.x)
         if(element.name == 'cuibe_head'){
           element.rotation.y = element.rotation.y + 0.01
           element.scale.x = 0.1

@@ -53,7 +53,6 @@ function Camera({ children }) {
 
   useEffect(() => {
     void setDefaultCamera(camera.current);
-    // console.log("canvasContainerSizeInPixels[0]", canvasContainerSizeInPixels[0])
     setCameraAspectRatio(canvasContainerSizeInPixels[0], canvasContainerSizeInPixels[1])
   }, [camera, setDefaultCamera, setCameraAspectRatio, canvasContainerSizeInPixels])
 

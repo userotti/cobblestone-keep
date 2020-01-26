@@ -51,21 +51,13 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
           0,  1,  2,   2,  1,  3,  // front
       ]);
 
-           
-
       geometry.setAttribute( 'instanceOffset', new THREE.InstancedBufferAttribute( offsets, 3 ) )
       geometry.setAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) )
       geometry.setAttribute( 'instanceUv', new THREE.InstancedBufferAttribute(instanceUvs, 2) )
 
-
       texture.minFilter = THREE.NearestFilter
       texture.magFilter = THREE.NearestFilter
 
-      console.log("texture.image.width: ", texture.image.width);
-      console.log("texture.image.height: ", texture.image.height);
-      
-      console.log("tileSize[0]: ", tileSize[0]);
-      console.log("tileSize[1]: ", tileSize[1]);
       
       const material = new THREE.MeshLambertMaterial( {
           map: texture,

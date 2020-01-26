@@ -27,7 +27,6 @@ export default function camera(set,get){
       }
     }),
     setCameraFocusPointOnPlayer: () => set(state=>{
-      console.log("state.player.position: ", state.player.position); 
       return {
         cameraFocusPointPosition: state.player.position
       }

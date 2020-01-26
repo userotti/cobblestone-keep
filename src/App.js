@@ -44,7 +44,6 @@ function Home() {
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels); 
 
   // music.play()
-  console.log('one?')
   muted ? music.volume(0) : music.volume(0.5)
 
   return <div className="game-holder">

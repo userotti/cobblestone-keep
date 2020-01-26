@@ -20,9 +20,6 @@ export default function player(set, get){
       let cellMap = get().cellMap;
       for (let x = 0; x < cellMap.activeCellMap.length; x++){
         for (let y = 0; y < cellMap.activeCellMap[x].length; y++){
-
-
-          console.log("cellMap.activeCellMap[x][y].type", cellMap.activeCellMap[x][y].type);
           if (cellMap.activeCellMap[x][y].type == "floor"){
             get().player.setPositionFromCell([x, y]);
             
@@ -77,9 +74,7 @@ export default function player(set, get){
 
     setYRotationFromPath: (path) => set(state=>{
       
-      console.log(path)
       let Yrotation = Math.atan((path[0][1] - path[1][1])/(path[0][0] - path[1][0])) + (Math.PI/2) 
-      console.log("Yrotation: ", Yrotation);   
       return {
         player: {
           ...state.player,

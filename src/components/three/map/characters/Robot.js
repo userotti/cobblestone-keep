@@ -40,7 +40,6 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
       }
     })  
       
-    // console.log("rotation-y={springs[2].Yrotation}", Yrotation);
     const springs = useSprings(3, [{
       from: { 
         position: [...position],
@@ -69,14 +68,12 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
       }
     }])
 
-    // console.log(loadedAssetData['model_gltf'].scene)
 
     useFrame(state => {
       let { children } = loadedAssetData['model_gltf'].scene
 
 
       children.forEach(element => {
-        // console.log(element.rotation.x)
         if(element.name == 'cuibe_head'){
           element.rotation.y = element.rotation.y + 0.01
           element.scale.x = 0.2
