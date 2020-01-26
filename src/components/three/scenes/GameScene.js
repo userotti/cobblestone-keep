@@ -54,7 +54,7 @@ export default function GameScene({assets}) {
     <ThreeFibreHTMLCanvas>
       <primitive object={dicrectionalLightTarget}/>
       <Camera>
-        <hemisphereLight color={0xffffff} intensity={1.2}/>
+        <hemisphereLight color={0xffffff} intensity={1.9}/>
 
         <directionalLight
           intensity={0.9}

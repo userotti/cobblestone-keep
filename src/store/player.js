@@ -30,6 +30,8 @@ export default function player(set, get){
         }
       }
     },
+
+
     movePlayerTowardsCellAt: (positionVectorArray) => {
 
 
@@ -41,30 +43,34 @@ export default function player(set, get){
         get().cellMap.activeCellMap[cellLocation[0]][cellLocation[1]] &&
         get().cellMap.activeCellMap[cellLocation[0]][cellLocation[1]].type === "floor" &&
         !(cellLocation[0] == playerAtCell[0] && cellLocation[1] == playerAtCell[1])
-      )) return null;
+      )) {
+       
+        get().player.setHopping(false);
+        
+      } else {
 
-
-      const passableCallback = function(x, y) {
-        if (get().cellMap && get().cellMap.activeCellMap[x] && get().cellMap.activeCellMap[x][y]){
-          let type = get().cellMap.activeCellMap[x][y].type;
-          return (type === "floor" || type === "door");
+        const passableCallback = function(x, y) {
+          if (get().cellMap && get().cellMap.activeCellMap[x] && get().cellMap.activeCellMap[x][y]){
+            let type = get().cellMap.activeCellMap[x][y].type;
+            return (type === "floor" || type === "door");
+          }
         }
+
+        const dijkstra = new ROT.Path.Dijkstra(cellLocation[0], cellLocation[1], passableCallback, {
+          topology: 4
+        });
+        
+        const path = [];
+        dijkstra.compute(playerAtCell[0], playerAtCell[1], function(x, y) {
+          path.push([x,y]);    
+        });
+        
+        if (path && path.length >= 2) {
+          get().player.setYRotationFromPath(path);
+          get().player.setPositionFromCell(path[1]);
+        } 
+        
       }
-
-
-      const dijkstra = new ROT.Path.Dijkstra(cellLocation[0], cellLocation[1], passableCallback, {
-        topology: 4
-      });
-
-
-      
-      const path = [];
-      dijkstra.compute(playerAtCell[0], playerAtCell[1], function(x, y) {
-        path.push([x,y]);    
-      });
-
-      get().player.setYRotationFromPath(path);
-      get().player.setPositionFromCell(path[1]);
 
     },
     setPlayerPositionFromTapPoint: (positionVectorArray) => {
@@ -95,6 +101,15 @@ export default function player(set, get){
           ...state.player,
           position: position,
           hopping: true
+        }
+      }
+    }),
+
+    setHopping: (bool) => set(state=>{
+      return {
+        player: {
+          ...state.player,
+          hopping: bool
         }
       }
     })

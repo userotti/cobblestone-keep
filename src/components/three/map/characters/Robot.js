@@ -39,7 +39,7 @@ export default function Robot({loadedAssetData, position, hopping, Yrotation}) {
         shadowMaterial: null
       }
     })  
-      
+    
     const springs = useSprings(3, [{
       from: { 
         position: [...position],
