@@ -11,6 +11,7 @@ body,
   padding: 0;
   background-color: #000;
   font-weight: normal;
+  color: #fff
 }
 
 a {
@@ -80,7 +81,7 @@ h1 {
 }
 
 canvas {
-  background: #111 url(/assets/space-3.jpg);
+  /* background: #111 url(/assets/space-3.jpg); */
   background-size: cover;
   border-radius: 0 0 4px 4px;
   border: 1px solid #666;

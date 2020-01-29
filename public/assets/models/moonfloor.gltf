@@ -91,12 +91,10 @@
             "doubleSided" : true,
             "name" : "Material.001",
             "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    0.2523823082447052,
-                    0.2523823082447052,
-                    0.2523823082447052,
-                    1
-                ],
+                "baseColorTexture" : {
+                    "index" : 0,
+                    "texCoord" : 0
+                },
                 "metallicFactor" : 0,
                 "roughnessFactor" : 0.781818151473999
             }
@@ -130,6 +128,18 @@
                     "material" : 1
                 }
             ]
+        }
+    ],
+    "textures" : [
+        {
+            "source" : 0
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "Material.001 Base Color",
+            "uri" : "Material_001 Base Color.png"
         }
     ],
     "accessors" : [

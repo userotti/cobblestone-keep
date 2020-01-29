@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
@@ -8,26 +8,26 @@ import HUD from './components/ui/HUD'
 import CameraControls from './components/ui/CameraControls'
 import MapGeneratorPanel from './components/ui/MapGeneratorPanel'
 
-import {Howl, Howler} from 'howler';
+import {Howl, Howler} from 'howler'
 
-
-const music = new Howl({
-  src: ['/assets/sounds/sound_music_loop.wav'],
-  volume: 0.2,
-  loop: true
-});
-
+// const music = new Howl({
+//   src: ['/assets/sounds/sound_music_loop.wav'],
+//   volume: 0.2,
+//   loop: true
+// });
 
 function App() {
   
-  music.play()
-  return (
-    <Router>
-      <div>
-        <Route exact path="/" component={Home} />        
-      </div>
-    </Router>
-  )
+  // music.play()
+
+  return <Home/>
+    // ! Does not work with Electron for some reason...
+    // <Router>
+    //   <div>
+    //     <Route exact path="/" component={Home} />        
+    //   </div>
+    // </Router>
+  
 }
 
 
@@ -44,7 +44,7 @@ function Home() {
   const canvasContainerSizeInPixels = useStore(state => state.canvasContainerSizeInPixels); 
 
   // music.play()
-  muted ? music.volume(0) : music.volume(0.5)
+  // muted ? music.volume(0) : music.volume(0.5)
 
   return <div className="game-holder">
     <h1>MoonSweeper</h1>

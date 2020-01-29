@@ -86,6 +86,7 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
         <mesh
           frustumCulled={false}
           receiveShadow={true}
+          castShadow={true}
         >
             <primitive attach="geometry" object={geometry}/>
             <primitive attach="material" object={material}/>

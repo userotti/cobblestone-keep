@@ -62,7 +62,6 @@ export default function GameScene({assets}) {
   dicrectionalLightTarget.position.x = player.position[0];
   dicrectionalLightTarget.position.y = player.position[1];
   dicrectionalLightTarget.position.z = player.position[2];
-  
 
   // console.log("dicrectionalLightTarget: ", dicrectionalLightTarget);
 
@@ -71,10 +70,10 @@ export default function GameScene({assets}) {
     <ThreeFibreHTMLCanvas>
       <primitive object={dicrectionalLightTarget}/>
       <Camera>
-        <hemisphereLight color={0x8888aa} intensity={1.2}/>
+        <hemisphereLight color={0xffffff} intensity={0.6}/>
 
         <directionalLight
-          intensity={1.2}
+          intensity={1.5}
           color={0xffffff}
           position={[player.position[0] + 8, player.position[1] + 10, player.position[2] + 8]}
           target={dicrectionalLightTarget}
@@ -94,7 +93,7 @@ export default function GameScene({assets}) {
 
         {/* <Swarm mouse={mouse} count={20} /> */}
 
-        <primitive object={loadedAssetData['moonfloor_gltf'].scene }/>
+        {/* <primitive object={loadedAssetData['moonfloor_gltf'].scene } scale={[0.5,0.5,0.5]}/> */}
 
         <Structural loadedAssetData={loadedAssetData}/>
 
