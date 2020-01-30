@@ -50,6 +50,7 @@ function Home() {
     <HUD/>
     <SceneContainer width={canvasContainerSizeInPixels[0]} height={canvasContainerSizeInPixels[1]}>
       <GameScene assets={assets}/>
+      
     </SceneContainer>
     <CameraControls/>
     <MapGeneratorPanel/>
@@ -66,3 +67,4 @@ const SceneContainer = styled.div`
   background-color: black;
   margin: 0rem;
 `
+

@@ -10,6 +10,15 @@ export default function items(set, get){
       modes["move_to_closest_rock"]
     ],
 
+    setVisible: (bool) => set((state) => {
+      return {
+        modeManager: {
+          ...state.modeManager,
+          visible: bool
+        }
+      }
+    }),
+
     setActiveMode: (mode) => set((state) => {
       return {
         modeManager: {
@@ -46,10 +55,13 @@ export default function items(set, get){
     }),
 
     removeModeFromMenu: (mode) => set((state) => {
+
       return {
         modeManager: {
           ...state.modeManager,
-          availableModeMenuItems: state.modeManager.availableModeMenuItems.filter((menuItem)=>{menuItem.type != mode.type})
+          availableModeMenuItems: state.modeManager.availableModeMenuItems.filter((menuItem)=>{
+            return menuItem.type != mode.type
+          })
         }
       }
     })

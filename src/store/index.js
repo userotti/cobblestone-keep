@@ -5,6 +5,8 @@ import cellMap from './cellMap'
 import game from './game'
 import player from './player'
 import items from './items'
+import modeManager from './modeManager'
+
 
 const canvasContainerSizeInPixels = [500, 500];
 const [useStore] = create((set,get) => ({
@@ -18,7 +20,8 @@ const [useStore] = create((set,get) => ({
   cellMap: cellMap(set, get),
   player: player(set, get),
   game: game(set, get),
-  items: items(set, get)
+  items: items(set, get),
+  modeManager: modeManager(set, get)
 
 }))
 

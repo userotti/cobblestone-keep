@@ -1,17 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 import Robot from './characters/Robot';
 import useStore from '../../../store';
-
 import { useSprings , animated , config  } from 'react-spring/three';
-import * as THREE from 'three';
 import { Howl } from 'howler';
-
-
-import { Dom } from 'react-three-fiber';
 
 export default function Player() {
 
   const playerState = useStore(state => state.player);
+  const modeManagerSetVisible = useStore(state => state.modeManager.setVisible);
+  
   const muted = useStore(state => state.game);
 
   const {sound, sound_end} = useMemo(()=>{
@@ -58,26 +55,34 @@ export default function Player() {
   }])
   
   return (
-    <animated.group
-      rotation-y={springs[2].Yrotation}
-      position-x={springs[0].position.interpolate((x)=>{
-        return x;
-      })}
-      position-z={springs[0].position.interpolate((x,y,z)=>{
-        return z;
-      })}
-      position-y={springs[1].progress.interpolate({
-        range: [0, 0.55, 1],
-        output: [0, 0.25, 1]
-      }).interpolate((progress)=>{
-        return (progress - 1)*6*(-1*progress)
-      })}
-      onClick={(e)=>{
-        e.stopPropagation();
-      }}
-    >
-      <Robot position={[0,0,0]}/>
-    </animated.group>
+    <Fragment>
+        <animated.group
+          rotation-y={springs[2].Yrotation}
+          position-x={springs[0].position.interpolate((x)=>{
+            return x;
+          })}
+          position-z={springs[0].position.interpolate((x,y,z)=>{
+            return z;
+          })}
+          position-y={springs[1].progress.interpolate({
+            range: [0, 0.55, 1],
+            output: [0, 0.25, 1]
+          }).interpolate((progress)=>{
+            return (progress - 1)*6*(-1*progress)
+          })}
+          onClick={(e)=>{
+            console.log("Player Click");
+            e.stopPropagation();
+            modeManagerSetVisible(true);
+          }}
+        > 
+          
+          <Robot position={[0,0,0]}/>
+        </animated.group>
+
+    </Fragment>
+    
   )
 
 }
+
