@@ -1,5 +1,4 @@
-import React, { Fragment, useMemo } from 'react';
-import * as THREE from 'three';
+import React, { useMemo } from 'react';
 
 
 export default function Rock({blenderScene, position, Yrotation}) {
@@ -8,7 +7,7 @@ export default function Rock({blenderScene, position, Yrotation}) {
       return {
         meshMemo: blenderScene.clone()
       }
-    })
+    }, [blenderScene])
 
     return (
       <primitive 

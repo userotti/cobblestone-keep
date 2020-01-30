@@ -78,7 +78,7 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
         material
       }
 
-    }, [texture, offsets, rotations])
+    }, [texture, offsets, rotations, instanceUvs, tileSize])
     
     
 

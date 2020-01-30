@@ -1,26 +1,22 @@
-import * as THREE from 'three';
 import { positionVectorToCell, cellToPositionVector } from './cellMap.js';
 import * as ROT from 'rot-js';
-import {Howl, Howler} from 'howler';
-
-const sound = new Howl({
-  src: ['/assets/sounds/sound_move_2.wav']
-});
-
-const origin = new THREE.Vector3(0,0,0);
 
 export default function player(set, get){
   return {
 
     position: null,
     Yrotation: 0,
-        
     hopping: false,
+    
+    nextTurn: () => {
+      //get().modeManager.playerMode
+    },
+
     setPlayerPositionToRandomOpenCell: () => { 
       let cellMap = get().cellMap;
       for (let x = 0; x < cellMap.activeCellMap.length; x++){
         for (let y = 0; y < cellMap.activeCellMap[x].length; y++){
-          if (cellMap.activeCellMap[x][y].type == "floor"){
+          if (cellMap.activeCellMap[x][y].type === "floor"){
             get().player.setPositionFromCell([x, y]);
             
             //stop!!!
@@ -40,7 +36,7 @@ export default function player(set, get){
         get().cellMap.activeCellMap[cellLocation[0]] &&
         get().cellMap.activeCellMap[cellLocation[0]][cellLocation[1]] &&
         get().cellMap.activeCellMap[cellLocation[0]][cellLocation[1]].type === "floor" &&
-        !(cellLocation[0] == playerAtCell[0] && cellLocation[1] == playerAtCell[1])
+        !(cellLocation[0] === playerAtCell[0] && cellLocation[1] === playerAtCell[1])
       )) {
        
         get().player.setHopping(false);

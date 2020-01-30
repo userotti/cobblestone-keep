@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import { positionVectorToCell, cellToPositionVector } from './cellMap.js';
+
+import { cellToPositionVector } from './cellMap.js';
 
 
 export default function items(set, get){

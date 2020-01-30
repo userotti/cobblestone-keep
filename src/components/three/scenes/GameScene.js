@@ -1,37 +1,25 @@
-import React, {useEffect, useRef, useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import Characters from '../map/Characters.js';
 import Items from '../map/Items.js';
-
-
-import Swarm from '../effects/Swarm.js';
 import * as THREE from 'three';
-
 import Camera from '../Camera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
 
-export default function GameScene({assets}) {
-
+export default function GameScene() {
   
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);  
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
   const movePlayerTowardsCellAt = useStore(state => state.player.movePlayerTowardsCellAt);
   const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
-  const setCameraFocusPointPosition = useStore(state => state.setCameraFocusPointPosition);
   const setCameraFocusPointOnPlayer = useStore(state => state.setCameraFocusPointOnPlayer);
   const player = useStore(state => state.player);
-
-  const getCellFromPositionVectorArray = useStore(state => state.cellMap.getCellFromPositionVectorArray);
   const getAllCellLocationsOfType = useStore(state => state.cellMap.getAllCellLocationsOfType);
-  
   const scatterRocks = useStore(state => state.items.scatterRocks);
   
-
-  const mouse = useRef([0, 0])
-
   useEffect(() => {
     loadAssets();
     setActiveCellMapParameters({
@@ -47,7 +35,14 @@ export default function GameScene({assets}) {
 
     scatterRocks(100, getAllCellLocationsOfType("floor"));
 
-  }, [loadAssets, setActiveCellMapParameters])
+  }, [
+    loadAssets, 
+    setActiveCellMapParameters, 
+    setPlayerPositionToRandomOpenCell, 
+    setCameraFocusPointOnPlayer, 
+    scatterRocks, 
+    getAllCellLocationsOfType
+  ])
 
   const { 
       dicrectionalLightTarget
@@ -55,18 +50,14 @@ export default function GameScene({assets}) {
     return {
       dicrectionalLightTarget: new THREE.Object3D()
     }
-  })  
+  }, [])  
 
-  if(!loadedAssetData) return null  
+  if(!loadedAssetData || !player.position) return null  
 
   dicrectionalLightTarget.position.x = player.position[0];
   dicrectionalLightTarget.position.y = player.position[1];
   dicrectionalLightTarget.position.z = player.position[2];
-  
 
-  // console.log("dicrectionalLightTarget: ", dicrectionalLightTarget);
-
-  // console.log([65 + robotPosition[0], 60, 65 + robotPosition[2]])
   return (
     <ThreeFibreHTMLCanvas>
       <primitive object={dicrectionalLightTarget}/>
@@ -101,6 +92,7 @@ export default function GameScene({assets}) {
         <Characters loadedAssetData={loadedAssetData}/>
      
         <StructuralOnTapPlane onTap={(event)=>{
+
           // onPlaneTap([event.point.x, event.point.y, event.point.z]);
           movePlayerTowardsCellAt([event.point.x, event.point.y, event.point.z]);
           setCameraFocusPointOnPlayer();

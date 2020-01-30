@@ -13,7 +13,7 @@ export default function cellMap(set, get){
     getAllCellLocationsOfType: (type)=>{
       const flatActiveCellMap = get().cellMap.flattenCellMap(get().cellMap.activeCellMap);
       return flatActiveCellMap.filter((cell)=>{
-        return (cell.type == type); 
+        return (cell.type === type); 
       }).map((cell)=>{
         return [...cell.cellLocation]
       })
@@ -51,6 +51,9 @@ export default function cellMap(set, get){
           case 'cellular':
             activeCellMap = cellular(cellMapParams.width, cellMapParams.height);  
             break;
+
+          default:
+           break;  
         }
       }
 

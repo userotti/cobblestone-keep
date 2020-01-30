@@ -19,18 +19,17 @@ export function cellular(gridWidth = GRID_WIDTH, gridHeight = GRID_HEIGHT){
   });
 
   /* display only the final map */
-  var display = new ROT.Display({width:w, height:h, fontSize:4});
-  SHOW(display.getContainer());    
-  map.create(display.DEBUG);
+  // var display = new ROT.Display({width:w, height:h, fontSize:4});
+  // SHOW(display.getContainer());    
+  map.create();
 
   /* now connect the maze */
-  var display = new ROT.Display({width:w, height:h, fontSize:4});
-  SHOW(display.getContainer());    
-  map.connect(display.DEBUG, 0, function(from, to) {
+  // var display = new ROT.Display({width:w, height:h, fontSize:4});
+  // SHOW(display.getContainer());    
+  map.connect(null, 0, function(from, to) {
       SHOW("Connection was made " + from + " to " + to);
   });
 
-  console.log("time to return: ", map._map);
   return rotjsToCustomMapFormat(map._map);
 } 
 

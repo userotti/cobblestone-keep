@@ -11,7 +11,7 @@ export function getRandomArbitrary(min, max) {
 export function rotjsToCustomMapFormat(rotMap) {
     return rotMap.map((row)=>{
       return row.map((cell)=>{
-        return cell == 0 ? {type: 'void'} : {type: 'floor'} 
+        return cell === 0 ? {type: 'void'} : {type: 'floor'} 
       })
     })
 }

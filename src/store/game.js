@@ -8,7 +8,7 @@ export default function game(set, get){
 
     damage: 2,
 
-    shroudRemoved: new Array(),
+    shroudRemoved: [],
     
     playerPosition: [0,0,0],
 

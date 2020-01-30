@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import styled from 'styled-components';
 import useStore from './store';
@@ -8,7 +8,7 @@ import HUD from './components/ui/HUD'
 import CameraControls from './components/ui/CameraControls'
 import MapGeneratorPanel from './components/ui/MapGeneratorPanel'
 
-import {Howl, Howler} from 'howler';
+import {Howl} from 'howler';
 
 
 const music = new Howl({
@@ -36,7 +36,6 @@ export default App
 function Home() {
 
   const {
-    game, 
     muted
   } = useStore(state => state.game)
   

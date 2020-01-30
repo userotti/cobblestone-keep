@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useSprings , animated , config  } from 'react-spring/three';
 import * as THREE from 'three';
 import useStore from '../../../../store'
@@ -10,19 +10,15 @@ export default function Robot({loadedAssetData, position, hopping}) {
     loadedAssetData['enemy1'].minFilter = THREE.NearestFilter;
     loadedAssetData['enemy1'].magFilter = THREE.NearestFilter;
     
-  
     const { 
       shadowGeometry,
-      shadowMaterial, 
       spriteMaterial
-      
     } = useMemo(()=>{
       return {
         spriteMaterial: new THREE.SpriteMaterial( { map: loadedAssetData['enemy1'], color: 0xffffff }),
-        shadowGeometry: new THREE.BoxGeometry(cellSize[0]*-0.8,cellSize[1]*0.8,cellSize[2]*0.8/2,1,1,1),
-        shadowMaterial: null
+        shadowGeometry: new THREE.BoxGeometry(cellSize[0]*-0.8,cellSize[1]*0.8,cellSize[2]*0.8/2,1,1,1)
       }
-    })  
+    }, [loadedAssetData])  
     
     const springs = useSprings(2, [{
       from: { 

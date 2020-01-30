@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import Wall from './cells/Wall'
 import FloorTextureShare from './cells/FloorTextureShare'
 import Floor from './cells/Floor'
 

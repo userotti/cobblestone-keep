@@ -1,6 +1,6 @@
 import { useThree } from 'react-three-fiber';
 import React, { useEffect, useRef } from 'react';
-import { useSpring , animated } from 'react-spring/three'
+import { useSpring , animated, config } from 'react-spring/three'
 import useStore from '../../store';
 import * as THREE from 'three';
 
@@ -48,8 +48,9 @@ function Camera({ children }) {
     from: { 
       matrixElements: m.elements,
       size: cameraSize-0.02
-    }}
-  )
+    },
+    config: config.default
+  })
 
   useEffect(() => {
     void setDefaultCamera(camera.current);
