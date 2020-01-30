@@ -43,7 +43,7 @@ h1 {
 }
 .hud {
   background: #333;
-  width: 1000px;
+  width: 500px;
   height: 80px;
   display: flex;
   flex-direction: row;

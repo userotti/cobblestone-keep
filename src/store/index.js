@@ -7,7 +7,7 @@ import game from './game'
 import player from './player'
 import items from './items'
 
-const canvasContainerSizeInPixels = [1000, 500];
+const canvasContainerSizeInPixels = [500, 500];
 const [useStore] = create((set,get) => ({
 
   canvasContainerSizeInPixels: canvasContainerSizeInPixels,
