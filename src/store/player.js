@@ -7,10 +7,36 @@ export default function player(set, get){
     position: null,
     Yrotation: 0,
     hopping: false,
+    speachBubbleText: '',
+    speachBubbleOpacity: 0,   
     
-    nextTurn: () => {
-      //get().modeManager.playerMode
+    nextTurn: (activeMode) => {
+
+      if (activeMode){
+        switch(activeMode.type){
+
+          case "move_to_closest_rock": 
+            let closestRock = get().items.findClosestRock(get().player.cellLocation);  
+            
+            get().player.movePlayerTowardsCellLocation(closestRock.cellLocation);
+            break;
+
+        }
+      } else {
+        get().player.saySomething("I need orders.");
+      }
     },
+
+    saySomething: (string) => set(state=>{
+      
+      return {
+        player: {
+          ...state.player,
+          speachBubbleText: '',
+          speachBubbleOpacity: 1   
+        }
+      }
+    }),
 
     setPlayerPositionToRandomOpenCell: () => { 
       let cellMap = get().cellMap;
@@ -27,9 +53,8 @@ export default function player(set, get){
       }
     },
 
-    movePlayerTowardsCellAt: (positionVectorArray) => {
+    movePlayerTowardsCellLocation: (cellLocation) => {
 
-      const cellLocation = positionVectorToCell(positionVectorArray, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);
       const playerAtCell = positionVectorToCell(get().player.position, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);
 
       if (!(
@@ -63,10 +88,18 @@ export default function player(set, get){
           get().player.setYRotationFromPath(path);
           get().player.setPositionFromCell(path[1]);
         } 
+
+        if (get().items.findRockAtCellLocation(path[1])){
+          get().items.pickUpRocksAtLocation(path[1]);
+        }
+
+        get().setCameraFocusPointOnPlayer();
+        
         
       }
 
     },
+
     setPlayerPositionFromTapPoint: (positionVectorArray) => {
       const cellLocation = positionVectorToCell(positionVectorArray, get().cellMap.cellSize, get().cellMap.activeCellMapParameters);
       get().player.setPositionFromCell(cellLocation);

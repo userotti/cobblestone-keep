@@ -18,7 +18,6 @@ export default function GameScene() {
   const loadAssets = useStore(state => state.loadAssets);
   const loadedAssetData = useStore(state => state.loadedAssetData);  
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
-  const movePlayerTowardsCellAt = useStore(state => state.player.movePlayerTowardsCellAt);
   const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
   const setCameraFocusPointOnPlayer = useStore(state => state.setCameraFocusPointOnPlayer);
   const player = useStore(state => state.player);
@@ -64,7 +63,7 @@ export default function GameScene() {
   dicrectionalLightTarget.position.y = player.position[1];
   dicrectionalLightTarget.position.z = player.position[2];
 
-  console.log("GameScene return...")
+  // console.log("GameScene return...")
   return (
     <Fragment>
       <ThreeFibreHTMLCanvas>

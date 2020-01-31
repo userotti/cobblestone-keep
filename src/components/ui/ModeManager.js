@@ -5,10 +5,14 @@ import useStore from '../../store'
 const ModeManager = function(){
 
   const modeManager = useStore(state => state.modeManager);
+  const nextTurn = useStore(state => state.player.nextTurn);
+  
   
   return (
     <Fragment>
-      {modeManager.activeMode ? <CurrentMode>{modeManager.activeMode.label}</CurrentMode> : null}
+      {modeManager.activeMode ? <CurrentMode onClick={()=>{
+        nextTurn(modeManager.activeMode);
+      }}>{modeManager.activeMode.label}</CurrentMode> : null}
       {modeManager.visible && <ModeMenu onClick={(e)=>{
         e.stopPropagation();
         console.log("ModeMenu: onClick");

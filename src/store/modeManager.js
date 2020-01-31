@@ -5,7 +5,6 @@ export default function items(set, get){
 
     visible: false,
     activeMode: null,
-    
     availableModeMenuItems: [
       modes["move_to_closest_rock"]
     ],
@@ -55,7 +54,6 @@ export default function items(set, get){
     }),
 
     removeModeFromMenu: (mode) => set((state) => {
-
       return {
         modeManager: {
           ...state.modeManager,

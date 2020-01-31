@@ -6,6 +6,38 @@ export default function items(set, get){
   return {
 
     rocks: [],
+
+    findRockAtCellLocation: (location)=>{
+      if (!location) return
+      let foundit = get().items.rocks.find((rock)=>{
+        return (rock.cellLocation[0] === location[0] && rock.cellLocation[1] === location[1]);
+      })
+      return foundit
+    },
+
+    findClosestRock: (location)=>{
+      let rocks = get().items.rocks;
+      let closestRockIndex = 0; 
+      for (let i = 0; i < rocks.length; i++){
+        const getDistance = get().items.getManhattanDistanceToItem;
+
+        if (getDistance(location, rocks[closestRockIndex].cellLocation) > getDistance(location, rocks[i].cellLocation)){
+          closestRockIndex = i;
+        }
+      }
+
+      return rocks[closestRockIndex];
+    },
+
+    pickUpRocksAtLocation: (location)=>{
+      get().items.removeRock(get().items.findRockAtCellLocation(location));
+    },
+
+    getManhattanDistanceToItem: (location, itemLocation)=>{
+      
+      return Math.abs(location[0] - itemLocation[0]) + Math.abs(location[1] - itemLocation[1])
+    },
+
     makeRock: (cellLocation)=>{
 
       const { cellSize, activeCellMapParameters } = get().cellMap;
@@ -24,6 +56,15 @@ export default function items(set, get){
         items: {
           ...state.items,
           rocks: [...state.items.rocks, rock]
+        }
+      }
+    }),
+
+    removeRock: (rock) => set((state) => {
+      return {
+        items: {
+          ...state.items,
+          rocks: state.items.rocks.filter((rockItem)=>{return rock.id !== rockItem.id})
         }
       }
     }),
