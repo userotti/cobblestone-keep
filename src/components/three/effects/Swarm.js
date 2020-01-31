@@ -15,11 +15,11 @@ export default function Swarm({ count, mouse }) {
     const temp = []
     for (let i = 0; i < count; i++) {
       const t = Math.random() * 100
-      const factor = 20 + Math.random() * 100
-      const speed = 0.01 + Math.random() / 200
-      const xFactor = -5 + Math.random() * 10
-      const yFactor = -5 + Math.random() * 10
-      const zFactor = -5 + Math.random() * 10
+      const factor = 100 + Math.random() * 20
+      const speed = 0.00001 + Math.random() / 200
+      const xFactor = -5 + Math.random() * 400 - 200
+      const yFactor = -5 + Math.random() * 400 - 200
+      const zFactor = -5 + Math.random() * 400 - 200
       temp.push({ t, factor, speed, xFactor, yFactor, zFactor, mx: 0, my: 0 })
     }
     return temp
@@ -36,16 +36,16 @@ export default function Swarm({ count, mouse }) {
       const a = Math.cos(t) + Math.sin(t * 1) / 10
       const b = Math.sin(t) + Math.cos(t * 2) / 10
       const s = Math.cos(t)
-      particle.mx += (mouse.current[0] - particle.mx) * 0.01
-      particle.my += (mouse.current[1] * -1 - particle.my) * 0.01
+      // particle.mx += (mouse.current[0] - particle.mx) * 0.01
+      // particle.my += (mouse.current[1] * -1 - particle.my) * 0.01
       // Update the dummy object
-      // dummy.position.set(
-      //   (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
-      //   (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
-      //   (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
-      // )
+      dummy.position.set(
+        (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
+        (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
+        (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
+      )
       dummy.scale.set(s, s, s)
-      dummy.rotation.set(s * 5, s * 5, s * 5)
+      dummy.rotation.set(s * 2, s * 2, s * 2)
       dummy.updateMatrix()
       // And apply the matrix to the instanced item
       mesh.current.setMatrixAt(i, dummy.matrix)
@@ -62,7 +62,7 @@ export default function Swarm({ count, mouse }) {
       </pointLight> */}
       <instancedMesh ref={mesh} args={[null, null, count]} frustumCulled={false} castShadow={true}>
         <dodecahedronBufferGeometry attach="geometry" args={[1, 0]} />
-        <meshStandardMaterial attach="material" color="#700020" />
+        <meshStandardMaterial attach="material" color="#777777" />
       </instancedMesh>
     </>
   )

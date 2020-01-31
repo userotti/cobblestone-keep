@@ -3,6 +3,7 @@ import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import Characters from '../map/Characters.js';
 import Items from '../map/Items.js';
+import Swarm from '../effects/Swarm.js';
 import ModeManager from '../../ui/ModeManager.js';
 
 import * as THREE from 'three';
@@ -92,7 +93,10 @@ export default function GameScene() {
 
           
 
-          {/* <Swarm mouse={mouse} count={20} /> */}
+          <Swarm 
+            // mouse={mouse} 
+            count={1000}
+          />
 
           <Structural loadedAssetData={loadedAssetData}/>
 
