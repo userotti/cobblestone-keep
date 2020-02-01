@@ -1,7 +1,15 @@
 
 import { cellToPositionVector } from './cellMap.js';
 
-
+// const itemTypes = [
+//   {
+//     type: "rock"
+//   },
+//   {
+//     type: "rock"
+//   }
+// ]
+// export 
 export default function items(set, get){
   return {
 
@@ -35,7 +43,6 @@ export default function items(set, get){
     },
 
     getManhattanDistanceToItem: (location, itemLocation)=>{
-      
       return Math.abs(location[0] - itemLocation[0]) + Math.abs(location[1] - itemLocation[1])
     },
 

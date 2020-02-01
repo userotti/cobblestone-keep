@@ -24,18 +24,6 @@ export default function game(set, get){
       }
     }),
 
-    updatePlayerPosition: (newPostionArray) => set(state=>{
-      return {
-        playerPosition: newPostionArray
-      }
-    }),
-
-    removeShroud: (newPostionArray) => set(state=>{
-      return {
-        shroudRemoved: [...state.shroudRemoved, newPostionArray]
-      }
-    }),
-
     makeNewScene(cellMapParams, params){
       
       const {
@@ -49,7 +37,7 @@ export default function game(set, get){
 
       const {
         setCameraFocusPointOnPlayer,
-      } = get()
+      } = get().camera
 
       const {
         scatterRocks

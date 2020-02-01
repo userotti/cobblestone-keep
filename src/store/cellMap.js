@@ -40,7 +40,6 @@ export default function cellMap(set, get){
     setActiveCellMapParameters: (cellMapParams) => set(state=>{
 
       let activeCellMap;
-
       if (cellMapParams) {
         switch (cellMapParams.type){
 
@@ -56,7 +55,6 @@ export default function cellMap(set, get){
            break;  
         }
       }
-
 
       const floorOffsets = getOffesetsFromCellType(activeCellMap, 'floor');
       const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
@@ -77,10 +75,7 @@ export default function cellMap(set, get){
           
           activeCellMap: activeCellMap,
           activeCellMapParameters: cellMapParams,
-          
-        
         }
-        
       }
     }),
 

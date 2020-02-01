@@ -44,10 +44,7 @@ export default function player(set, get){
         for (let y = 0; y < cellMap.activeCellMap[x].length; y++){
           if (cellMap.activeCellMap[x][y].type === "floor"){
             get().player.setPositionFromCell([x, y]);
-            
-            //stop!!!
-            y = cellMap.activeCellMap[x].length - 1;
-            x = cellMap.activeCellMap.length - 1;
+            return
           }
         }
       }
@@ -93,7 +90,7 @@ export default function player(set, get){
           get().items.pickUpRocksAtLocation(path[1]);
         }
 
-        get().setCameraFocusPointOnPlayer();
+        get().camera.setCameraFocusPointOnPlayer();
         
         
       }

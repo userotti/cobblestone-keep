@@ -4,17 +4,16 @@ import useStore from '../../store'
 
 const CameraControls = function({controlsColor, controlsBackgroundColor }){
 
-  const { 
-    increaseCameraSize, 
-    rotateCamera,
-    tiltCamera,
-    cameraTiltIndex,
-    cameraTiltValues,
+  const {
     cameraSize,
+    increaseCameraSize,
+    rotateCamera,
     cameraOrthographicAngle,
-    
-  } = useStore()
-
+    cameraTiltValues,
+    cameraTiltIndex,
+    tiltCamera
+  } = useStore(state => state.camera);
+  
   const {
     muteSwitch,
     muted
@@ -22,20 +21,6 @@ const CameraControls = function({controlsColor, controlsBackgroundColor }){
 
   return (<CameraControlsContainer className="camera-controls" controlsBackgroundColor={controlsBackgroundColor}>
    
-    {/* <IconButton onClick={()=>{
-      console.log([interactionPlanePosition[0] + 0.1, interactionPlanePosition[1]]);
-      setInteractionPlanePosition([interactionPlanePosition[0] + 0.1, interactionPlanePosition[1]])
-      }}>
-      <span> Do something - </span>
-    </IconButton>
-    
-    <IconButton onClick={()=>{
-      console.log([interactionPlanePosition[0] -0.1, interactionPlanePosition[1]]);
-      setInteractionPlanePosition([interactionPlanePosition[0] -0.1, interactionPlanePosition[1]])
-      }}>
-      <span> Do something + </span>
-    </IconButton> */}
-
     <IconButton onClick={()=>{increaseCameraSize(-1)}}>
       <img src="../icons/zoom-in-32x32.png" alt="zoom-out"/>
     </IconButton>
