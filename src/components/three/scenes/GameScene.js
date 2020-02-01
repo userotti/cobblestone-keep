@@ -16,8 +16,8 @@ import styled from 'styled-components';
 
 export default function GameScene() {
   
-  const loadAssets = useStore(state => state.loadAssets);
-  const loadedAssetData = useStore(state => state.loadedAssetData);  
+  const loadAssets = useStore(state => state.assets.loadAssets);
+  const loadedAssetData = useStore(state => state.assets.loadedAssetData);  
   const setActiveCellMapParameters = useStore(state => state.cellMap.setActiveCellMapParameters);
   const setPlayerPositionToRandomOpenCell = useStore(state => state.player.setPlayerPositionToRandomOpenCell);
   const setCameraFocusPointOnPlayer = useStore(state => state.camera.setCameraFocusPointOnPlayer);

@@ -16,7 +16,7 @@ const [useStore] = create((set,get) => ({
   setInteractionPlanePosition: (newPostionArray) => set(state=>({interactionPlanePosition: newPostionArray})),
   
   camera: camera(set, get),
-  ...assets(set, get),
+  assets: assets(set, get),
   cellMap: cellMap(set, get),
   player: player(set, get),
   game: game(set, get),

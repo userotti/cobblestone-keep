@@ -5,7 +5,7 @@ export default function assets(set){
   return {
 
     loadedAssetData: null,
-    assets: {
+    assetNamesAndLocations: {
       'grey_brick_wall_three_gltf': {
         url: '/assets/walls_on_ground.gltf',
       },
@@ -73,24 +73,28 @@ export default function assets(set){
 
     setLoadedAssetData: (loadedAssetData) => set((state) => {
       return {
-        loadedAssetData: loadedAssetData.reduce((total, item, index)=>{
-          return {
-            ...total,
-            ...item
-          }
-        }, {})
+        assets: {
+          ...state.assets,
+          loadedAssetData: loadedAssetData.reduce((total, item, index)=>{
+            return {
+              ...total,
+              ...item
+            }
+          }, {})
+        }
+        
       }
     }),
 
     loadAssets: () => set((state) => {
       
       const loadingAssetPromises = [
-        ...getGLTFLoadingPromises(state.assets),
-        ...getPNGLoadingPromises(state.assets),
+        ...getGLTFLoadingPromises(state.assets.assetNamesAndLocations),
+        ...getPNGLoadingPromises(state.assets.assetNamesAndLocations),
       ];
 
       Promise.all(loadingAssetPromises).then((assetData) => {
-        state.setLoadedAssetData(assetData)
+        state.assets.setLoadedAssetData(assetData)
       })
 
     }) 

@@ -3,7 +3,7 @@ import useStore from '../../../../store'
 
 export default function Robot({position}) {
 
-    const loadedAssetData = useStore(state => state.loadedAssetData);  
+    const loadedAssetData = useStore(state => state.assets.loadedAssetData);  
     
     const { 
       robotMesh
@@ -14,5 +14,5 @@ export default function Robot({position}) {
     }, [loadedAssetData])  
 
     
-    return (<primitive object={robotMesh}/>)
+    return (<primitive object={robotMesh} position={position}/>)
 }
