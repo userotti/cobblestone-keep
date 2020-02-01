@@ -2,9 +2,17 @@ import React, { useMemo } from 'react';
 import * as THREE from 'three';
 import floorTextureShareVertexShader from '../../../../utils/shaders/floor/floorTextureShareVertexShader.glsl';
 
+import useStore from '../../../../store';
 
-export default function FloorTextureShare({texture, offsets, rotations, instanceUvs, tileSize}) {
+export default function FloorTextureShare() {
     
+    
+    const loadedAssetData = useStore(state => state.assets.loadedAssetData);
+    const offsets = useStore(state => state.cellMap.floorOffsets);
+    const rotations = useStore(state => state.cellMap.floorRotations);
+    const instanceUvs = useStore(state => state.cellMap.floorUvs);
+    const tileSize = useStore(state => state.cellMap.floorTileSize);
+
     const { geometry, material } = useMemo(()=>{
       const vertices = [
         
@@ -55,6 +63,7 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
       geometry.setAttribute( 'instanceRotation', new THREE.InstancedBufferAttribute( rotations, 1 ) )
       geometry.setAttribute( 'instanceUv', new THREE.InstancedBufferAttribute(instanceUvs, 2) )
 
+      let texture = loadedAssetData['texture_share_floor_16_256']
       texture.minFilter = THREE.NearestFilter
       texture.magFilter = THREE.NearestFilter
 
@@ -73,12 +82,13 @@ export default function FloorTextureShare({texture, offsets, rotations, instance
           }
       }
 
+      console.log("every time");
       return { 
         geometry,
         material
       }
 
-    }, [texture, offsets, rotations, instanceUvs, tileSize])
+    }, [offsets, rotations, instanceUvs, tileSize])
     
     
 

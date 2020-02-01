@@ -8,6 +8,7 @@ export default function cellMap(set, get){
 
     cellSize: [1,1,1],
     activeCellMap: null,
+    floorTileSize: [16,16],
     activeCellMapParameters: null,
     
     getAllCellLocationsOfType: (type)=>{
