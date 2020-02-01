@@ -6,6 +6,7 @@ export default function items(set, get){
   return {
 
     rocks: [],
+    scraps: [],
 
     findRockAtCellLocation: (location)=>{
       if (!location) return
@@ -42,7 +43,18 @@ export default function items(set, get){
 
       const { cellSize, activeCellMapParameters } = get().cellMap;
       
+      return {
+        id: Math.random(),
+        cellLocation: cellLocation,
+        position: cellToPositionVector(cellLocation, cellSize, activeCellMapParameters),
+        Yrotation: Math.random() * Math.PI
+      }
+    },
 
+    makeScrap: (cellLocation)=>{
+
+      const { cellSize, activeCellMapParameters } = get().cellMap;
+      
       return {
         id: Math.random(),
         cellLocation: cellLocation,
@@ -60,11 +72,29 @@ export default function items(set, get){
       }
     }),
 
+    addScrap: (scrap) => set((state) => {
+      return {
+        items: {
+          ...state.items,
+          scraps: [...state.items.scraps, scrap]
+        }
+      }
+    }),
+
     removeRock: (rock) => set((state) => {
       return {
         items: {
           ...state.items,
           rocks: state.items.rocks.filter((rockItem)=>{return rock.id !== rockItem.id})
+        }
+      }
+    }),
+
+    removeScrap: (scrap) => set((state) => {
+      return {
+        items: {
+          ...state.items,
+          scraps: state.items.scraps.filter((scrapItem)=>{return scrap.id !== scrapItem.id})
         }
       }
     }),
@@ -83,7 +113,24 @@ export default function items(set, get){
           rocks: [...newRocks]
         }
       }
+    }),
+
+    scatterScraps: (scrapCount, openCellLocations) => set((state) => {
+      
+      let openCellsCount = openCellLocations.length;
+      let newScraps = [];
+      for (let i = 0; i < scrapCount; i++){
+        newScraps.push(get().items.makeScrap(openCellLocations[Math.floor(Math.random()*openCellsCount)]));
+      }
+
+      return {
+        items: {
+          ...state.items,
+          scraps: [...newScraps]
+        }
+      }
     })
+    
     
   }
 }

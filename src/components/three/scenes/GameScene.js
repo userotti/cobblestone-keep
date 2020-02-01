@@ -24,6 +24,7 @@ export default function GameScene() {
   const player = useStore(state => state.player);
   const getAllCellLocationsOfType = useStore(state => state.cellMap.getAllCellLocationsOfType);
   const scatterRocks = useStore(state => state.items.scatterRocks);
+  const scatterScraps = useStore(state => state.items.scatterScraps);
   
   
   useEffect(() => {
@@ -39,7 +40,10 @@ export default function GameScene() {
     setPlayerPositionToRandomOpenCell();
     setCameraFocusPointOnPlayer();
 
+    
     scatterRocks(100, getAllCellLocationsOfType("floor"));
+    scatterScraps(100, getAllCellLocationsOfType("floor"));
+    
 
   }, [
     loadAssets, 
@@ -58,7 +62,7 @@ export default function GameScene() {
     }
   }, [])  
 
-  if(!loadedAssetData || !player.position) return null  
+  if(!loadedAssetData || !player.position) return <div className="error">loadedAssetData || !player.position not loadding...</div>
 
   dicrectionalLightTarget.position.x = player.position[0];
   dicrectionalLightTarget.position.y = player.position[1];
@@ -88,15 +92,12 @@ export default function GameScene() {
             shadow-mapSize-height={1024}
           />
 
-
           <primitive object={dicrectionalLightTarget}/>
 
-          
-
-          <Swarm 
+          {/* <Swarm 
             // mouse={mouse} 
             count={1000}
-          />
+          /> */}
 
           <Structural loadedAssetData={loadedAssetData}/>
 

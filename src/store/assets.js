@@ -15,6 +15,9 @@ export default function assets(set){
       'rock_gltf': {
         url: '/assets/models/rock1.gltf',
       },
+      'scrap_gltf': {
+        url: '/assets/models/scrap.gltf',
+      },
       'brown_floor_three_gltf': {
         url: '/assets/tiled_floor.gltf',
       },

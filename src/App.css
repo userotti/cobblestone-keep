@@ -20,6 +20,13 @@ a:hover {
   color: white
 }
 
+.error {
+  background: #fff;
+   color: red;
+   padding: 10px;
+
+}
+
 h1 {
   color: #35303E;
   text-align: center;
