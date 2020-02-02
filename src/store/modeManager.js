@@ -6,10 +6,11 @@ export default function items(set, get){
     visible: false,
     activeMode: null,
     availableModeMenuItems: [
-      modes["move_to_closest_rock"]
+      modes["collect_rocks"],
+      modes["collect_scrap"]
     ],
 
-    setVisible: (bool) => set((state) => {
+    setMenuVisiblity: (bool) => set((state) => {
       return {
         modeManager: {
           ...state.modeManager,
@@ -27,7 +28,7 @@ export default function items(set, get){
       }
     }),
 
-    modeAvailable: (mode) => {
+    modeIsAvailable: (mode) => {
       get().modeManager.availableModeMenuItems.find((menuItem)=>{
         return menuItem.type == mode.type
       })
@@ -43,7 +44,7 @@ export default function items(set, get){
     }),
 
     addModeToMenu: (mode) => set((state) => {
-      if (!get().modeManager.modeAvailable(mode)){
+      if (!get().modeManager.modeIsAvailable(mode)){
         return {
           modeManager: {
             ...state.modeManager,
@@ -62,6 +63,74 @@ export default function items(set, get){
           })
         }
       }
+    }),
+
+    testForModeDeactivation: () => set((state) => {
+      const { findClosestItemOfType } = get().items;
+      const { cellLocation } = get().player;
+      const { activeMode, availableModeMenuItems } = get().modeManager;
+
+      switch (activeMode.type){
+        case "collect_rocks": 
+          if (findClosestItemOfType(cellLocation, 'rock') == null){
+            return {
+              modeManager: {
+                ...state.modeManager,
+                activeMode: null,
+                availableModeMenuItems: availableModeMenuItems.filter((menuItem)=>{
+                  return activeMode.type == menuItem.type
+                })
+              }
+            }
+          }
+          break;
+
+        case "collect_scrap": 
+          if (findClosestItemOfType(cellLocation, 'scrap') == null){
+            return {
+              modeManager: {
+                ...state.modeManager,
+                activeMode: null,
+                availableModeMenuItems: availableModeMenuItems.filter((menuItem)=>{
+                  return activeMode.type == menuItem.type
+                })
+              }
+            }
+          }
+          break;
+      }
+
+      //do nothing
+      return {
+        modeManager: {
+          ...state.modeManager,
+        }
+      }
+    }),
+
+    testForModeMenuRemoval: () => set((state) => {
+      const { findClosestItemOfType } = get().items;
+      const { cellLocation } = get().player;
+      const { availableModeMenuItems } = get().modeManager;
+      
+      let result = availableModeMenuItems.filter((modeMenuItem)=>{
+        switch (modeMenuItem.type){
+          case "collect_rocks": 
+            return !(findClosestItemOfType(cellLocation, 'rock') == null);  
+            
+          case "collect_scrap": 
+            return !(findClosestItemOfType(cellLocation, 'scrap') == null);
+            
+        }
+      })
+      
+      //do nothing
+      return {
+        modeManager: {
+          ...state.modeManager,
+          availableModeMenuItems: result
+        }
+      }
     })
     
     
@@ -70,14 +139,14 @@ export default function items(set, get){
 
 export const modes = {
 
-  "move_to_closest_rock" : {
-    type: "move_to_closest_rock",
-    label: "find rock"
+  "collect_rocks" : {
+    type: "collect_rocks",
+    label: "collect rocks"
   },
 
-  "pick_up_rock" : {
-    type: "pick_up_rock",
-    label: "pick up rock"
+  "collect_scrap" : {
+    type: "collect_scrap",
+    label: "collect scrap"
   }
 
 }

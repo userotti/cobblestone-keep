@@ -1,19 +1,21 @@
 import React, { useMemo } from 'react';
+import useStore from '../../../../store';
 
 
-export default function Rock({blenderScene, position, Yrotation}) {
+export default function Rock({position, Yrotation, uniformScale}) {
 
-    const { meshMemo } = useMemo(()=>{
+    const loadedAssetData = useStore(state => state.assets.loadedAssetData); 
+    const { mesh } = useMemo(()=>{
       return {
-        meshMemo: blenderScene.clone()
+        mesh: loadedAssetData['rock_gltf'].scene.clone()
       }
-    }, [blenderScene])
+    }, [loadedAssetData])
 
     return (
       <primitive 
-        object={meshMemo}
+        object={mesh}
         position={position}   
-        scale={[0.2,0.2,0.2]}
+        scale={uniformScale}
         rotation-y={Yrotation}
       />
     )

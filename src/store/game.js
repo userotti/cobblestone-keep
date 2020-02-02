@@ -40,7 +40,7 @@ export default function game(set, get){
       } = get().camera
 
       const {
-        scatterRocks
+        scatterItemsOfType
       } = get().items;
 
       setActiveCellMapParameters({...cellMapParams});
@@ -48,7 +48,9 @@ export default function game(set, get){
       setPlayerPositionToRandomOpenCell();
       setCameraFocusPointOnPlayer();
 
-      scatterRocks(params.items.rocks.count, getAllCellLocationsOfType(params.items.rocks.placeOnTileType));
+    
+      scatterItemsOfType(5, getAllCellLocationsOfType("floor"), 'rock', true);
+      scatterItemsOfType(5, getAllCellLocationsOfType("floor"), 'scrap', false);
     }
   }
 }

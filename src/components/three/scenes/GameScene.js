@@ -23,8 +23,7 @@ export default function GameScene() {
   const setCameraFocusPointOnPlayer = useStore(state => state.camera.setCameraFocusPointOnPlayer);
   const player = useStore(state => state.player);
   const getAllCellLocationsOfType = useStore(state => state.cellMap.getAllCellLocationsOfType);
-  const scatterRocks = useStore(state => state.items.scatterRocks);
-  const scatterScraps = useStore(state => state.items.scatterScraps);
+  const scatterItemsOfType = useStore(state => state.items.scatterItemsOfType);
   
   
   useEffect(() => {
@@ -35,15 +34,15 @@ export default function GameScene() {
       height: 45,
       roomSizeRange: [15,15],
       maxRooms: 1,
-      type: 'cellular'
+      type: 'basic'
     });
 
     setPlayerPositionToRandomOpenCell();
     setCameraFocusPointOnPlayer();
 
     
-    scatterRocks(100, getAllCellLocationsOfType("floor"));
-    scatterScraps(100, getAllCellLocationsOfType("floor"));
+    scatterItemsOfType(5, getAllCellLocationsOfType("floor"), 'rock', true);
+    scatterItemsOfType(5, getAllCellLocationsOfType("floor"), 'scrap', false);
     
 
   }, [
@@ -51,7 +50,7 @@ export default function GameScene() {
     setActiveCellMapParameters, 
     setPlayerPositionToRandomOpenCell, 
     setCameraFocusPointOnPlayer, 
-    scatterRocks, 
+    scatterItemsOfType, 
     getAllCellLocationsOfType
   ])
 
@@ -95,12 +94,7 @@ export default function GameScene() {
 
         <primitive object={dicrectionalLightTarget}/>
 
-        {/* <Swarm 
-          // mouse={mouse} 
-          count={1000}
-        /> */}
-
-        <Structural loadedAssetData={loadedAssetData}/>
+        <Structural/>
 
         <Items textures={loadedAssetData}/>
         

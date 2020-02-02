@@ -5,7 +5,7 @@ export default function Structural() {
 
   return (
     <Fragment>
-      <FloorTextureShare />
+      <FloorTextureShare/>
     </Fragment>
   )
 }

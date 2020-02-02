@@ -1,53 +1,142 @@
 
 import { cellToPositionVector } from './cellMap.js';
 
-// const itemTypes = [
-//   {
-//     type: "rock"
-//   },
-//   {
-//     type: "rock"
-//   }
-// ]
-// export 
 export default function items(set, get){
   return {
 
-    rocks: [],
-    scraps: [],
+    //State... 
+    itemTypes: ['rock', 'scrap'],
+    all: [],
 
-    findRockAtCellLocation: (location)=>{
-      if (!location) return
-      let foundit = get().items.rocks.find((rock)=>{
-        return (rock.cellLocation[0] === location[0] && rock.cellLocation[1] === location[1]);
+    //Getters...
+
+    //search for type by location
+    findItemAtCellLocation: (location)=>{
+      if (!location) return null
+      return get().items.all.find((item)=>{
+        return (item.cellLocation[0] === location[0] && item.cellLocation[1] === location[1]);
       })
-      return foundit
     },
 
-    findClosestRock: (location)=>{
-      let rocks = get().items.rocks;
-      let closestRockIndex = 0; 
-      for (let i = 0; i < rocks.length; i++){
-        const getDistance = get().items.getManhattanDistanceToItem;
+    //filter
+    getItemsOfType: (type)=>{
+      return get().items.all.filter((item)=>{
+        return (item.type == type);
+      })
+    },
 
-        if (getDistance(location, rocks[closestRockIndex].cellLocation) > getDistance(location, rocks[i].cellLocation)){
-          closestRockIndex = i;
+    //search for closest item of type
+    findClosestItemOfType: (location, type)=>{
+      const { getItemsOfType, getManhattanDistanceToItem } = get().items;
+      let allItemsOfType = getItemsOfType(type);
+      let closestItemOfTypeIndex = 0; 
+
+      if (!allItemsOfType.length) return null;
+      for (let i = 0; i < allItemsOfType.length; i++){
+        if (getManhattanDistanceToItem(location, allItemsOfType[closestItemOfTypeIndex].cellLocation) > getManhattanDistanceToItem(location, allItemsOfType[i].cellLocation)){
+          closestItemOfTypeIndex = i;
         }
       }
 
-      return rocks[closestRockIndex];
-    },
-
-    pickUpRocksAtLocation: (location)=>{
-      get().items.removeRock(get().items.findRockAtCellLocation(location));
+      return allItemsOfType[closestItemOfTypeIndex];
     },
 
     getManhattanDistanceToItem: (location, itemLocation)=>{
       return Math.abs(location[0] - itemLocation[0]) + Math.abs(location[1] - itemLocation[1])
     },
 
-    makeRock: (cellLocation)=>{
+    makeItemOfTypeAtCellLocation: (cellLocation, type)=>{
+      const { cellSize, activeCellMapParameters, getPositionVectorArrayFromCellLocation } = get().cellMap;
 
+      let uniformScale = [1,1,1];
+      switch(type){
+        case 'rock':
+          const randomness = Math.random() * 0.2;
+          uniformScale = [0.1+randomness,0.1+randomness,0.1+randomness];
+          break;
+        case 'scrap':
+          uniformScale = [0.25,0.25,0.25];
+          break;  
+      }
+
+      return {
+        id: Math.random(),
+        type: type,
+        cellLocation: cellLocation,
+        position: getPositionVectorArrayFromCellLocation(cellLocation, cellSize, activeCellMapParameters),
+        uniformScale: uniformScale,
+        Yrotation: Math.random() * Math.PI
+      }
+    },
+
+    //Setters...
+
+    //nuke an item from the all array
+    removeItemAtLocation: (location)=>{
+      const { removeItem, findItemAtCellLocation } = get().items; 
+      removeItem(findItemAtCellLocation(location));
+    },
+
+    //nuke an item by id
+    removeItem: (itemToRemove) => set((state) => {
+      
+      //setState!
+      return {
+        items: {
+          ...state.items,
+          all: state.items.all.filter((item)=>{return item.id !== itemToRemove.id})
+        }
+      }
+    }),
+
+    //create new items of type
+    scatterItemsOfType: (itemCount, openCellLocations, type, fresh) => set((state) => {
+      const { makeItemOfTypeAtCellLocation, findItemAtCellLocation } = get().items; 
+
+      
+      //make sure there is nothing else there
+      openCellLocations = openCellLocations.filter((location)=>{
+        return !findItemAtCellLocation(location);
+      })
+
+      if (itemCount > openCellLocations.length){
+        throw 'there is not enough room to place ' + itemCount + ' items';
+      }
+      
+      const newItems = [];
+      for (let i = 0; i < itemCount; i++){
+        const randomLocationIndex = Math.floor(Math.random()*openCellLocations.length);
+        const location = openCellLocations[randomLocationIndex];
+
+        newItems.push(makeItemOfTypeAtCellLocation(location, type));
+        //its not open any more!!!
+        openCellLocations.splice(randomLocationIndex, 1)
+        
+      }
+
+
+      //setState!
+      // if fresh, nuke all the old stuff
+      if (fresh){
+        return {
+          items: {
+            ...state.items,
+            all: [...newItems]
+          }
+        }
+      } else {
+        return {
+          items: {
+            ...state.items,
+            all: [...state.items.all, ...newItems]
+          }
+        }
+      }
+      
+    }),
+
+    //old stuff
+    makeRock: (cellLocation)=>{
       const { cellSize, activeCellMapParameters } = get().cellMap;
       
       return {
@@ -87,15 +176,9 @@ export default function items(set, get){
         }
       }
     }),
+    
 
-    removeRock: (rock) => set((state) => {
-      return {
-        items: {
-          ...state.items,
-          rocks: state.items.rocks.filter((rockItem)=>{return rock.id !== rockItem.id})
-        }
-      }
-    }),
+    
 
     removeScrap: (scrap) => set((state) => {
       return {

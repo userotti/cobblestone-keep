@@ -21,8 +21,9 @@ const ModeManager = function(){
             return <ModeMenuItem onClick={(e)=>{
               e.stopPropagation();
               console.log("ModeMenuItem: onClick");
-              modeManager.setVisible(false);
+              modeManager.setMenuVisiblity(false);
               modeManager.setActiveMode(menuItem);
+              
             }} key={index}>{menuItem.label}</ModeMenuItem>
           })
         }

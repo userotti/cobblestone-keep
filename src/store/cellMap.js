@@ -1,18 +1,32 @@
 
 import { buildOutTheMap } from '../utils/mapGenerators/basic';
 import { cellular } from '../utils/mapGenerators/rotjs';
+import { rotjsToCustomMapFormat } from '../utils/functions/index';
 
 export default function cellMap(set, get){
   return {
 
-
+    //state
     cellSize: [1,1,1],
     activeCellMap: null,
     floorTileSize: [16,16],
     activeCellMapParameters: null,
-    
+
+    //get the cellLocation[i,j] from the a 3d position[x,y,z]
+    getCellLocationFromPositionVectorArray: (position)=>{
+      const { cellSize, activeCellMapParameters } = get().cellMap;
+      return positionVectorToCell(position, cellSize, activeCellMapParameters);
+    },
+
+    //get the 3d position[x,y,z] from the a cellLocation[i,j]
+    getPositionVectorArrayFromCellLocation: (cellLocation)=>{
+      const { cellSize, activeCellMapParameters } = get().cellMap;
+      return cellToPositionVector(cellLocation, cellSize, activeCellMapParameters);
+    },
+
     getAllCellLocationsOfType: (type)=>{
-      const flatActiveCellMap = get().cellMap.flattenCellMap(get().cellMap.activeCellMap);
+      const { flattenCellMap, activeCellMap } = get().cellMap;
+      const flatActiveCellMap = flattenCellMap(activeCellMap);
       return flatActiveCellMap.filter((cell)=>{
         return (cell.type === type); 
       }).map((cell)=>{
@@ -20,8 +34,8 @@ export default function cellMap(set, get){
       })
     },
 
+    //turn the activeCellMap into a single array 
     flattenCellMap: (cellMap)=>{
-
       let flat = cellMap.reduce((total, cellColumn, xindex)=>{
         return [...total, ...cellColumn.map((cell, yindex)=>{
           return {
@@ -30,14 +44,10 @@ export default function cellMap(set, get){
           }
         })]
       }, [])
-
       return flat
     },
 
-    getCellFromPositionVectorArray: (position)=>{
-      return positionVectorToCell(position, get().cellMap.cellSize, get().cellMap.activeCellMapParameters)
-    },
-
+    //state setters, these will cause some components to rerender due to their state interests in the useStore hook
     setActiveCellMapParameters: (cellMapParams) => set(state=>{
 
       let activeCellMap;
@@ -49,7 +59,7 @@ export default function cellMap(set, get){
             break;
 
           case 'cellular':
-            activeCellMap = cellular(cellMapParams.width, cellMapParams.height);  
+            activeCellMap = rotjsToCustomMapFormat(cellular(cellMapParams.width, cellMapParams.height));  
             break;
 
           default:
@@ -60,9 +70,6 @@ export default function cellMap(set, get){
       const floorOffsets = getOffesetsFromCellType(activeCellMap, 'floor');
       const floorRotations = getRotationsFromCellType(activeCellMap, 'floor');
       const floorUvs = getUVsFromCellType(activeCellMap, 'floor');
-
-      const doorOffsets = getOffesetsFromCellType(activeCellMap, 'door');
-      const doorRotations = getRotationsFromCellType(activeCellMap, 'door');
         
       return {
         cellMap: {
@@ -71,9 +78,6 @@ export default function cellMap(set, get){
           floorRotations: floorRotations,
           floorUvs: floorUvs,
 
-          doorOffsets: doorOffsets,
-          doorRotations: doorRotations,
-          
           activeCellMap: activeCellMap,
           activeCellMapParameters: cellMapParams,
         }
@@ -83,6 +87,7 @@ export default function cellMap(set, get){
   }
 }
 
+//helper methods
 export function positionVectorToCell(positionVectorArray, cellSize, activeCellMapParameters){
   const cellTappedLocation = [
     Math.floor(positionVectorArray[0]/(cellSize[0]*2) + activeCellMapParameters.width/2), 
@@ -91,11 +96,11 @@ export function positionVectorToCell(positionVectorArray, cellSize, activeCellMa
   return cellTappedLocation
 }
 
-export function cellToPositionVector(cellCoord, cellSize, activeCellMapParameters){
+export function cellToPositionVector(cellLocation, cellSize, activeCellMapParameters){
   return [
-    (cellCoord[0] * cellSize[0]*2) - activeCellMapParameters.width + cellSize[0],
+    (cellLocation[0] * cellSize[0]*2) - activeCellMapParameters.width + cellSize[0],
     0,
-    (cellCoord[1] * cellSize[1]*2) - activeCellMapParameters.height + cellSize[1]
+    (cellLocation[1] * cellSize[1]*2) - activeCellMapParameters.height + cellSize[1]
   ];
 }
 

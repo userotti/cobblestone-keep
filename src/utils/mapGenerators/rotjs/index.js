@@ -1,5 +1,4 @@
 import * as ROT from 'rot-js';
-import { rotjsToCustomMapFormat } from '../../functions';
 
 export const GRID_HEIGHT = 60;
 export const GRID_WIDTH = 80;
@@ -30,7 +29,15 @@ export function cellular(gridWidth = GRID_WIDTH, gridHeight = GRID_HEIGHT){
       SHOW("Connection was made " + from + " to " + to);
   });
 
-  return rotjsToCustomMapFormat(map._map);
+  map.connect(null, 0, function(from, to) {
+      SHOW("Connection was made " + from + " to " + to);
+  });
+
+  map.connect(null, 0, function(from, to) {
+      SHOW("Connection was made " + from + " to " + to);
+  });
+
+  return map._map;
 } 
 
 function SHOW(value){

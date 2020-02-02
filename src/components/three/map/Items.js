@@ -3,21 +3,17 @@ import Rock from './items/Rock';
 import Scrap from './items/Scrap';
 import useStore from '../../../store';
 
-export default function Items({textures}) {
+export default function Items() {
 
-  const rocks = useStore(state => state.items.rocks);
-  const scraps = useStore(state => state.items.scraps);
-
-
-  if (!textures) return null;
+  const { getItemsOfType } = useStore(state => state.items);
 
   return (
     <Fragment>
-      {rocks.map((rock)=>{
-        return <Rock blenderScene={textures['rock_gltf'].scene} position={rock.position} Yrotation={rock.Yrotation} key={rock.id}/> 
+      {getItemsOfType('rock').map((rock)=>{
+        return <Rock position={rock.position} Yrotation={rock.Yrotation} key={rock.id} uniformScale={rock.uniformScale}/> 
       })}
-      {scraps.map((scrap)=>{
-        return <Scrap blenderScene={textures['scrap_gltf'].scene} position={scrap.position} Yrotation={scrap.Yrotation} key={scrap.id}/> 
+      {getItemsOfType('scrap').map((scrap)=>{
+        return <Scrap position={scrap.position} Yrotation={scrap.Yrotation} key={scrap.id} uniformScale={scrap.uniformScale}/> 
       })}
     </Fragment>
   )

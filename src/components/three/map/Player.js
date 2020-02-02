@@ -6,8 +6,8 @@ import { Howl } from 'howler';
 
 export default function Player() {
 
-  const playerState = useStore(state => state.player);
-  const modeManagerSetVisible = useStore(state => state.modeManager.setVisible);
+  const playerStore = useStore(state => state.player);
+  const modeManagerStore = useStore(state => state.modeManager);
   
   const muted = useStore(state => state.game);
 
@@ -27,10 +27,10 @@ export default function Player() {
 
   const springs = useSprings(3, [{
     from: { 
-      position: [...playerState.position],
+      position: [...playerStore.position],
     },
     to: {
-      position: [...playerState.position],
+      position: [...playerStore.position],
     },
     config: config.default  
     
@@ -39,7 +39,7 @@ export default function Player() {
       progress: 0
     },
     to: {
-      progress: playerState.hopping ? 1 : 0
+      progress: playerStore.hopping ? 1 : 0
     },
     onStart: () => { !muted && sound.play() },
     onRest: () => { !muted && sound_end.play() },
@@ -47,10 +47,10 @@ export default function Player() {
     config: config.default //{ mass: 1, tension: 290, friction: 32 }
   },{
     from: { 
-      Yrotation: playerState.Yrotation,
+      Yrotation: playerStore.Yrotation,
     },
     to: {
-      Yrotation: playerState.Yrotation,
+      Yrotation: playerStore.Yrotation,
     }
   }])
   
@@ -73,7 +73,8 @@ export default function Player() {
           onClick={(e)=>{
             console.log("Player Click");
             e.stopPropagation();
-            modeManagerSetVisible(true);
+            modeManagerStore.setMenuVisiblity(true);
+            modeManagerStore.testForModeMenuRemoval();
           }}
         > 
           

@@ -7,18 +7,28 @@ export default function player(set, get){
     position: null,
     Yrotation: 0,
     hopping: false,
+    cellLocation: null,
     speachBubbleText: '',
     speachBubbleOpacity: 0,   
     
     nextTurn: (activeMode) => {
+      const { items, player } = get();
+      const { cellLocation, movePlayerTowardsCellLocation } = player;
+      const { findClosestItemOfType } = items;
+
+
 
       if (activeMode){
         switch(activeMode.type){
 
-          case "move_to_closest_rock": 
-            let closestRock = get().items.findClosestRock(get().player.cellLocation);  
-            
-            get().player.movePlayerTowardsCellLocation(closestRock.cellLocation);
+          case "collect_rocks": 
+            let closestRock = findClosestItemOfType(cellLocation, 'rock');  
+            movePlayerTowardsCellLocation(closestRock.cellLocation);
+            break;
+
+          case "collect_scrap": 
+            let closestScrap = findClosestItemOfType(cellLocation, 'scrap');  
+            movePlayerTowardsCellLocation(closestScrap.cellLocation);
             break;
 
         }
@@ -86,11 +96,30 @@ export default function player(set, get){
           get().player.setPositionFromCell(path[1]);
         } 
 
-        if (get().items.findRockAtCellLocation(path[1])){
-          get().items.pickUpRocksAtLocation(path[1]);
+        // we we do anything special on this tile?
+        const itemOnTile = get().items.findItemAtCellLocation(path[1]);
+        switch(get().modeManager.activeMode.type){
+          
+          case "collect_rocks": 
+            if (itemOnTile && itemOnTile.type == 'rock'){
+              get().items.removeItemAtLocation(path[1]);
+            }
+            break;
+
+          case "collect_scrap": 
+            if (itemOnTile && itemOnTile.type == 'scrap'){
+              get().items.removeItemAtLocation(path[1]);
+            }
+            break;
         }
 
+        
+       
+        get().modeManager.testForModeDeactivation();
+
         get().camera.setCameraFocusPointOnPlayer();
+
+
         
         
       }
