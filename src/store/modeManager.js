@@ -77,9 +77,6 @@ export default function items(set, get){
               modeManager: {
                 ...state.modeManager,
                 activeMode: null,
-                availableModeMenuItems: availableModeMenuItems.filter((menuItem)=>{
-                  return activeMode.type == menuItem.type
-                })
               }
             }
           }
@@ -91,9 +88,6 @@ export default function items(set, get){
               modeManager: {
                 ...state.modeManager,
                 activeMode: null,
-                availableModeMenuItems: availableModeMenuItems.filter((menuItem)=>{
-                  return activeMode.type == menuItem.type
-                })
               }
             }
           }
@@ -124,6 +118,7 @@ export default function items(set, get){
         }
       })
       
+      console.log("result: ", result);
       //do nothing
       return {
         modeManager: {
