@@ -10,7 +10,7 @@ const ModeManager = function(){
   
   return (
     <Fragment>
-      {modeManager.activeMode ? <CurrentMode onClick={()=>{
+      {modeManager.activeMode && !modeManager.visible ? <CurrentMode onClick={()=>{
         nextTurn(modeManager.activeMode);
       }}>{modeManager.activeMode.label}</CurrentMode> : null}
       {modeManager.visible && <ModeMenu onClick={(e)=>{

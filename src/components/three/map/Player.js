@@ -7,7 +7,9 @@ import { Howl } from 'howler';
 export default function Player() {
 
   const playerStore = useStore(state => state.player);
-  const modeManagerStore = useStore(state => state.modeManager);
+  const setMenuVisiblity = useStore(state => state.modeManager.setMenuVisiblity);
+  const testForModeMenuRemoval = useStore(state => state.modeManager.testForModeMenuRemoval);
+  
   
   const muted = useStore(state => state.game);
 
@@ -73,8 +75,8 @@ export default function Player() {
           onClick={(e)=>{
             console.log("Player Click");
             e.stopPropagation();
-            modeManagerStore.setMenuVisiblity(true);
-            modeManagerStore.testForModeMenuRemoval();
+            setMenuVisiblity(true);
+            testForModeMenuRemoval();
           }}
         > 
           
