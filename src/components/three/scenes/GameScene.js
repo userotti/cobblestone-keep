@@ -1,4 +1,5 @@
-import React, {useEffect, useMemo , Fragment} from 'react';
+import React, { useContext, useCallback, useMemo, useRef, useState, useEffect, Fragment } from 'react';
+
 import Structural from '../map/Structural.js';
 import StructuralOnTapPlane from '../map/StructuralOnTapPlane.js';
 import Characters from '../map/Characters.js';
@@ -10,9 +11,70 @@ import * as THREE from 'three';
 import CustomOrthographicCamera from '../CustomOrthographicCamera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
-
-
 import styled from 'styled-components';
+
+
+import { Vector2 } from "three"
+import { extend, useFrame, useThree } from 'react-three-fiber'
+
+// Outline Effects
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer"
+import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass"
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass"
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass"
+import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader"
+
+
+
+extend({ EffectComposer, RenderPass, OutlinePass, ShaderPass })
+
+const context = React.createContext()
+
+const Outline = ({ children }) => {
+  const { gl, scene, camera, size } = useThree()
+  const composer = useRef()
+  const [hovered, set] = useState([])
+  const aspect = useMemo(() => new Vector2(size.width, size.height), [size])
+  useEffect(() => composer.current.setSize(size.width, size.height), [size])
+  useFrame(() => composer.current.render(), 1)
+
+  return (
+    <context.Provider value={set}>
+      {children}
+      <effectComposer ref={composer} args={[gl]}>
+        <renderPass attachArray="passes" args={[scene, camera]} />
+        <outlinePass
+          attachArray="passes"
+          args={[aspect, scene, camera]}
+          selectedObjects={hovered}
+          // selectedObjects={true}
+          visibleEdgeColor="white"
+          hiddenEdgeColor="black"
+          edgeStrength={50}
+          edgeThickness={1}
+        />
+        <shaderPass attachArray="passes" args={[FXAAShader]} uniforms-resolution-value={[1 / size.width, 1 / size.height]} />
+      </effectComposer>
+    </context.Provider>
+  )
+}
+
+function useHover() {
+  const ref = useRef()
+  const setHovered = useContext(context)
+  const onPointerOver = useCallback(() => setHovered(state => [...state, ref.current]), [])
+  const onPointerOut = useCallback(() => setHovered(state => state.filter(mesh => mesh !== ref.current)), [])
+  return { ref, onPointerOver, onPointerOut }
+}
+
+const Thing = ({ radius = 1, detail = 64, color = "indianred", ...props }) => {
+  return (
+    <mesh {...props} scale={[0.1,0.1,0.1]} {...useHover()}>
+      <dodecahedronGeometry attach="geometry" args={[40]} />
+      <meshStandardMaterial attach="material" color={color} />
+    </mesh>
+  )
+}
 
 export default function GameScene() {
   
@@ -73,10 +135,10 @@ export default function GameScene() {
     <Fragment>
       <ThreeFibreHTMLCanvas>
         <CustomOrthographicCamera/>
-        <hemisphereLight color={0xffffff} intensity={1.9}/>
+        <hemisphereLight color={0xffffff} intensity={1.6}/>
 
         <directionalLight
-          intensity={0.9}
+          intensity={0.8}
           color={0xffffff}
           position={[player.position[0] + 8, player.position[1] + 10, player.position[2] + 8]}
           target={dicrectionalLightTarget}
@@ -98,8 +160,12 @@ export default function GameScene() {
 
         <Items textures={loadedAssetData}/>
         
-        <Characters/>
-    
+        <Outline>
+            <Thing position={[-10, 0, -20]} color="hotpink" />
+        </Outline>
+        
+        <Characters />
+
         <StructuralOnTapPlane onTap={(event)=>{
           event.stopPropagation();
           console.log("On Plane Tap");
