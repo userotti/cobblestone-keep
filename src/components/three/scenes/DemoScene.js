@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import CustomOrthographicCamera from '../CustomOrthographicCamera.js';
 import ThreeFibreHTMLCanvas from '../ThreeFibreHTMLCanvas.js';
 import useStore from '../../../store';
+import Robot from '../map/characters/Robot.js';
 
 
 export default function GameScene() {
@@ -25,6 +26,9 @@ export default function GameScene() {
       <ThreeFibreHTMLCanvas>
         <CustomOrthographicCamera/>
         <hemisphereLight color={0xffffff} intensity={1.9}/>
+
+        <Robot position={[0,0,0]}/>
+
         
       </ThreeFibreHTMLCanvas>
       <ModeManager/>
