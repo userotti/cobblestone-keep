@@ -44,7 +44,7 @@ export default function camera(set,get){
       return {
         camera: {
           ...state.camera,
-          cameraVisibleRadius: state.cameraVisibleRadius + amount
+          cameraVisibleRadius: state.camera.cameraVisibleRadius + amount
         }
       }
     }),
@@ -52,7 +52,7 @@ export default function camera(set,get){
       return {
         camera: {
           ...state.camera,
-          cameraSize: state.cameraSize + amount
+          cameraSize: state.camera.cameraSize + amount
         }
       }
     }),
@@ -60,7 +60,7 @@ export default function camera(set,get){
       return {
         camera: {
           ...state.camera,
-          cameraOrthographicAngle: state.cameraOrthographicAngle + amount
+          cameraOrthographicAngle: state.camera.cameraOrthographicAngle + amount
         }  
       }
     }),
@@ -68,7 +68,7 @@ export default function camera(set,get){
       return {
         camera: {
           ...state.camera,  
-          cameraTiltIndex: state.cameraTiltIndex !== state.cameraTiltValues.length-1 ? state.cameraTiltIndex + 1 : 0
+          cameraTiltIndex: state.camera.cameraTiltIndex !== state.camera.cameraTiltValues.length-1 ? state.camera.cameraTiltIndex + 1 : 0
         }  
       }
     })
