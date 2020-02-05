@@ -3,6 +3,9 @@ import Robot from './characters/Robot';
 import useStore from '../../../store';
 import { useSprings , animated , config  } from 'react-spring/three';
 import { Howl } from 'howler';
+import * as THREE from 'three';
+
+
 
 export default function Player() {
 
@@ -22,7 +25,8 @@ export default function Player() {
       sound_end: new Howl({
         src: ['/assets/sounds/sound_robot_speak.wav'],
         volume: 0.1
-      })
+      }),
+      
     }
 
   }, []);
@@ -80,6 +84,7 @@ export default function Player() {
           }}
         > 
           
+            
           <Robot position={[0,0,0]}/>
         </animated.group>
 

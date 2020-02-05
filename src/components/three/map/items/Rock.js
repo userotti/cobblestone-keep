@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment, useState } from 'react';
 import useStore from '../../../../store';
-
-
+import * as THREE from 'three';
+import { Dom } from 'react-three-fiber'
 export default function Rock({position, Yrotation, uniformScale}) {
 
     const loadedAssetData = useStore(state => state.assets.loadedAssetData); 
@@ -11,12 +11,29 @@ export default function Rock({position, Yrotation, uniformScale}) {
       }
     }, [loadedAssetData])
 
+    const [state, setState] = useState({
+      showText: false
+    });
+
     return (
-      <primitive 
-        object={mesh}
-        position={position}   
-        scale={uniformScale}
-        rotation-y={Yrotation}
-      />
+      <group
+        position={position}
+      > 
+        <primitive 
+          object={mesh}
+          scale={uniformScale}
+          rotation-y={Yrotation}
+          onPointerEnter={e => setState({
+            showText: true
+          })}
+          onPointerLeave={e => setState({
+            showText: false
+          })}
+        />
+        {state.showText ? <Dom position={[0, 1.2, 0]}>
+          <p style={{color: '#fff', fontWeight: 'bold'}}>rocks</p>
+        </Dom >: null}
+        
+      </group>
     )
 }

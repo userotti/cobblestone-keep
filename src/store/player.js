@@ -7,6 +7,7 @@ export default function player(set, get){
     position: null,
     Yrotation: 0,
     hopping: false,
+    currentPath: [],
     cellLocation: null,
     speachBubbleText: '',
     speachBubbleOpacity: 0,   
@@ -36,6 +37,15 @@ export default function player(set, get){
         get().player.saySomething("I need orders.");
       }
     },
+
+    setCurrentDestinationPath: (path) =>set(state=>{
+      return {
+        player: {
+          ...state.player,
+          currentPath: [...path]
+        }
+      }
+    }),
 
     saySomething: (string) => set(state=>{
       
@@ -94,6 +104,8 @@ export default function player(set, get){
         if (path && path.length >= 2) {
           get().player.setYRotationFromPath(path);
           get().player.setPositionFromCell(path[1]);
+          get().player.setCurrentDestinationPath(path);
+          
         } 
 
         // we we do anything special on this tile?
